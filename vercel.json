@@ -1,3 +1,39 @@
 {
-  "rewrites": []
+  "rewrites": [
+    {
+      "source": "/(.*)",
+      "destination": "/epk/$1",
+      "has": [{ "type": "host", "value": "epk.fiddlerontherock.com" }]
+    },
+    {
+      "source": "/(.*)",
+      "destination": "/epk/$1",
+      "has": [{ "type": "host", "value": "press.fiddlerontherock.com" }]
+    },
+    {
+      "source": "/(.*)",
+      "destination": "/serenades/$1",
+      "has": [{ "type": "host", "value": "serenades.fiddlerontherock.com" }]
+    },
+    {
+      "source": "/(.*)",
+      "destination": "/experience/$1",
+      "has": [{ "type": "host", "value": "packages.fiddlerontherock.com" }]
+    },
+    {
+      "source": "/(.*)",
+      "destination": "/redesign/$1",
+      "has": [{ "type": "host", "value": "redesign.fiddlerontherock.com" }]
+    }
+  ],
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        { "key": "Cache-Control", "value": "no-store, no-cache, must-revalidate, proxy-revalidate" },
+        { "key": "Pragma", "value": "no-cache" },
+        { "key": "Expires", "value": "0" }
+      ]
+    }
+  ]
 }
