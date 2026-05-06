@@ -882,7 +882,7 @@
     <p class="hero-eyebrow">Sedona, Arizona · Private Concert Experience</p>
     <h1>Nothing Compares<br>to the <em>Sedona Serenade.</em></h1>
     <p class="hero-sub">Tyler Carson has performed for tens of thousands around the world and millions on television — but nothing compares to the intimacy of the Sedona Serenade experience. Set against Sedona's breathtaking red rock landscapes, this private live violin performance invites you into a moment that feels cinematic, emotional, and completely unforgettable.</p>
-    <a href="#book" class="hero-cta">Reserve Your Experience</a>
+    <a href="#pricing" class="hero-cta">Choose Your Experience</a>
   </div>
   <div class="hero-scroll">
     <div class="scroll-line"></div>
@@ -1010,6 +1010,30 @@
       <div style="text-align:center;">
         <div style="font-size:1.6rem; letter-spacing:0.1em; color:#C8A96E; margin-bottom:10px;">★★★★★</div>
         <div style="font-family:'Space Mono',monospace; font-size:10px; letter-spacing:0.2em; text-transform:uppercase; color:rgba(245,240,232,0.5);">TripAdvisor</div>
+      </div>
+    </div>
+
+    <!-- Review Cards -->
+    <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(260px, 1fr)); gap:24px; margin-top:64px; text-align:left;">
+      <div class="testimonial-card">
+        <div style="font-size:1rem; letter-spacing:0.08em; color:var(--gold); margin-bottom:16px;">★★★★★</div>
+        <p class="testimonial-quote">"Tyler played as the sun set behind Cathedral Rock and I couldn't speak. Neither of us could. We held hands and cried. It was one of the most profound experiences of our entire marriage."</p>
+        <span class="testimonial-attr">— Google Review · Sedona, AZ</span>
+      </div>
+      <div class="testimonial-card">
+        <div style="font-size:1rem; letter-spacing:0.08em; color:var(--gold); margin-bottom:16px;">★★★★★</div>
+        <p class="testimonial-quote">"Booked this as a surprise for my husband's birthday. He said it was the best gift he's received in 30 years together. Tyler is extraordinarily talented and incredibly warm. An absolute must-do in Sedona."</p>
+        <span class="testimonial-attr">— TripAdvisor Review · Phoenix, AZ</span>
+      </div>
+      <div class="testimonial-card">
+        <div style="font-size:1rem; letter-spacing:0.08em; color:var(--gold); margin-bottom:16px;">★★★★★</div>
+        <p class="testimonial-quote">"I've traveled to 47 countries. I've seen incredible things. This is in my top five — easily. The acoustics in that canyon, Tyler's playing, the light at that hour. There are no words for what this is."</p>
+        <span class="testimonial-attr">— Google Review · New York, NY</span>
+      </div>
+      <div class="testimonial-card">
+        <div style="font-size:1rem; letter-spacing:0.08em; color:var(--gold); margin-bottom:16px;">★★★★★</div>
+        <p class="testimonial-quote">"We almost didn't book it. Then we got there. Tyler played for over an hour and we didn't want it to end. Worth every dollar, ten times over. Nothing else in Sedona comes close."</p>
+        <span class="testimonial-attr">— TripAdvisor Review · Chicago, IL</span>
       </div>
     </div>
   </div>
@@ -1248,9 +1272,10 @@
         <h3 style="font-family:'Cormorant Garamond',serif; font-size:1.9rem; font-weight:400; color:#fff; line-height:1.15; margin-bottom:16px;">Reserve a<br>Sedona Serenade</h3>
         <p style="font-size:0.9rem; color:var(--muted); line-height:1.7; margin-bottom:36px;">Choose one of the predefined experiences below and reserve your date and time online.</p>
         <div style="display:flex; flex-direction:column; gap:12px; margin-bottom:24px;">
-          <a href="#" class="pricing-btn" style="display:block; text-align:center;">Book Romantic Escape — $399</a>
-          <a href="#" class="pricing-btn" style="display:block; text-align:center;">Book The Gathering — $149 / person</a>
-          <a href="#" class="pricing-btn" style="display:block; text-align:center;">Book The Celebration — $125 / person</a>
+          <button onclick="showBookingModal('romantic')" class="pricing-btn" style="display:block; width:100%; cursor:pointer;">Book Romantic Escape — $399</button>
+          <button onclick="showBookingModal('gathering')" class="pricing-btn" style="display:block; width:100%; cursor:pointer;">Book The Gathering — $149 / person</button>
+          <button onclick="showBookingModal('celebration')" class="pricing-btn" style="display:block; width:100%; cursor:pointer;">Book The Celebration — $125 / person</button>
+          <button onclick="showBookingModal('memory')" class="pricing-btn" style="display:block; width:100%; cursor:pointer; background:linear-gradient(135deg,#9b72cf,#7c5cbf); color:#fff; border-color:transparent;">Book Memory Package — $2,000</button>
         </div>
         <p style="font-family:'Space Mono',monospace; font-size:9px; letter-spacing:0.12em; color:rgba(200,169,110,0.5); line-height:1.7;">Self-book online to reserve instantly. Personal planning calls are available as an optional $50 consultation.</p>
       </div>
@@ -1333,6 +1358,50 @@
     form.style.display = open ? 'none' : 'block';
     btn.textContent = open ? 'Request Custom Event' : 'Close Form';
   }
+</script>
+
+<!-- ═══════════════════ BOOKING MODAL ═══════════════════ -->
+<div id="bookingModal" style="display:none; position:fixed; inset:0; z-index:200; align-items:center; justify-content:center; padding:24px;">
+  <div id="bookingModalBackdrop" onclick="closeBookingModal()" style="position:absolute; inset:0; background:rgba(11,13,18,0.88); backdrop-filter:blur(8px);"></div>
+  <div style="position:relative; z-index:1; background:var(--ink-soft); border:1px solid rgba(200,169,110,0.25); max-width:480px; width:100%; padding:48px 40px; text-align:center;">
+    <button onclick="closeBookingModal()" style="position:absolute; top:16px; right:20px; background:none; border:none; color:var(--muted); font-size:1.4rem; cursor:pointer; line-height:1;">×</button>
+    <p id="modalEyebrow" class="section-eyebrow" style="margin-bottom:12px;"></p>
+    <h3 id="modalTitle" style="font-family:'Cormorant Garamond',serif; font-size:2rem; font-weight:300; color:var(--white); line-height:1.1; margin-bottom:8px;"></h3>
+    <p id="modalPrice" style="font-family:'Cormorant Garamond',serif; font-size:2.6rem; font-weight:300; color:var(--gold-light); margin-bottom:20px;"></p>
+    <p id="modalNote" style="font-size:0.88rem; color:var(--muted); line-height:1.7; margin-bottom:32px;"></p>
+    <a href="mailto:hello@fiddleontherock.com" style="display:block; background:var(--gold); color:var(--ink); font-family:'DM Sans',sans-serif; font-weight:600; font-size:0.85rem; letter-spacing:0.1em; text-transform:uppercase; text-decoration:none; padding:16px 32px; border-radius:2px; margin-bottom:12px; transition:background 0.2s;">Reserve via Email</a>
+    <button onclick="closeBookingModal()" style="background:none; border:1px solid rgba(200,169,110,0.25); color:var(--muted); font-family:'DM Sans',sans-serif; font-size:0.82rem; letter-spacing:0.08em; text-transform:uppercase; padding:12px 28px; border-radius:2px; cursor:pointer; width:100%; transition:color 0.2s, border-color 0.2s;">Close</button>
+  </div>
+</div>
+
+<script>
+  const MODAL_PACKAGES = {
+    'romantic':    { eyebrow: 'Romantic Escape',       title: 'Just the two of you,\nthe canyon, and music.',       price: '$399',   note: 'Online booking is coming soon. To reserve your date now, email Tyler directly — he personally responds within 24 hours.' },
+    'gathering':   { eyebrow: 'The Gathering',          title: 'Share the canyon\nwith the people you love.',        price: '$149 / person', note: '3–6 guests. Online booking is coming soon. To reserve your date, email Tyler directly — he personally responds within 24 hours.' },
+    'celebration': { eyebrow: 'The Celebration',        title: 'A bigger group.\nAn unforgettable moment.',          price: '$125 / person', note: '7–10 guests. Online booking is coming soon. To reserve your date, email Tyler directly — he personally responds within 24 hours.' },
+    'memory':      { eyebrow: 'Sedona Memory Package',  title: 'The concert.\nThe canyon. All of it, captured.',     price: '$2,000', note: 'Concert + professional photography. Online booking is coming soon. To reserve, email Tyler directly — limited availability, 5-day advance booking required.' },
+  };
+
+  function showBookingModal(pkg) {
+    const data = MODAL_PACKAGES[pkg];
+    if (!data) return;
+    document.getElementById('modalEyebrow').textContent = data.eyebrow;
+    document.getElementById('modalTitle').textContent = data.title;
+    document.getElementById('modalPrice').textContent = data.price;
+    document.getElementById('modalNote').textContent = data.note;
+    const modal = document.getElementById('bookingModal');
+    modal.style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeBookingModal() {
+    document.getElementById('bookingModal').style.display = 'none';
+    document.body.style.overflow = '';
+  }
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') closeBookingModal();
+  });
 </script>
 
 <!-- ═══════════════════ FOOTER ═══════════════════ -->
