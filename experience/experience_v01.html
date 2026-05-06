@@ -20,8 +20,8 @@
     --white: #FFFFFF;
   }
 
-  html { scroll-behavior: smooth; }
-  
+  html { scroll-behavior: smooth; overflow-x: hidden; }
+
   body {
     background: var(--ink);
     color: var(--cream);
@@ -29,6 +29,7 @@
     font-weight: 300;
     line-height: 1.7;
     overflow-x: hidden;
+    width: 100%;
   }
 
   /* ── HERO ── */
@@ -398,9 +399,7 @@
     margin-top: 56px;
     align-items: start;
   }
-  @media (max-width: 900px) {
-    .pricing-grid { grid-template-columns: 1fr; }
-  }
+  /* pricing-grid responsive handled in consolidated block below */
   .pricing-card {
     background: var(--ink-soft);
     border: 1px solid rgba(200,169,110,0.12);
@@ -437,9 +436,7 @@
   }
   .pricing-card.private-event .pe-text { flex: 1; }
   .pricing-card.private-event .pe-cta { flex-shrink: 0; }
-  @media (max-width: 700px) {
-    .pricing-card.private-event { flex-direction: column; text-align: center; }
-  }
+  /* private-event responsive handled in consolidated block below */
   .pricing-card h3 {
     font-family: 'Cormorant Garamond', serif;
     font-size: 1.9rem;
@@ -574,10 +571,7 @@
     gap: 0 32px;
     margin-bottom: 32px;
   }
-  @media (max-width: 900px) {
-    .pricing-card.memory-pkg { grid-template-columns: 1fr; }
-    .memory-pkg .includes-cols { grid-template-columns: 1fr; }
-  }
+  /* memory-pkg responsive handled in consolidated block below */
 
   /* ── PRICE SUMMARY BOX ── */
   .price-summary {
@@ -674,7 +668,7 @@
     margin-top: 56px;
     align-items: start;
   }
-  @media (max-width: 680px) { .expect-grid { grid-template-columns: 1fr; gap: 40px; } }
+  /* expect-grid responsive handled in consolidated block below */
   .expect-block h3 {
     font-family: 'Cormorant Garamond', serif;
     font-size: 1.6rem;
@@ -740,6 +734,7 @@
     margin-bottom: 16px;
   }
   @media (max-width: 560px) { .form-row { grid-template-columns: 1fr; } }
+  /* ↑ keep — form row collapses separately from main grid */
   .form-group { margin-bottom: 16px; }
   .form-group label {
     display: block;
@@ -859,15 +854,109 @@
     transition: background 0.2s;
   }
   .sticky-cta:hover { background: var(--gold-light); }
-  @media (max-width: 500px) {
+  /* sticky-bar responsive handled in consolidated block below */
+
+  /* ─────────────────────────────────────────
+     RESPONSIVE — TABLET (≤900px)
+  ───────────────────────────────────────── */
+  @media (max-width: 900px) {
+    /* Pricing: collapse to single column */
+    .pricing-grid { grid-template-columns: 1fr; }
+
+    /* Memory pkg: stack button below text, reduce padding */
+    .pricing-card.memory-pkg {
+      grid-template-columns: 1fr;
+      padding: 52px 36px 40px;
+      gap: 32px;
+    }
+    .memory-pkg .includes-cols { grid-template-columns: 1fr; }
+
+    /* Steps: 2-up on tablet */
+    .steps-grid { grid-template-columns: 1fr 1fr; }
+  }
+
+  /* ─────────────────────────────────────────
+     RESPONSIVE — MOBILE (≤700px)
+  ───────────────────────────────────────── */
+  @media (max-width: 700px) {
+    section { padding: 64px 20px; }
+
+    /* Force single-column grids */
+    .steps-grid       { grid-template-columns: 1fr; }
+    .locations-grid   { grid-template-columns: 1fr; }
+    .testimonials-grid { grid-template-columns: 1fr; }
+    .addons-grid      { grid-template-columns: 1fr 1fr; } /* 2-col is fine here */
+    .pricing-grid     { grid-template-columns: 1fr; }
+    .expect-grid      { grid-template-columns: 1fr; gap: 40px; }
+
+    /* Pricing cards: safe horizontal padding */
+    .pricing-card { padding: 36px 24px; }
+
+    /* Memory package: single column, reduced padding */
+    .pricing-card.memory-pkg {
+      grid-template-columns: 1fr;
+      padding: 44px 24px 36px;
+      gap: 24px;
+    }
+    .pricing-card.memory-pkg > div:last-child { text-align: center; }
+
+    /* Private event: stack vertically */
+    .pricing-card.private-event {
+      flex-direction: column;
+      text-align: center;
+      padding: 36px 24px;
+      gap: 20px;
+    }
+    .pricing-card.private-event .pe-text p { max-width: 100%; }
+
+    /* Bigger touch targets on form elements (prevents iOS zoom) */
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      font-size: 1rem;
+      padding: 16px;
+    }
+
+    /* Sticky bar */
+    .sticky-bar { padding: 12px 16px; gap: 12px; }
+  }
+
+  /* ─────────────────────────────────────────
+     RESPONSIVE — SMALL PHONES (≤480px)
+  ───────────────────────────────────────── */
+  @media (max-width: 480px) {
+    section { padding: 52px 16px; }
+
+    /* Hero */
+    .hero-content { width: 100%; }
+    .hero-cta { display: block; text-align: center; padding: 18px 24px; }
+    .hero-logo { width: 80px; }
+
+    /* Pricing: tighten padding further */
+    .pricing-card { padding: 32px 18px; }
+    .pricing-card.memory-pkg { padding: 40px 18px 32px; }
+    .pricing-card.private-event { padding: 32px 18px; }
+    .price-main { font-size: 2.6rem; }
+
+    /* Add-ons: single column */
+    .addons-grid { grid-template-columns: 1fr; }
+
+    /* Sticky: hide text, full-width button */
     .sticky-text { display: none; }
     .sticky-cta { width: 100%; text-align: center; }
   }
 
-  /* ── RESPONSIVE ── */
-  @media (max-width: 700px) {
-    section { padding: 72px 20px; }
-    .pricing-grid { grid-template-columns: 1fr; }
+  /* ─────────────────────────────────────────
+     RESPONSIVE — VERY SMALL PHONES (≤380px)
+     iPhone SE, older Android
+  ───────────────────────────────────────── */
+  @media (max-width: 380px) {
+    section { padding: 48px 14px; }
+    .pricing-card { padding: 28px 16px; }
+    .pricing-card.memory-pkg { padding: 36px 16px 28px; }
+    h2.section-title { font-size: 2rem; }
+    .hero h1 { font-size: 2.6rem; }
+    .pricing-btn { padding: 12px 20px; font-size: 0.82rem; }
   }
 </style>
 </head>
@@ -1003,12 +1092,12 @@
   <div class="container" style="text-align:center;">
     <span class="section-eyebrow">What people are saying</span>
     <h2 class="section-title">Rated <em>5 Stars</em><br>on Every Platform.</h2>
-    <div style="display:flex; justify-content:center; gap:48px; margin-top:48px; flex-wrap:wrap;">
+    <div style="display:flex; justify-content:center; align-items:center; gap:40px; margin-top:48px; flex-wrap:wrap; row-gap:24px;">
       <div style="text-align:center;">
         <div style="font-size:1.6rem; letter-spacing:0.1em; color:#C8A96E; margin-bottom:10px;">★★★★★</div>
         <div style="font-family:'Space Mono',monospace; font-size:10px; letter-spacing:0.2em; text-transform:uppercase; color:rgba(245,240,232,0.5);">Google Reviews</div>
       </div>
-      <div style="width:1px; background:rgba(200,169,110,0.15);"></div>
+      <div style="width:1px; height:40px; background:rgba(200,169,110,0.15); flex-shrink:0;"></div>
       <div style="text-align:center;">
         <div style="font-size:1.6rem; letter-spacing:0.1em; color:#C8A96E; margin-bottom:10px;">★★★★★</div>
         <div style="font-family:'Space Mono',monospace; font-size:10px; letter-spacing:0.2em; text-transform:uppercase; color:rgba(245,240,232,0.5);">TripAdvisor</div>
@@ -1016,11 +1105,11 @@
     </div>
 
     <!-- Review Cards -->
-    <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(260px, 1fr)); gap:24px; margin-top:64px; text-align:left;">
+    <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(min(260px, 100%), 1fr)); gap:24px; margin-top:64px; text-align:left;">
       <div class="testimonial-card">
         <div style="font-size:1rem; letter-spacing:0.08em; color:var(--gold); margin-bottom:16px;">★★★★★</div>
-        <p class="testimonial-quote">"Tyler played as the sun set behind Cathedral Rock and I couldn't speak. Neither of us could. We held hands and cried. It was one of the most profound experiences of our entire marriage."</p>
-        <span class="testimonial-attr">— Google Review · Sedona, AZ</span>
+        <p class="testimonial-quote">"What an incredibly magical man! With his very first note, he has captivated my attention and sent his music through my soul! I absolutely adore his talent along with his beautiful smile and soul! Thank you for adding to an already beautiful moment for my son and I!!"</p>
+        <span class="testimonial-attr">— Mercedes Thornhill · Google · Local Guide</span>
       </div>
       <div class="testimonial-card">
         <div style="font-size:1rem; letter-spacing:0.08em; color:var(--gold); margin-bottom:16px;">★★★★★</div>
