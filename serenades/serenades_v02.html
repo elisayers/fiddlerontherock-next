@@ -512,12 +512,101 @@ section.bg-ink { background: var(--ink); }
 }
 .btn-vip:hover { background: rgba(155,74,138,0.1); border-color: var(--dusk-light); }
 
+/* ── PHOTO GALLERY ── */
+.gallery-section {
+  padding: 0;
+  background: var(--ink);
+  position: relative;
+  z-index: 1;
+}
+.gallery-header {
+  padding: 80px 24px 52px;
+  text-align: center;
+  max-width: 680px;
+  margin: 0 auto;
+}
+.gallery-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: 340px 340px 260px;
+  gap: 4px;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+.g-love   { grid-column: 1; grid-row: 1; }
+.g-crew   { grid-column: 2; grid-row: 1; }
+.g-tyler  { grid-column: 3; grid-row: 1 / 3; }
+.g-sunset { grid-column: 1; grid-row: 2; }
+.g-redrock{ grid-column: 2; grid-row: 2; }
+.g-seats  { grid-column: 1 / 4; grid-row: 3; }
+.gallery-item {
+  overflow: hidden;
+  position: relative;
+}
+.gallery-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.7s cubic-bezier(0.25,0.46,0.45,0.94);
+}
+.gallery-item:hover img { transform: scale(1.05); }
+.gallery-footer {
+  padding: 48px 24px 80px;
+  text-align: center;
+}
+@media (max-width: 900px) {
+  .gallery-grid {
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 260px 260px 260px 220px;
+  }
+  .g-love   { grid-column: 1; grid-row: 1; }
+  .g-crew   { grid-column: 2; grid-row: 1; }
+  .g-tyler  { grid-column: 1; grid-row: 2; }
+  .g-sunset { grid-column: 2; grid-row: 2; }
+  .g-redrock{ grid-column: 1; grid-row: 3; }
+  .g-seats  { grid-column: 2; grid-row: 3; }
+  .g-seats-row { display: none; }
+}
+@media (max-width: 600px) {
+  .gallery-grid {
+    grid-template-columns: 1fr;
+    grid-template-rows: repeat(6, 240px);
+  }
+  .g-love, .g-crew, .g-tyler, .g-sunset, .g-redrock, .g-seats {
+    grid-column: 1 !important;
+    grid-row: auto !important;
+  }
+}
+
 /* ── TESTIMONIALS ── */
 .quote-block {
   border-left: 2px solid var(--gold);
   padding: 28px 36px;
   background: var(--ink-soft);
   margin-bottom: 20px;
+}
+.quote-block.ta-review {
+  border-left-color: #34E0A1; /* TripAdvisor green */
+}
+.ta-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 14px;
+}
+.ta-stars {
+  color: #34E0A1;
+  font-size: 14px;
+  letter-spacing: 1px;
+}
+.ta-label {
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #34E0A1;
+  opacity: 0.75;
 }
 .quote-text {
   font-family: 'Cormorant Garamond', serif;
@@ -1020,11 +1109,51 @@ footer {
   </div>
 </div>
 
+<!-- PHOTO GALLERY -->
+<section class="gallery-section bg-ink">
+  <div class="gallery-header">
+    <p class="section-eyebrow">The Experience</p>
+    <h2 class="section-title" style="margin-bottom:14px;">Moments from the<br><em>canyon.</em></h2>
+    <p style="font-size:15px; font-weight:300; color:var(--muted); line-height:1.65;">Every serenade is completely private. These are guests who chose to share theirs.</p>
+  </div>
+  <div class="gallery-grid">
+    <div class="gallery-item g-love">
+      <img src="images/serenade-love.jpg" alt="Couple sharing a private serenade moment in Sedona" loading="lazy">
+    </div>
+    <div class="gallery-item g-crew">
+      <img src="images/happy-crew.jpg" alt="Happy guests enjoying a Sedona serenade experience" loading="lazy">
+    </div>
+    <div class="gallery-item g-tyler">
+      <img src="images/tyler-serenade-story.jpg" alt="Tyler Carson performing violin at a private Sedona serenade" loading="lazy">
+    </div>
+    <div class="gallery-item g-sunset">
+      <img src="images/sunset-serenades.jpg" alt="Sunset during a private violin serenade in Sedona" loading="lazy">
+    </div>
+    <div class="gallery-item g-redrock">
+      <img src="images/redrock-views.jpg" alt="Red rock canyon views during a Sedona Serenade" loading="lazy">
+    </div>
+    <div class="gallery-item g-seats">
+      <img src="images/serenade-seats.jpg" alt="Intimate seating setup for a private Sedona violin experience" loading="lazy">
+    </div>
+  </div>
+  <div class="gallery-footer">
+    <a href="#inquire" class="btn-primary">Reserve Your Date</a>
+  </div>
+</section>
+
 <!-- TESTIMONIALS -->
 <section class="bg-ink">
   <div class="section-inner narrow" style="text-align:center;">
     <p class="section-eyebrow">What Guests Say</p>
     <h2 class="section-title" style="margin-bottom:48px;">Words from the<br><em>canyon.</em></h2>
+    <div class="quote-block ta-review" style="text-align:left;">
+      <div class="ta-badge">
+        <span class="ta-stars">★★★★★</span>
+        <span class="ta-label">TripAdvisor · Verified Review</span>
+      </div>
+      <p class="quote-text">"What an honor to watch someone who has mastered their craft while at the same time exuding the confident stage presence required for a show of this magnitude, in the most fun, joyful and authentic way possible. A heart-based experience for sure!"</p>
+      <p class="quote-attr">— Julie H &nbsp;·&nbsp; Solo Guest &nbsp;·&nbsp; February 2025</p>
+    </div>
     <div class="quote-block" style="text-align:left;">
       <p class="quote-text">"She said I was doing God's work — turning the landscape into music she could feel in her whole body."</p>
       <p class="quote-attr">— Tyler, on a guest's reaction</p>

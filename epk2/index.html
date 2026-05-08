@@ -1,0 +1,1040 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tyler Carson — Fiddler on the Rock | Electronic Press Kit 2026</title>
+<meta name="description" content="Electronic Press Kit for Tyler Carson, Fiddler on the Rock. One Man Symphony. Sedona, Arizona.">
+<meta name="robots" content="noindex">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+
+<style>
+/* ─────────────────────────────────────────
+   TOKENS
+───────────────────────────────────────── */
+:root {
+  --ink:      #0B0D12;
+  --ink-mid:  #141720;
+  --gold:     #C8A96E;
+  --gold-dim: rgba(200,169,110,0.18);
+  --cream:    #F5F0E8;
+  --soft:     rgba(245,240,232,0.65);
+  --muted:    #8a8fa8;
+  --rule:     rgba(200,169,110,0.22);
+  --serif:    'Cormorant Garamond', Georgia, serif;
+  --sans:     'DM Sans', system-ui, sans-serif;
+  --mono:     'Space Mono', monospace;
+  --ease:     cubic-bezier(0.76, 0, 0.24, 1);
+  --speed:    0.75s;
+}
+
+/* ─────────────────────────────────────────
+   RESET
+───────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: var(--ink);
+  color: var(--cream);
+  font-family: var(--sans);
+  font-weight: 300;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ─────────────────────────────────────────
+   SCROLL CONTAINER
+───────────────────────────────────────── */
+.epk-outer {
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+}
+
+.epk-track {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%;
+  /* height set by JS to totalSections * 100vh */
+  transition: transform var(--speed) var(--ease);
+  will-change: transform;
+}
+
+/* ─────────────────────────────────────────
+   SECTIONS
+───────────────────────────────────────── */
+.epk-section {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+/* ─────────────────────────────────────────
+   FIXED CHROME
+───────────────────────────────────────── */
+
+/* Top bar */
+.epk-topbar {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 200;
+  padding: 24px 40px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  pointer-events: none;
+}
+
+.epk-logo {
+  pointer-events: all;
+}
+.epk-logo img {
+  height: 36px;
+  opacity: 0.9;
+  filter: drop-shadow(0 2px 8px rgba(0,0,0,0.6));
+}
+
+.epk-label {
+  font-family: var(--mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: rgba(200,169,110,0.6);
+}
+
+/* Right-side nav dots */
+.epk-nav {
+  position: fixed;
+  right: 28px;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 200;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  align-items: center;
+}
+
+.nav-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  border: 1px solid rgba(200,169,110,0.5);
+  background: transparent;
+  cursor: pointer;
+  padding: 0;
+  transition: background 0.3s, border-color 0.3s, transform 0.3s;
+}
+.nav-dot:hover {
+  border-color: var(--gold);
+  transform: scale(1.2);
+}
+.nav-dot.active {
+  background: var(--gold);
+  border-color: var(--gold);
+  transform: scale(1.1);
+}
+
+/* Page counter */
+.page-counter {
+  position: fixed;
+  bottom: 32px;
+  left: 40px;
+  z-index: 200;
+  font-family: var(--mono);
+  font-size: 0.58rem;
+  letter-spacing: 0.2em;
+  color: rgba(200,169,110,0.4);
+}
+.page-counter span { color: rgba(200,169,110,0.8); }
+
+/* Scroll-down arrow */
+.scroll-btn {
+  position: absolute;
+  bottom: 36px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
+  background: none;
+  border: 1px solid rgba(200,169,110,0.35);
+  color: var(--gold);
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: border-color 0.2s, background 0.2s;
+  animation: bob 2.4s ease-in-out infinite;
+}
+.scroll-btn:hover {
+  border-color: var(--gold);
+  background: rgba(200,169,110,0.12);
+}
+.scroll-btn svg {
+  width: 16px;
+  height: 16px;
+  stroke: currentColor;
+  fill: none;
+  stroke-width: 1.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+@keyframes bob {
+  0%, 100% { transform: translateX(-50%) translateY(0); }
+  50%       { transform: translateX(-50%) translateY(6px); }
+}
+
+/* ─────────────────────────────────────────
+   ╔══════════════════════════════╗
+   ║  PAGE 1 — HERO               ║
+   ╚══════════════════════════════╝
+───────────────────────────────────────── */
+.s-hero {
+  text-align: center;
+}
+
+.hero-bg {
+  position: absolute;
+  inset: 0;
+  background-image: url('images/tyler-jump-hero.jpg');
+  background-size: cover;
+  background-position: center 20%;
+  filter: brightness(0.38) saturate(0.75);
+  z-index: 0;
+}
+
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse at 50% 0%, rgba(200,169,110,0.06) 0%, transparent 60%),
+    linear-gradient(to bottom, rgba(11,13,18,0.25) 0%, rgba(11,13,18,0.2) 50%, rgba(11,13,18,0.85) 100%);
+  z-index: 1;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+  padding: 0 32px;
+}
+
+.hero-eyebrow {
+  font-family: var(--mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 28px;
+  opacity: 0.8;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+.hero-eyebrow::before,
+.hero-eyebrow::after {
+  content: '';
+  display: block;
+  width: 32px;
+  height: 1px;
+  background: var(--gold);
+  opacity: 0.4;
+}
+
+.hero-name {
+  font-family: var(--serif);
+  font-size: clamp(4rem, 10vw, 8.5rem);
+  font-weight: 300;
+  line-height: 0.92;
+  color: var(--cream);
+  letter-spacing: -0.02em;
+  margin-bottom: 16px;
+}
+
+.hero-title {
+  font-family: var(--serif);
+  font-size: clamp(1.8rem, 4.5vw, 3.8rem);
+  font-weight: 300;
+  font-style: italic;
+  color: var(--gold);
+  line-height: 1;
+  margin-bottom: 20px;
+  letter-spacing: 0.01em;
+}
+
+.hero-subtitle {
+  font-family: var(--mono);
+  font-size: clamp(0.65rem, 1.2vw, 0.78rem);
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: rgba(245,240,232,0.5);
+}
+
+.hero-rule {
+  width: 1px;
+  height: 40px;
+  background: linear-gradient(to bottom, var(--gold), transparent);
+  margin: 28px auto;
+  opacity: 0.5;
+}
+
+.hero-kit-label {
+  font-family: var(--mono);
+  font-size: 0.58rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: rgba(200,169,110,0.5);
+}
+
+
+/* ─────────────────────────────────────────
+   ╔══════════════════════════════╗
+   ║  PAGE 2 — BIO                ║
+   ╚══════════════════════════════╝
+───────────────────────────────────────── */
+.s-bio {
+  background: var(--ink-mid);
+  align-items: stretch;
+  flex-direction: row;
+}
+
+.bio-photo-col {
+  flex: 0 0 38%;
+  position: relative;
+  overflow: hidden;
+}
+.bio-photo-col img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+  filter: brightness(0.55) saturate(0.8);
+}
+.bio-photo-col::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to right, transparent 60%, var(--ink-mid) 100%);
+}
+
+.bio-text-col {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 80px 64px 80px 48px;
+  overflow-y: auto;
+  /* hide scrollbar visually */
+  scrollbar-width: none;
+}
+.bio-text-col::-webkit-scrollbar { display: none; }
+
+.bio-eyebrow {
+  font-family: var(--mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.bio-eyebrow::before {
+  content: '';
+  display: block;
+  width: 24px;
+  height: 1px;
+  background: var(--gold);
+  opacity: 0.45;
+}
+
+.bio-heading {
+  font-family: var(--serif);
+  font-size: clamp(2rem, 3.5vw, 3rem);
+  font-weight: 300;
+  line-height: 1.1;
+  color: var(--cream);
+  margin-bottom: 36px;
+}
+.bio-heading em {
+  font-style: italic;
+  color: var(--gold);
+}
+
+.bio-paras {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  max-width: 600px;
+}
+
+.bio-para {
+  font-size: clamp(0.88rem, 1.2vw, 1rem);
+  font-weight: 300;
+  color: var(--soft);
+  line-height: 1.82;
+}
+
+.bio-para strong {
+  color: var(--cream);
+  font-weight: 400;
+}
+
+.bio-rule {
+  width: 48px;
+  height: 1px;
+  background: var(--gold);
+  opacity: 0.3;
+  margin: 8px 0 28px;
+}
+
+
+/* ─────────────────────────────────────────
+   ╔══════════════════════════════╗
+   ║  PAGE 3 — PRESS              ║
+   ╚══════════════════════════════╝
+───────────────────────────────────────── */
+.s-press {
+  background: var(--ink);
+  align-items: center;
+  justify-content: flex-start;
+  padding: 0;
+}
+
+.press-inner {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  padding: 88px 64px 80px;
+  overflow: hidden;
+}
+
+.press-header {
+  text-align: center;
+  margin-bottom: 40px;
+  flex-shrink: 0;
+}
+
+.press-eyebrow {
+  font-family: var(--mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+}
+.press-eyebrow::before,
+.press-eyebrow::after {
+  content: '';
+  display: block;
+  width: 32px;
+  height: 1px;
+  background: var(--gold);
+  opacity: 0.35;
+}
+
+.press-heading {
+  font-family: var(--serif);
+  font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+  font-weight: 300;
+  color: var(--cream);
+  line-height: 1.1;
+}
+.press-heading em { font-style: italic; color: var(--gold); }
+
+/* Grid layout: CBS featured full-width top, then 2x2 below */
+.press-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: auto auto;
+  gap: 16px;
+  flex: 1;
+  min-height: 0;
+}
+
+/* CBS takes top row, full width */
+.press-card.featured {
+  grid-column: 1 / -1;
+}
+
+.press-card {
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(200,169,110,0.1);
+  padding: 24px 28px;
+  display: flex;
+  gap: 24px;
+  align-items: flex-start;
+  position: relative;
+  transition: border-color 0.2s, background 0.2s;
+}
+.press-card:hover {
+  border-color: rgba(200,169,110,0.28);
+  background: rgba(200,169,110,0.03);
+}
+.press-card.featured {
+  gap: 32px;
+}
+
+/* Logo column */
+.press-logo {
+  flex-shrink: 0;
+  width: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.press-card.featured .press-logo {
+  width: 100px;
+}
+
+/* CBS NEWS logo (CSS-rendered) */
+.logo-cbs {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+.cbs-eye {
+  width: 48px;
+  height: 48px;
+  background: #cc0000;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+.cbs-eye::before {
+  content: '';
+  width: 24px;
+  height: 16px;
+  background: white;
+  border-radius: 50%;
+  position: absolute;
+}
+.cbs-eye::after {
+  content: '';
+  width: 10px;
+  height: 10px;
+  background: #cc0000;
+  border-radius: 50%;
+  position: absolute;
+}
+.cbs-text {
+  font-family: var(--sans);
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: var(--cream);
+  white-space: nowrap;
+}
+
+/* Red Rock News logo (CSS-rendered) */
+.logo-rrn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  line-height: 1;
+}
+.rrn-news {
+  font-family: var(--sans);
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: #e05a20;
+  letter-spacing: -0.02em;
+  line-height: 1;
+}
+.rrn-name {
+  font-family: var(--sans);
+  font-size: 0.48rem;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(245,240,232,0.5);
+  margin-top: 2px;
+}
+
+/* Insight Timer logo (CSS-rendered) */
+.logo-insight {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 4px;
+}
+.insight-bowl {
+  width: 28px;
+  height: 16px;
+  background: linear-gradient(135deg, #c8873a, #8b5a1e);
+  border-radius: 50% 50% 50% 50% / 20% 20% 80% 80%;
+}
+.insight-name {
+  font-family: var(--sans);
+  font-size: 0.56rem;
+  font-weight: 500;
+  color: var(--cream);
+  letter-spacing: 0.01em;
+  white-space: nowrap;
+}
+
+/* DTPR logo (CSS-rendered) */
+.logo-dtpr {
+  font-family: var(--sans);
+  font-size: 1.4rem;
+  font-weight: 900;
+  color: var(--cream);
+  letter-spacing: -0.04em;
+  line-height: 1;
+  text-align: center;
+}
+.logo-dtpr span {
+  display: block;
+  font-size: 0.42rem;
+  font-weight: 400;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-top: 3px;
+}
+
+/* Visit Sedona logo (CSS-rendered) */
+.logo-vs {
+  text-align: center;
+}
+.vs-visit {
+  font-family: var(--serif);
+  font-size: 0.62rem;
+  font-style: italic;
+  color: var(--muted);
+  letter-spacing: 0.08em;
+  display: block;
+}
+.vs-sedona {
+  font-family: var(--sans);
+  font-size: 0.85rem;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--cream);
+  display: block;
+  line-height: 1;
+}
+
+/* Press card text */
+.press-body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 8px;
+}
+
+.press-pub {
+  font-family: var(--mono);
+  font-size: 0.55rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+
+.press-quote {
+  font-family: var(--serif);
+  font-size: clamp(0.9rem, 1.4vw, 1.1rem);
+  font-style: italic;
+  font-weight: 300;
+  color: var(--cream);
+  line-height: 1.5;
+}
+.press-card.featured .press-quote {
+  font-size: clamp(1rem, 1.6vw, 1.25rem);
+  line-height: 1.55;
+}
+
+.press-desc {
+  font-size: 0.82rem;
+  color: var(--soft);
+  line-height: 1.6;
+}
+
+.press-link {
+  font-family: var(--mono);
+  font-size: 0.58rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--gold);
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 4px;
+  opacity: 0.7;
+  transition: opacity 0.2s;
+  width: fit-content;
+}
+.press-link:hover { opacity: 1; }
+.press-link::after { content: '→'; }
+
+.press-date {
+  font-family: var(--mono);
+  font-size: 0.52rem;
+  letter-spacing: 0.12em;
+  color: rgba(138,143,168,0.5);
+}
+
+
+/* ─────────────────────────────────────────
+   RESPONSIVE
+───────────────────────────────────────── */
+@media (max-width: 900px) {
+  .s-bio { flex-direction: column; }
+  .bio-photo-col {
+    flex: 0 0 35%;
+    width: 100%;
+  }
+  .bio-photo-col::after {
+    background: linear-gradient(to bottom, transparent 50%, var(--ink-mid) 100%);
+  }
+  .bio-text-col {
+    flex: 1;
+    padding: 32px 32px 80px;
+  }
+  .press-inner { padding: 88px 32px 72px; }
+  .press-grid {
+    grid-template-columns: 1fr;
+    grid-template-rows: unset;
+  }
+  .press-card.featured { grid-column: 1; }
+}
+
+@media (max-width: 600px) {
+  .epk-topbar { padding: 18px 20px; }
+  .epk-logo img { height: 28px; }
+  .epk-nav { right: 14px; }
+  .page-counter { left: 20px; bottom: 24px; }
+  .scroll-btn { bottom: 24px; }
+
+  .hero-name { font-size: clamp(3rem, 14vw, 5rem); }
+  .hero-title { font-size: clamp(1.4rem, 7vw, 2.2rem); }
+
+  .bio-photo-col { flex: 0 0 30%; }
+  .bio-text-col { padding: 24px 20px 80px; }
+  .bio-heading { font-size: 1.7rem; }
+
+  .press-inner { padding: 80px 20px 72px; }
+  .press-card { flex-direction: column; gap: 12px; padding: 18px 16px; }
+  .press-logo { width: 100%; justify-content: flex-start; flex-direction: row; gap: 10px; align-items: center; }
+  .press-card.featured .press-logo { width: 100%; }
+  .press-heading { font-size: 1.5rem; }
+  .press-header { margin-bottom: 24px; }
+}
+</style>
+</head>
+<body>
+
+<!-- ─── FIXED CHROME ─── -->
+<header class="epk-topbar">
+  <div class="epk-logo">
+    <img src="images/fotr-wordmark-light.png" alt="Fiddler on the Rock">
+  </div>
+  <div class="epk-label">Electronic Press Kit · 2026</div>
+</header>
+
+<!-- Side nav dots -->
+<nav class="epk-nav" aria-label="Page navigation">
+  <button class="nav-dot active" data-index="0" aria-label="Page 1: Hero" title="Intro"></button>
+  <button class="nav-dot"        data-index="1" aria-label="Page 2: Bio"  title="The Artist"></button>
+  <button class="nav-dot"        data-index="2" aria-label="Page 3: Press" title="Press"></button>
+  <!-- dots added here dynamically as pages are added -->
+</nav>
+
+<!-- Page counter -->
+<div class="page-counter"><span id="counter-current">1</span> / <span id="counter-total">3</span></div>
+
+<!-- ─── SCROLLING TRACK ─── -->
+<div class="epk-outer">
+  <div class="epk-track" id="epkTrack">
+
+
+    <!-- ════════════════════════════════
+         PAGE 1 — HERO
+    ════════════════════════════════ -->
+    <section class="epk-section s-hero" data-page="1">
+      <div class="hero-bg"></div>
+      <div class="hero-overlay"></div>
+
+      <div class="hero-content">
+        <p class="hero-eyebrow">Sedona, Arizona</p>
+        <h1 class="hero-name">Tyler Carson</h1>
+        <h2 class="hero-title">Fiddler on the Rock</h2>
+        <p class="hero-subtitle">One Man Symphony</p>
+        <div class="hero-rule"></div>
+        <p class="hero-kit-label">Electronic Press Kit · May 2026</p>
+      </div>
+
+      <button class="scroll-btn" onclick="goToSection(1)" aria-label="Next page">
+        <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+      </button>
+    </section>
+
+
+    <!-- ════════════════════════════════
+         PAGE 2 — BIO
+    ════════════════════════════════ -->
+    <section class="epk-section s-bio" data-page="2">
+
+      <div class="bio-photo-col">
+        <img src="images/tyler-red-rock.jpg" alt="Tyler Carson performing in the Red Rocks of Sedona">
+      </div>
+
+      <div class="bio-text-col">
+        <p class="bio-eyebrow">The Artist</p>
+        <h2 class="bio-heading">Thirty-five years.<br><em>One instrument.</em><br>No ceiling.</h2>
+        <div class="bio-rule"></div>
+
+        <div class="bio-paras">
+          <p class="bio-para">
+            Tyler Carson plays the violin with the kind of conviction that makes audiences forget what room they're in. His style defies easy categorization — trained as a classical soloist at thirteen, fluent in Celtic fiddle from his earliest years, and now performing in the genre he calls <strong>"Living Music"</strong> — a fusion of classical precision, improvisation, and something that functions more like energy than entertainment. When Tyler plays, a solo violin sounds like a full band. When he finishes, people describe the silence differently than they did before.
+          </p>
+          <p class="bio-para">
+            Tyler grew up in Victoria, British Columbia, with a violin in hand before most children hold a pencil. A prodigy's résumé: solo artist with the <strong>Victoria Symphony at age thirteen</strong>, simultaneous training in classical and folk fiddle, early appearances at festival mainstages and on major television — the CBS Jerry Lewis Telethon among them. By his twenties he was touring with leading Celtic acts and performing across Canada, Japan, Thailand, Germany, and the Cayman Islands.
+          </p>
+          <p class="bio-para">
+            Everything changed when Tyler lost his voice. <strong>Spasmodic dysphonia</strong> — a neurological condition — stripped away his ability to sing and even to speak normally. What followed was not a setback, but a becoming. A special invitation brought him to give his first-ever solo performance in Auroville, India. Something opened there that has never closed. He has since become a certified full-spectrum energy healer, and his life's journey was documented in <strong><em>Living Music</em></strong>, a multi-award-winning film.
+          </p>
+          <p class="bio-para">
+            Today Tyler performs every Thursday in the red rock landscape of Sedona, where the canyon becomes the concert hall and the violin fills the kind of silence most people have stopped knowing how to find. He has performed for <strong>tens of thousands around the world</strong> and millions more on national television. CBS Mornings brought cameras into the canyon to document his story. Lindsey Stirling, one of the world's most recognized violinists, called him <em>"such a great player"</em> on air — live on national television. He is, as Sedona's guests consistently put it: impossible to forget.
+          </p>
+        </div>
+      </div>
+
+      <button class="scroll-btn" onclick="goToSection(2)" aria-label="Next page">
+        <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+      </button>
+    </section>
+
+
+    <!-- ════════════════════════════════
+         PAGE 3 — PRESS
+    ════════════════════════════════ -->
+    <section class="epk-section s-press" data-page="3">
+      <div class="press-inner">
+
+        <div class="press-header">
+          <p class="press-eyebrow">In the Press</p>
+          <h2 class="press-heading">What the <em>world is saying.</em></h2>
+        </div>
+
+        <div class="press-grid">
+
+          <!-- CBS NEWS — FEATURED TOP ROW -->
+          <div class="press-card featured">
+            <div class="press-logo">
+              <div class="logo-cbs">
+                <div class="cbs-eye"></div>
+                <span class="cbs-text">CBS NEWS</span>
+              </div>
+            </div>
+            <div class="press-body">
+              <p class="press-pub">CBS Mornings · National Television · Nov 2024</p>
+              <p class="press-quote">"Violinist Tyler Carson is known professionally as the 'Fiddler on the Rock,' for his performances from the famous Red Rocks of Sedona, Arizona. Natalie Morales spoke with Carson about how an unexpected turn in his life drew him to the inspiring and spiritual landscape of beauty, hope and healing."</p>
+              <a href="https://www.cbsnews.com/video/the-story-of-violinist-tyler-carson-the-fiddler-on-the-rock/" target="_blank" rel="noopener" class="press-link">Watch the CBS Segment</a>
+            </div>
+          </div>
+
+          <!-- RED ROCK NEWS -->
+          <div class="press-card">
+            <div class="press-logo">
+              <div class="logo-rrn">
+                <span class="rrn-news">NEWS</span>
+                <span class="rrn-name">Sedona Red Rock</span>
+              </div>
+            </div>
+            <div class="press-body">
+              <p class="press-pub">Sedona Red Rock News · Dec 2023</p>
+              <p class="press-quote">"Fiddling with the Red Rocks"</p>
+              <p class="press-desc">A profile tracing Tyler's path from classical training in Canada to touring with major Celtic acts — and how he became Sedona's Fiddler on the Rock.</p>
+              <a href="https://www.redrocknews.com/2023/12/28/fiddling-with-the-red-rocks/" target="_blank" rel="noopener" class="press-link">Read Here</a>
+            </div>
+          </div>
+
+          <!-- INSIGHT TIMER -->
+          <div class="press-card">
+            <div class="press-logo">
+              <div class="logo-insight">
+                <div class="insight-bowl"></div>
+                <span class="insight-name">InsightTimer</span>
+              </div>
+            </div>
+            <div class="press-body">
+              <p class="press-pub">Insight Timer · Featured Artist Profile</p>
+              <p class="press-quote">"A lifetime musician with 35 years of daily connection to his violin — Tyler's attunement and expression of Living Music is transcendental."</p>
+              <p class="press-desc">Featured on the world's largest meditation app. In Tyler's hands a solo violin is a full band.</p>
+              <a href="https://insighttimer.com/fiddlerontherock" target="_blank" rel="noopener" class="press-link">Read Here</a>
+            </div>
+          </div>
+
+          <!-- DTPR -->
+          <div class="press-card">
+            <div class="press-logo">
+              <div class="logo-dtpr">DTPR<span>Discover the Phoenix Region</span></div>
+            </div>
+            <div class="press-body">
+              <p class="press-pub">Discover the Phoenix Region · Magazine Cover · May–Jun 2025</p>
+              <p class="press-quote">"Fiddler on the Rock — Up and Coming from the Red Rocks of Sedona"</p>
+              <p class="press-desc">Cover story. A feature on his formative years, the Carson Kids, early performances, and his classical and fiddle training.</p>
+              <a href="https://discovertheregion.com/fiddler-on-the-rock-up-and-coming-from-the-redrocks-of-sedona/" target="_blank" rel="noopener" class="press-link">Read Here</a>
+            </div>
+          </div>
+
+          <!-- VISIT SEDONA -->
+          <div class="press-card">
+            <div class="press-logo">
+              <div class="logo-vs">
+                <span class="vs-visit">visit</span>
+                <span class="vs-sedona">Sedona</span>
+              </div>
+            </div>
+            <div class="press-body">
+              <p class="press-pub">Visit Sedona · Official Tourism Feature</p>
+              <p class="press-quote">"Sedona's Unique Musical Experience: Fiddler on the Rock"</p>
+              <p class="press-desc">A feature about the show, Tyler Carson, and the Sedona concert experience — published by Sedona's official tourism platform.</p>
+              <a href="https://visitsedona.com/blog/discover-sedonas-unique-musical-experience-fiddler-on-the-rock/" target="_blank" rel="noopener" class="press-link">Read Here</a>
+            </div>
+          </div>
+
+        </div><!-- /press-grid -->
+      </div><!-- /press-inner -->
+
+      <!-- Scroll down arrow points to page 4 when added -->
+      <button class="scroll-btn" onclick="goToSection(3)" aria-label="Next page" id="pressScrollBtn" style="display:none;">
+        <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+      </button>
+    </section>
+
+
+  </div><!-- /epk-track -->
+</div><!-- /epk-outer -->
+
+
+<script>
+/* ─────────────────────────────────────────
+   EPK SCROLL ENGINE
+───────────────────────────────────────── */
+(function() {
+  const track      = document.getElementById('epkTrack');
+  const sections   = Array.from(document.querySelectorAll('.epk-section'));
+  const dots       = Array.from(document.querySelectorAll('.nav-dot'));
+  const counterEl  = document.getElementById('counter-current');
+  const totalEl    = document.getElementById('counter-total');
+
+  const TOTAL      = sections.length;
+  const COOLDOWN   = 900;   // ms between page transitions
+  const DEBOUNCE   = 220;   // ms scroll debounce
+  const TOUCH_THRESH = 45; // px swipe to trigger
+
+  let current      = 0;
+  let lastNav      = 0;
+  let scrollTimer  = null;
+  let touchStartY  = 0;
+  let isAnimating  = false;
+
+  // Init
+  totalEl.textContent = TOTAL;
+  track.style.height  = (TOTAL * 100) + 'vh';
+
+  /* ── Core navigation ── */
+  function goToSection(idx) {
+    if (idx < 0 || idx >= TOTAL) return;
+    if (isAnimating) return;
+    const now = Date.now();
+    if (now - lastNav < COOLDOWN) return;
+
+    isAnimating = true;
+    lastNav = now;
+    current = idx;
+
+    track.style.transform = `translateY(-${idx * 100}vh)`;
+
+    dots.forEach((d, i) => d.classList.toggle('active', i === idx));
+    counterEl.textContent = idx + 1;
+
+    setTimeout(() => { isAnimating = false; }, 800);
+  }
+
+  // Expose globally for onclick handlers
+  window.goToSection = goToSection;
+
+  /* ── Dot clicks ── */
+  dots.forEach(dot => {
+    dot.addEventListener('click', () => goToSection(parseInt(dot.dataset.index)));
+  });
+
+  /* ── Wheel / scroll ── */
+  window.addEventListener('wheel', function(e) {
+    e.preventDefault();
+    clearTimeout(scrollTimer);
+    scrollTimer = setTimeout(() => {
+      if (e.deltaY > 0) goToSection(current + 1);
+      else              goToSection(current - 1);
+    }, DEBOUNCE);
+  }, { passive: false });
+
+  /* ── Touch swipe ── */
+  window.addEventListener('touchstart', function(e) {
+    touchStartY = e.touches[0].clientY;
+  }, { passive: true });
+
+  window.addEventListener('touchend', function(e) {
+    const dy = touchStartY - e.changedTouches[0].clientY;
+    if (Math.abs(dy) > TOUCH_THRESH) {
+      if (dy > 0) goToSection(current + 1);
+      else        goToSection(current - 1);
+    }
+  }, { passive: true });
+
+  /* ── Keyboard ── */
+  window.addEventListener('keydown', function(e) {
+    if (e.key === 'ArrowDown' || e.key === 'PageDown') {
+      e.preventDefault();
+      goToSection(current + 1);
+    } else if (e.key === 'ArrowUp' || e.key === 'PageUp') {
+      e.preventDefault();
+      goToSection(current - 1);
+    } else if (e.key === 'Home') {
+      e.preventDefault();
+      goToSection(0);
+    } else if (e.key === 'End') {
+      e.preventDefault();
+      goToSection(TOTAL - 1);
+    }
+  });
+
+})();
+</script>
+
+</body>
+</html>

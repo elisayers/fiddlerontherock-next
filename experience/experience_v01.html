@@ -337,6 +337,90 @@
     text-transform: uppercase;
   }
 
+  /* ── PHOTO GALLERY ── */
+  .gallery-section {
+    padding: 0;
+    background: var(--ink);
+    position: relative;
+    z-index: 1;
+  }
+  .gallery-header {
+    padding: 80px 24px 52px;
+    text-align: center;
+    max-width: 680px;
+    margin: 0 auto;
+  }
+  .gallery-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 340px 340px 260px;
+    gap: 4px;
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+  .g-love    { grid-column: 1; grid-row: 1; }
+  .g-crew    { grid-column: 2; grid-row: 1; }
+  .g-tyler   { grid-column: 3; grid-row: 1 / 3; }
+  .g-sunset  { grid-column: 1; grid-row: 2; }
+  .g-redrock { grid-column: 2; grid-row: 2; }
+  .g-seats   { grid-column: 1 / 4; grid-row: 3; }
+  .gallery-item {
+    overflow: hidden;
+    position: relative;
+  }
+  .gallery-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.7s cubic-bezier(0.25,0.46,0.45,0.94);
+  }
+  .gallery-item:hover img { transform: scale(1.05); }
+  .gallery-footer {
+    padding: 48px 24px 80px;
+    text-align: center;
+  }
+  @media (max-width: 900px) {
+    .gallery-grid {
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: 260px 260px 260px 220px;
+    }
+    .g-love    { grid-column: 1; grid-row: 1; }
+    .g-crew    { grid-column: 2; grid-row: 1; }
+    .g-tyler   { grid-column: 1; grid-row: 2; }
+    .g-sunset  { grid-column: 2; grid-row: 2; }
+    .g-redrock { grid-column: 1; grid-row: 3; }
+    .g-seats   { grid-column: 2; grid-row: 3; }
+  }
+  @media (max-width: 600px) {
+    .gallery-grid {
+      grid-template-columns: 1fr;
+      grid-template-rows: repeat(6, 240px);
+    }
+    .g-love, .g-crew, .g-tyler, .g-sunset, .g-redrock, .g-seats {
+      grid-column: 1 !important;
+      grid-row: auto !important;
+    }
+  }
+
+  /* ── TA BADGE ── */
+  .ta-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 14px;
+  }
+  .ta-stars { color: #34E0A1; font-size: 14px; letter-spacing: 1px; }
+  .ta-label {
+    font-size: 9px;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: #34E0A1;
+    opacity: 0.75;
+  }
+  .testimonial-card.ta-review { border-left-color: #34E0A1; }
+
   /* ── VIDEO PLACEHOLDER ── */
   .video-section { background: var(--ink-soft); }
   .video-placeholder {
@@ -1131,7 +1215,47 @@
         <p class="testimonial-quote">"This was a birthday celebration gift for my husband. We did the VIP and it was well worth it!! Listening to the talented Fiddler on the Rock while enjoying the view was outstanding! Sedona is a special place and he made our trip magical with his music. Looking forward to attending again when we are back in Sedona!"</p>
         <span class="testimonial-attr">— Christine P · TripAdvisor · October 2025</span>
       </div>
+      <div class="testimonial-card ta-review">
+        <div class="ta-badge">
+          <span class="ta-stars">★★★★★</span>
+          <span class="ta-label">TripAdvisor · Verified Review</span>
+        </div>
+        <p class="testimonial-quote">"What an honor to watch someone who has mastered their craft while at the same time exuding the confident stage presence required for a show of this magnitude, in the most fun, joyful and authentic way possible. A heart-based experience for sure!"</p>
+        <span class="testimonial-attr">— Julie H · Solo Guest · February 2025</span>
+      </div>
     </div>
+  </div>
+</section>
+
+<!-- ═══════════════════ PHOTO GALLERY ═══════════════════ -->
+<section class="gallery-section">
+  <div class="gallery-header">
+    <span class="section-eyebrow">The Experience</span>
+    <h2 class="section-title" style="margin-bottom:14px;">Moments from the<br><em>canyon.</em></h2>
+    <p style="font-size:15px; font-weight:300; color:var(--muted); line-height:1.65;">Real moments from real guests — in the red rocks, under open sky.</p>
+  </div>
+  <div class="gallery-grid">
+    <div class="gallery-item g-love">
+      <img src="images/serenade-love.jpg" alt="Couple sharing a moment during a private violin experience in Sedona" loading="lazy">
+    </div>
+    <div class="gallery-item g-crew">
+      <img src="images/happy-crew.jpg" alt="Happy guests enjoying a Sedona Red Rock concert" loading="lazy">
+    </div>
+    <div class="gallery-item g-tyler">
+      <img src="images/tyler-serenade-story.jpg" alt="Tyler Carson performing violin in the Sedona red rocks" loading="lazy">
+    </div>
+    <div class="gallery-item g-sunset">
+      <img src="images/sunset-serenades.jpg" alt="Sunset during a private violin concert in Sedona" loading="lazy">
+    </div>
+    <div class="gallery-item g-redrock">
+      <img src="images/redrock-views.jpg" alt="Red rock canyon views during a Sedona concert" loading="lazy">
+    </div>
+    <div class="gallery-item g-seats">
+      <img src="images/serenade-seats.jpg" alt="Intimate seating arrangement for a Sedona Red Rock concert" loading="lazy">
+    </div>
+  </div>
+  <div class="gallery-footer">
+    <a href="#pricing" class="btn-gold">See Pricing & Book</a>
   </div>
 </section>
 
