@@ -1,0 +1,82 @@
+@import "tailwindcss";
+
+@theme {
+  /* ── Palette ── */
+  --color-ink:        #0B0D12;
+  --color-ink-soft:   #13161E;
+  --color-ink-mid:    #1e2230;
+  --color-gold:       #C8A96E;
+  --color-gold-light: #e0c98a;
+  --color-gold-dim:   rgba(200, 169, 110, 0.18);
+  --color-cream:      #F5F0E8;
+  --color-cream-soft: rgba(245, 240, 232, 0.65);
+  --color-muted:      #8a8fa8;
+  --color-muted-rule: rgba(138, 143, 168, 0.14);
+  --color-gold-rule:  rgba(200, 169, 110, 0.30);
+
+  /* ── Typography ── */
+  --font-serif:      'Cormorant Garamond', Georgia, serif;
+  --font-sans:       'DM Sans', system-ui, sans-serif;
+  --font-mono:       'Space Mono', monospace;
+  /* Aliases used in components */
+  --font-cormorant:  'Cormorant Garamond', Georgia, serif;
+  --font-dm-sans:    'DM Sans', system-ui, sans-serif;
+  --font-space-mono: 'Space Mono', monospace;
+
+  /* ── Easing ── */
+  --ease-silk: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  --ease-expo: cubic-bezier(0.76, 0, 0.24, 1);
+  --ease-back: cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* ── Reset ── */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  background: var(--color-ink);
+  color: var(--color-cream);
+  font-family: var(--font-sans), 'DM Sans', system-ui, sans-serif;
+  font-weight: 300;
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+/* ── Gold rule utility ── */
+.gold-rule {
+  display: block;
+  width: 40px;
+  height: 1px;
+  background: var(--color-gold);
+  opacity: 0.45;
+}
+
+/* ── Eyebrow utility ── */
+.eyebrow {
+  font-family: var(--font-mono), monospace;
+  font-size: 0.62rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--color-gold);
+}
+
+/* ── Selection color ── */
+::selection {
+  background: rgba(200, 169, 110, 0.25);
+  color: var(--color-cream);
+}
+
+/* ── Smooth image rendering ── */
+img {
+  display: block;
+  max-width: 100%;
+}
