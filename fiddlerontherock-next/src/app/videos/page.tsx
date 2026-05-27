@@ -1,0 +1,6 @@
+import type { Metadata } from "next";
+import VideoFacade from "@/components/VideoFacade";
+import { CardGrid, InfoCard, PageHero, Section } from "@/components/PagePrimitives";
+import { videos } from "@/lib/data";
+export const metadata: Metadata = { title: "Fiddler on the Rock Videos", description: "Watch Fiddler on the Rock videos on-site, including CBS, documentary, and Sedona performance videos." };
+export default function VideosPage() { return <><PageHero eyebrow="Videos" title="Watch without leaving the site." subtitle="CBS and documentary stories have their own pages. This archive keeps broader performance video easy to find." image="/images/tyler-performance.jpg" /><Section><VideoFacade youtubeId={videos[0].youtubeId} title="Fiddler on the Rock video archive" poster="/images/tyler-performance.jpg" /></Section><Section title="Video paths" tone="soft"><CardGrid>{videos.map((item) => <InfoCard key={item.title} eyebrow={item.type} title={item.title} body="Open the dedicated page or play the on-site video facade without sending visitors away from the site." href={item.href} cta="Watch" />)}</CardGrid></Section></>; }

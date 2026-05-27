@@ -1,207 +1,148 @@
+"use client";
+
+import Image from "next/image";
 import Link from "next/link";
-import { navLinks } from "@/lib/data";
+import { experiences, site, socialLinks, support } from "@/lib/data";
+import { usePathname } from "next/navigation";
 
 export default function Footer() {
+  const pathname = usePathname();
+  if (pathname === "/experience") return null;
+
   const year = new Date().getFullYear();
-
   return (
-    <footer
-      style={{
-        background: "var(--color-ink-soft)",
-        borderTop: "1px solid var(--color-muted-rule)",
-        padding: "56px 52px 48px",
-      }}
-    >
-      <div
-        style={{
-          maxWidth: "1200px",
-          margin: "0 auto",
-        }}
-      >
-        {/* Top row */}
-        <div
-          style={{
-            display: "flex",
-            alignItems: "flex-start",
-            justifyContent: "space-between",
-            gap: "48px",
-            marginBottom: "56px",
-            flexWrap: "wrap",
-          }}
-        >
-          {/* Wordmark + tagline */}
-          <div>
-            <Link
-              href="/"
-              style={{
-                fontFamily: "var(--font-cormorant), Georgia, serif",
-                fontSize: "1.4rem",
-                fontWeight: 300,
-                color: "var(--color-cream)",
-                textDecoration: "none",
-                display: "block",
-                marginBottom: "10px",
-                letterSpacing: "0.01em",
-              }}
-            >
-              Fiddler{" "}
-              <em style={{ fontStyle: "italic", color: "var(--color-gold)" }}>
-                on the
-              </em>{" "}
-              Rock
-            </Link>
-            <p
-              style={{
-                fontSize: "0.78rem",
-                color: "var(--color-muted)",
-                fontWeight: 300,
-                maxWidth: "240px",
-                lineHeight: 1.7,
-              }}
-            >
-              Tyler Carson · Violin in the red rocks of Sedona, Arizona.
-            </p>
-          </div>
-
-          {/* Nav columns */}
-          <div
-            style={{
-              display: "flex",
-              gap: "64px",
-              flexWrap: "wrap",
-            }}
-          >
-            <FooterCol label="Experiences">
-              <FooterLink href="/serenades">Sedona Serenades</FooterLink>
-              <FooterLink href="/concerts">Nature Concerts</FooterLink>
-              <FooterLink href="/contact">Private Events</FooterLink>
-            </FooterCol>
-            <FooterCol label="Tyler">
-              <FooterLink href="/about">About</FooterLink>
-              <FooterLink href="/press">Press</FooterLink>
-              <FooterLink href="/press">CBS Mornings</FooterLink>
-            </FooterCol>
-            <FooterCol label="Connect">
-              <FooterLink href="https://instagram.com" external>Instagram</FooterLink>
-              <FooterLink href="https://youtube.com" external>YouTube</FooterLink>
-              <FooterLink href="/contact">Contact</FooterLink>
-            </FooterCol>
-          </div>
+    <footer className="site-footer">
+      <div className="footer-brand" style={{ display: "flex", flexDirection: "column", alignItems: "flex-start", gap: "12px", marginBottom: "42px" }}>
+        <div style={{ display: "flex", alignItems: "center", gap: "16px" }}>
+          <Image src="/images/logo-white.png" alt="Fiddler on the Rock" width={56} height={56} />
+          <span style={{ fontFamily: "var(--font-serif)", fontSize: "1.25rem", letterSpacing: "0.02em" }}>Fiddler on the Rock</span>
         </div>
-
-        {/* Bottom row */}
-        <div
-          style={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-between",
-            gap: "20px",
-            flexWrap: "wrap",
-            paddingTop: "24px",
-            borderTop: "1px solid var(--color-muted-rule)",
-          }}
-        >
-          <p
-            style={{
-              fontSize: "0.65rem",
-              letterSpacing: "0.12em",
-              textTransform: "uppercase",
-              color: "rgba(138,143,168,0.4)",
-            }}
-          >
-            © {year} Tyler Carson · Sedona, Arizona
-          </p>
-          <div style={{ display: "flex", gap: "28px" }}>
-            {["Privacy", "Terms"].map((label) => (
-              <Link
-                key={label}
-                href={`/${label.toLowerCase()}`}
+        <p style={{ marginTop: "8px", maxWidth: "460px" }}>Tyler Carson performs Living Music in the Red Rocks of Sedona, Arizona.</p>
+        
+        <div style={{ display: "flex", gap: "20px", marginTop: "16px" }}>
+          {socialLinks.map((link) => {
+            const Icon = getSocialIcon(link.label);
+            return (
+              <a
+                key={link.label}
+                href={link.href}
+                target="_blank"
+                rel="noopener noreferrer"
                 style={{
-                  fontSize: "0.62rem",
-                  letterSpacing: "0.14em",
-                  textTransform: "uppercase",
-                  color: "rgba(138,143,168,0.35)",
-                  textDecoration: "none",
-                  transition: "color 0.2s",
+                  color: "var(--color-gold)",
+                  opacity: 0.6,
+                  transition: "opacity 0.25s ease, transform 0.2s ease",
+                  display: "inline-flex",
+                  alignItems: "center"
                 }}
                 onMouseEnter={(e) => {
-                  (e.currentTarget as HTMLElement).style.color =
-                    "var(--color-muted)";
+                  e.currentTarget.style.opacity = "1";
+                  e.currentTarget.style.transform = "translateY(-2px)";
                 }}
                 onMouseLeave={(e) => {
-                  (e.currentTarget as HTMLElement).style.color =
-                    "rgba(138,143,168,0.35)";
+                  e.currentTarget.style.opacity = "0.6";
+                  e.currentTarget.style.transform = "none";
                 }}
+                aria-label={link.label}
               >
-                {label}
-              </Link>
-            ))}
-          </div>
+                {Icon}
+              </a>
+            );
+          })}
         </div>
+      </div>
+
+      <div className="footer-grid">
+        <FooterColumn title="Experiences" links={experiences.map((item) => ({ label: item.title, href: item.href }))} />
+        <FooterColumn 
+          title="Media" 
+          links={[
+            { label: "CBS Feature", href: "/cbs" },
+            { label: "Documentary", href: "/documentary" },
+            { label: "Videos", href: "/videos" },
+            { label: "Music", href: "/music" }
+          ]} 
+        />
+        <FooterColumn 
+          title="Press" 
+          links={[
+            { label: "Press Hub", href: "/press" },
+            { label: "EPK", href: "/epk" },
+            { label: "Reviews", href: "/what-people-say" }
+          ]} 
+        />
+        <FooterColumn 
+          title="About" 
+          links={[
+            { label: "About Tyler", href: "/about" },
+            { label: "Support Campaign", href: "/support" },
+            { label: "Contact", href: "/contact" }
+          ]} 
+        />
+      </div>
+
+      <div className="footer-support">
+        <p><span>Support the next chapter.</span> {support.body}</p>
+        <Link href={site.indiegogo} target="_blank" rel="noopener noreferrer">Indiegogo</Link>
+      </div>
+
+      <div className="footer-bottom">
+        <p>© {year} Tyler Carson. Sedona, Arizona.</p>
+        <p>Tickets and merch are separate checkout paths. Square handles payments; GoHighLevel handles CRM sync.</p>
       </div>
     </footer>
   );
 }
 
-function FooterCol({
-  label,
-  children,
-}: {
-  label: string;
-  children: React.ReactNode;
-}) {
+function FooterColumn({ title, links }: { title: string; links: { label: string; href: string; external?: boolean }[] }) {
   return (
-    <div>
-      <p
-        style={{
-          fontFamily: "var(--font-space-mono), monospace",
-          fontSize: "0.56rem",
-          letterSpacing: "0.22em",
-          textTransform: "uppercase",
-          color: "var(--color-gold)",
-          marginBottom: "20px",
-          opacity: 0.75,
-        }}
-      >
-        {label}
-      </p>
-      <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
-        {children}
-      </div>
+    <div className="footer-column">
+      <h2>{title}</h2>
+      {links.map((link) => (
+        <Link key={title + link.label} href={link.href} target={link.external ? "_blank" : undefined} rel={link.external ? "noopener noreferrer" : undefined}>
+          {link.label}
+        </Link>
+      ))}
     </div>
   );
 }
 
-function FooterLink({
-  href,
-  external = false,
-  children,
-}: {
-  href: string;
-  external?: boolean;
-  children: React.ReactNode;
-}) {
-  return (
-    <Link
-      href={href}
-      target={external ? "_blank" : undefined}
-      rel={external ? "noopener noreferrer" : undefined}
-      style={{
-        fontSize: "0.82rem",
-        fontWeight: 300,
-        color: "var(--color-muted)",
-        textDecoration: "none",
-        transition: "color 0.2s",
-        display: "block",
-      }}
-      onMouseEnter={(e) => {
-        (e.currentTarget as HTMLElement).style.color = "var(--color-cream)";
-      }}
-      onMouseLeave={(e) => {
-        (e.currentTarget as HTMLElement).style.color = "var(--color-muted)";
-      }}
-    >
-      {children}
-    </Link>
-  );
+function getSocialIcon(label: string) {
+  switch (label.toLowerCase()) {
+    case "instagram":
+      return (
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+          <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+          <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+          <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+        </svg>
+      );
+    case "facebook":
+      return (
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+          <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path>
+        </svg>
+      );
+    case "youtube":
+      return (
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+          <path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z"></path>
+          <polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"></polygon>
+        </svg>
+      );
+    case "spotify":
+      return (
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+          <path d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm4.586 14.424c-.18.295-.565.387-.86.207-2.377-1.454-5.37-1.783-8.893-.982-.336.076-.67-.135-.746-.47-.077-.337.135-.67.472-.747 3.852-.88 7.15-.506 9.82 1.13.295.18.387.563.207.862zm1.225-2.73c-.226.367-.707.487-1.074.26-2.72-1.672-6.87-2.157-10.082-1.182-.413.125-.85-.107-.975-.52-.125-.413.107-.85.52-.975 3.678-1.117 8.243-.573 11.35 1.34.367.227.488.708.26 1.076zm.106-2.83C14.69 8.878 9.24 8.7 6.09 9.654c-.5.152-1.025-.136-1.177-.638-.152-.5.137-1.025.638-1.177 3.657-1.11 9.65-.9 13.38 1.314.45.267.6.846.333 1.296-.267.45-.847.6-1.296.333z"/>
+        </svg>
+      );
+    case "apple music":
+    case "apple":
+      return (
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+          <path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>
+      );
+    default:
+      return null;
+  }
 }

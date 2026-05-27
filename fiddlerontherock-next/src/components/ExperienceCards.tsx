@@ -1,27 +1,40 @@
 "use client";
 
 import Link from "next/link";
-import { motion, useInView } from "framer-motion";
-import { useRef } from "react";
+import { motion } from "framer-motion";
+import Image from "next/image";
 import { experienceCards as experiences } from "@/lib/data";
+import { fadeUp, staggerContainer } from "@/lib/motion";
 
 export default function ExperienceCards() {
-  const ref = useRef<HTMLElement>(null);
-  const inView = useInView(ref, { once: true, margin: "-60px" });
 
   return (
     <section
-      ref={ref}
       style={{
+        position: "relative",
         padding: "120px 52px",
         background: "var(--color-ink)",
+        overflow: "hidden",
       }}
     >
+      <div style={{ position: "absolute", inset: 0, zIndex: 0, opacity: 0.12 }}>
+        <Image
+          src="/images/tyler-romantic-sunset.jpg"
+          alt="Sunset over Red Rocks"
+          fill
+          style={{ objectFit: "cover", objectPosition: "center" }}
+        />
+      </div>
+      <motion.div
+        variants={staggerContainer}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, amount: 0.2 }}
+        style={{ position: "relative", zIndex: 1 }}
+      >
       {/* Section header */}
       <motion.div
-        initial={{ opacity: 0, y: 24 }}
-        animate={inView ? { opacity: 1, y: 0 } : {}}
-        transition={{ duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94] }}
+        variants={fadeUp}
         style={{
           textAlign: "center",
           maxWidth: "600px",
@@ -94,34 +107,25 @@ export default function ExperienceCards() {
           gap: "2px",
         }}
       >
-        {experiences.map((exp, i) => (
-          <ExperienceCard key={exp.id} exp={exp} index={i} inView={inView} />
+        {experiences.map((exp) => (
+          <ExperienceCard key={exp.id} exp={exp} />
         ))}
       </div>
+      </motion.div>
     </section>
   );
 }
 
 function ExperienceCard({
   exp,
-  index,
-  inView,
 }: {
   exp: (typeof experiences)[number];
-  index: number;
-  inView: boolean;
 }) {
   const isAccent = exp.accent;
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: 36 }}
-      animate={inView ? { opacity: 1, y: 0 } : {}}
-      transition={{
-        delay: index * 0.12,
-        duration: 0.85,
-        ease: [0.25, 0.46, 0.45, 0.94],
-      }}
+      variants={fadeUp}
       whileHover={{ y: -4 }}
     >
       <div

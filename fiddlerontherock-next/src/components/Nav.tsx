@@ -1,226 +1,183 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Image from "next/image";
 import Link from "next/link";
-import { motion, useScroll, useTransform } from "framer-motion";
-import { navLinks } from "@/lib/data";
+import { AnimatePresence, motion } from "framer-motion";
+import { experiences } from "@/lib/data";
+import { usePathname } from "next/navigation";
 
 export default function Nav() {
+  const pathname = usePathname();
+  if (pathname === "/experience") return null;
+
+  const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const [menuOpen, setMenuOpen] = useState(false);
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 60);
+    const onScroll = () => setScrolled(window.scrollY > 24);
+    onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  return (
-    <>
-      <motion.nav
-        initial={{ opacity: 0, y: -16 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.7, ease: [0.25, 0.46, 0.45, 0.94] }}
-        style={{
-          position: "fixed",
-          top: 0,
-          left: 0,
-          right: 0,
-          zIndex: 100,
-          padding: "22px 52px",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "space-between",
-          transition: "background 0.4s ease, backdrop-filter 0.4s ease",
-          background: scrolled
-            ? "rgba(11,13,18,0.94)"
-            : "linear-gradient(to bottom, rgba(11,13,18,0.88) 0%, rgba(11,13,18,0) 100%)",
-          backdropFilter: scrolled ? "blur(12px)" : "none",
-          borderBottom: scrolled ? "1px solid rgba(138,143,168,0.08)" : "1px solid transparent",
-        }}
-      >
-        {/* Wordmark */}
-        <Link
-          href="/"
-          style={{
-            fontFamily: "var(--font-cormorant), Georgia, serif",
-            fontSize: "1.1rem",
-            fontWeight: 300,
-            color: "var(--color-cream)",
-            textDecoration: "none",
-            letterSpacing: "0.015em",
-          }}
-        >
-          Fiddler <em style={{ fontStyle: "italic", color: "var(--color-gold)" }}>on the</em> Rock
-        </Link>
+  useEffect(() => {
+    document.body.style.overflow = open ? "hidden" : "";
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [open]);
 
-        {/* Desktop links */}
-        <ul
-          style={{
-            display: "flex",
-            gap: "40px",
-            listStyle: "none",
-            alignItems: "center",
-          }}
-          className="hidden md:flex"
-        >
-          {navLinks.map((link) => (
-            <li key={link.href}>
-              <Link
-                href={link.href}
-                style={{
-                  fontFamily: "var(--font-dm-sans), sans-serif",
-                  fontSize: "0.68rem",
-                  letterSpacing: "0.2em",
-                  textTransform: "uppercase",
-                  color: "var(--color-muted)",
-                  textDecoration: "none",
-                  transition: "color 0.2s",
-                }}
-                onMouseEnter={(e) =>
-                  ((e.target as HTMLElement).style.color = "var(--color-cream)")
-                }
-                onMouseLeave={(e) =>
-                  ((e.target as HTMLElement).style.color = "var(--color-muted)")
-                }
-              >
+  const experienceLinks = experiences.map((item) => ({ label: item.title, href: item.href }));
+
+  const mediaNavLinks = [
+    { label: "CBS", href: "/cbs" },
+    { label: "Documentary", href: "/documentary" },
+    { label: "Videos", href: "/videos" },
+    { label: "Music", href: "/music" }
+  ];
+
+  const pressNavLinks = [
+    { label: "Press", href: "/press" },
+    { label: "EPK", href: "/epk" },
+    { label: "Reviews", href: "/what-people-say" }
+  ];
+
+  const aboutNavLinks = [
+    { label: "About", href: "/about" },
+    { label: "Support", href: "/support" },
+    { label: "Contact", href: "/contact" }
+  ];
+
+  return (
+    <header className={"site-nav " + (scrolled ? "site-nav-scrolled" : "")}>
+      <Link href="/" className="nav-logo" aria-label="Fiddler on the Rock home" onClick={() => setOpen(false)}>
+        <Image src="/images/logo-white.png" alt="Fiddler on the Rock" width={52} height={52} priority />
+        <span>Fiddler on the Rock</span>
+      </Link>
+
+      <nav className="desktop-nav" aria-label="Primary navigation">
+        <Link href="/">Home</Link>
+        
+        <div className="nav-dropdown">
+          <Link href="/experiences">Experiences</Link>
+          <div className="dropdown-panel">
+            {experienceLinks.map((link) => (
+              <Link key={link.href} href={link.href}>
                 {link.label}
               </Link>
-            </li>
-          ))}
-        </ul>
+            ))}
+          </div>
+        </div>
 
-        {/* CTA button */}
-        <Link
-          href="/serenades"
-          style={{
-            fontFamily: "var(--font-dm-sans), sans-serif",
-            fontSize: "0.65rem",
-            letterSpacing: "0.18em",
-            textTransform: "uppercase",
-            color: "var(--color-ink)",
-            background: "var(--color-gold)",
-            textDecoration: "none",
-            padding: "10px 22px",
-            transition: "opacity 0.2s",
-            display: "inline-block",
-          }}
-          className="hidden md:inline-block"
-          onMouseEnter={(e) =>
-            ((e.currentTarget as HTMLElement).style.opacity = "0.8")
-          }
-          onMouseLeave={(e) =>
-            ((e.currentTarget as HTMLElement).style.opacity = "1")
-          }
-        >
-          Book Experience
-        </Link>
+        <div className="nav-dropdown">
+          <Link href="/media">Media</Link>
+          <div className="dropdown-panel">
+            {mediaNavLinks.map((link) => (
+              <Link key={link.href} href={link.href}>
+                {link.label}
+              </Link>
+            ))}
+          </div>
+        </div>
 
-        {/* Mobile hamburger */}
-        <button
-          onClick={() => setMenuOpen(!menuOpen)}
-          className="md:hidden"
-          style={{
-            background: "none",
-            border: "none",
-            cursor: "pointer",
-            padding: "4px",
-            display: "flex",
-            flexDirection: "column",
-            gap: "5px",
-          }}
-          aria-label="Toggle menu"
-        >
-          {[0, 1, 2].map((i) => (
-            <motion.span
-              key={i}
-              animate={{
-                rotate:
-                  menuOpen && i === 0 ? 45 : menuOpen && i === 2 ? -45 : 0,
-                y: menuOpen && i === 0 ? 7 : menuOpen && i === 2 ? -7 : 0,
-                opacity: menuOpen && i === 1 ? 0 : 1,
-              }}
-              transition={{ duration: 0.25 }}
-              style={{
-                display: "block",
-                width: "22px",
-                height: "1px",
-                background: "var(--color-cream)",
-                transformOrigin: "center",
-              }}
-            />
-          ))}
-        </button>
-      </motion.nav>
+        <div className="nav-dropdown">
+          <Link href="/press">Press</Link>
+          <div className="dropdown-panel">
+            {pressNavLinks.map((link) => (
+              <Link key={link.href} href={link.href}>
+                {link.label}
+              </Link>
+            ))}
+          </div>
+        </div>
 
-      {/* Mobile menu */}
-      <motion.div
-        initial={false}
-        animate={{
-          opacity: menuOpen ? 1 : 0,
-          pointerEvents: menuOpen ? "auto" : "none",
-        }}
-        transition={{ duration: 0.3 }}
-        style={{
-          position: "fixed",
-          inset: 0,
-          zIndex: 99,
-          background: "rgba(11,13,18,0.97)",
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          justifyContent: "center",
-          gap: "36px",
-        }}
+        <Link href="/merch">Merch</Link>
+
+        <div className="nav-dropdown">
+          <Link href="/about">About</Link>
+          <div className="dropdown-panel">
+            {aboutNavLinks.map((link) => (
+              <Link key={link.href} href={link.href}>
+                {link.label}
+              </Link>
+            ))}
+          </div>
+        </div>
+      </nav>
+
+      <Link href="/booking" className="nav-cta">Book</Link>
+
+      <button
+        className="menu-button"
+        type="button"
+        onClick={() => setOpen((value) => !value)}
+        aria-label={open ? "Close menu" : "Open menu"}
+        aria-expanded={open}
       >
-        {navLinks.map((link, i) => (
+        <span />
+        <span />
+        <span />
+      </button>
+
+      <AnimatePresence>
+        {open ? (
           <motion.div
-            key={link.href}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: menuOpen ? 1 : 0, y: menuOpen ? 0 : 20 }}
-            transition={{ delay: menuOpen ? i * 0.08 : 0, duration: 0.4 }}
+            className="mobile-panel"
+            initial={{ opacity: 0, y: -16 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -16 }}
+            transition={{ duration: 0.25 }}
           >
-            <Link
-              href={link.href}
-              onClick={() => setMenuOpen(false)}
-              style={{
-                fontFamily: "var(--font-cormorant), Georgia, serif",
-                fontSize: "2.4rem",
-                fontWeight: 300,
-                color: "var(--color-cream)",
-                textDecoration: "none",
-                letterSpacing: "0.01em",
-              }}
-            >
-              {link.label}
+            <MobileGroup
+              title="Home"
+              links={[{ label: "Fiddler Home", href: "/" }]}
+              onClick={() => setOpen(false)}
+            />
+            <MobileGroup
+              title="Experiences"
+              links={[{ label: "All Experiences", href: "/experiences" }, ...experienceLinks]}
+              onClick={() => setOpen(false)}
+            />
+            <MobileGroup
+              title="Media"
+              links={[{ label: "Media Hub", href: "/media" }, ...mediaNavLinks]}
+              onClick={() => setOpen(false)}
+            />
+            <MobileGroup
+              title="Press"
+              links={pressNavLinks}
+              onClick={() => setOpen(false)}
+            />
+            <MobileGroup
+              title="Merch"
+              links={[{ label: "Merch Store", href: "/merch" }]}
+              onClick={() => setOpen(false)}
+            />
+            <MobileGroup
+              title="About"
+              links={aboutNavLinks}
+              onClick={() => setOpen(false)}
+            />
+            <Link className="mobile-book" href="/booking" onClick={() => setOpen(false)}>
+              Book an Experience
             </Link>
           </motion.div>
-        ))}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: menuOpen ? 1 : 0 }}
-          transition={{ delay: 0.32, duration: 0.4 }}
-        >
-          <Link
-            href="/serenades"
-            onClick={() => setMenuOpen(false)}
-            style={{
-              fontFamily: "var(--font-dm-sans), sans-serif",
-              fontSize: "0.65rem",
-              letterSpacing: "0.2em",
-              textTransform: "uppercase",
-              color: "var(--color-ink)",
-              background: "var(--color-gold)",
-              textDecoration: "none",
-              padding: "14px 32px",
-              marginTop: "12px",
-              display: "inline-block",
-            }}
-          >
-            Book Experience
-          </Link>
-        </motion.div>
-      </motion.div>
-    </>
+        ) : null}
+      </AnimatePresence>
+    </header>
+  );
+}
+
+function MobileGroup({ title, links, onClick }: { title: string; links: { label: string; href: string }[]; onClick: () => void }) {
+  return (
+    <div className="mobile-group">
+      <p>{title}</p>
+      {links.map((link) => (
+        <Link key={link.href + link.label} href={link.href} onClick={onClick}>
+          {link.label}
+        </Link>
+      ))}
+    </div>
   );
 }

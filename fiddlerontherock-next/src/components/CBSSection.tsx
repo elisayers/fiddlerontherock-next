@@ -1,16 +1,15 @@
 "use client";
 
 import Link from "next/link";
-import { motion, useInView } from "framer-motion";
-import { useRef } from "react";
+import { motion } from "framer-motion";
+import { staggerContainer, slideInLeft, slideInRight } from "@/lib/motion";
+import VideoFacade from "@/components/VideoFacade";
+import { cbsSection } from "@/lib/data";
 
 export default function CBSSection() {
-  const ref = useRef<HTMLElement>(null);
-  const inView = useInView(ref, { once: true, margin: "-80px" });
 
   return (
     <section
-      ref={ref}
       style={{
         background: "var(--color-ink-soft)",
         borderTop: "1px solid var(--color-muted-rule)",
@@ -19,7 +18,11 @@ export default function CBSSection() {
         overflow: "hidden",
       }}
     >
-      <div
+      <motion.div
+        variants={staggerContainer}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, amount: 0.2 }}
         style={{
           maxWidth: "1100px",
           margin: "0 auto",
@@ -31,11 +34,7 @@ export default function CBSSection() {
         className="grid-cbs"
       >
         {/* Left — label + quote */}
-        <motion.div
-          initial={{ opacity: 0, x: -32 }}
-          animate={inView ? { opacity: 1, x: 0 } : {}}
-          transition={{ duration: 0.9, ease: [0.25, 0.46, 0.45, 0.94] }}
-        >
+        <motion.div variants={slideInLeft}>
           {/* "As Seen On" eyebrow */}
           <div
             style={{
@@ -63,7 +62,7 @@ export default function CBSSection() {
                 color: "var(--color-gold)",
               }}
             >
-              As Seen On
+              {cbsSection.eyebrow}
             </span>
           </div>
 
@@ -100,7 +99,7 @@ export default function CBSSection() {
               borderLeft: "2px solid var(--color-gold-rule)",
             }}
           >
-            That was so fun!! You are such a great player.
+            {cbsSection.quote}
           </blockquote>
           <p
             style={{
@@ -111,7 +110,7 @@ export default function CBSSection() {
               color: "var(--color-gold)",
             }}
           >
-            — Lindsey Stirling · CBS Mornings
+            — {cbsSection.quoteAttribution}
           </p>
 
           {/* CTA */}
@@ -121,7 +120,7 @@ export default function CBSSection() {
             transition={{ duration: 0.2 }}
           >
             <Link
-              href="/press"
+              href={cbsSection.ctaSecondary.href}
               style={{
                 fontFamily: "var(--font-dm-sans), sans-serif",
                 fontSize: "0.65rem",
@@ -134,44 +133,27 @@ export default function CBSSection() {
                 gap: "10px",
               }}
             >
-              Watch the Segment
+              {cbsSection.ctaSecondary.label}
               <span style={{ fontSize: "0.8rem" }}>→</span>
             </Link>
           </motion.div>
         </motion.div>
 
         {/* Right — context copy */}
-        <motion.div
-          initial={{ opacity: 0, x: 32 }}
-          animate={inView ? { opacity: 1, x: 0 } : {}}
-          transition={{ duration: 0.9, delay: 0.15, ease: [0.25, 0.46, 0.45, 0.94] }}
-        >
+        <motion.div variants={slideInRight}>
           <p
             style={{
               fontSize: "1.08rem",
               fontWeight: 300,
               color: "var(--color-cream-soft)",
               lineHeight: 1.82,
-              marginBottom: "22px",
+              marginBottom: "40px",
             }}
           >
-            CBS Mornings traveled to Sedona to cover Tyler Carson's story — a
-            violinist who lost his voice and found something more powerful. The
-            segment introduced a national audience to the red rocks, the music,
-            and a message about resilience the network knew would resonate.
+            {cbsSection.body}
           </p>
-          <p
-            style={{
-              fontSize: "1.08rem",
-              fontWeight: 300,
-              color: "var(--color-cream-soft)",
-              lineHeight: 1.82,
-            }}
-          >
-            On set that day, Tyler performed alongside Lindsey Stirling — one of
-            the most recognized violinists in the world. Her reaction says more
-            than any review could.
-          </p>
+
+          <VideoFacade youtubeId={cbsSection.youtubeId} title="CBS Mornings Segment" />
 
           {/* Press badges */}
           <div
@@ -203,7 +185,7 @@ export default function CBSSection() {
             )}
           </div>
         </motion.div>
-      </div>
+      </motion.div>
 
       <style>{`
         @media (max-width: 768px) {

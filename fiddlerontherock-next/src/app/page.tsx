@@ -1,23 +1,9 @@
-import Nav from "@/components/Nav";
-import Hero from "@/components/Hero";
-import CBSSection from "@/components/CBSSection";
-import ExperienceCards from "@/components/ExperienceCards";
-import Testimonials from "@/components/Testimonials";
-import EmailSignup from "@/components/EmailSignup";
-import Footer from "@/components/Footer";
-
-export default function Home() {
-  return (
-    <>
-      <Nav />
-      <main>
-        <Hero />
-        <CBSSection />
-        <ExperienceCards />
-        <Testimonials />
-        <EmailSignup />
-      </main>
-      <Footer />
-    </>
-  );
-}
+import type { Metadata } from "next";
+import Link from "next/link";
+import Image from "next/image";
+import JsonLd from "@/components/JsonLd";
+import { ButtonLink, CardGrid, FeatureSplit, InfoCard, PageHero, Section } from "@/components/PagePrimitives";
+import { cbs, experiences, home, testimonials } from "@/lib/data";
+import { eventSchema, localBusinessSchema } from "@/lib/schema";
+export const metadata: Metadata = { title: "Live Violin Concerts in Sedona", description: "Live violin concerts in Sedona Red Rocks. Book public shows, private Sedona Serenades, CBS-featured videos, music, press, reviews, and merch." };
+export default function HomePage() { return <><JsonLd data={[localBusinessSchema(), ...eventSchema()]} /><PageHero title={home.headline} subtitle={home.subheadline} image="/images/tyler-hero.jpg" ctas={[home.primaryCta, home.secondaryCta]} /><Section eyebrow="Sedona live music" title={home.seoHeadline}><p className="lede">Some music entertains. This music opens something. Come find your own spark in the Red Rocks through three intimate experiences built for visitors who want more than another tourist stop.</p><CardGrid>{experiences.map((item) => <InfoCard key={item.id} eyebrow={item.eyebrow} title={item.title} body={item.summary} href={item.href} cta="Explore" />)}</CardGrid></Section><Section eyebrow="As seen on CBS Mornings" title="National proof. Sedona magic."><FeatureSplit image="/images/tyler-sedona-solos.jpg" alt="Tyler Carson in Sedona" title="CBS came to Sedona for the story behind the music." body={cbs.subheadline + " " + cbs.body} ctas={[{ label: "Watch CBS", href: "/cbs" }, { label: "Read Tyler's Story", href: "/about" }]} /><div className="quote-block" style={{ marginTop: 56 }}><p>{cbs.quote}</p><cite>{cbs.attribution}</cite></div></Section><Section eyebrow="What guests say" title="A moment visitors remember after the trip ends." tone="soft"><CardGrid>{testimonials.map((item) => <InfoCard key={item.author} title={item.author} eyebrow={item.context} body={item.quote} />)}</CardGrid><div className="button-row left"><ButtonLink link={{ label: "Read Reviews", href: "/what-people-say" }} /></div></Section><Link href="/experience" className="floating-client-link" aria-label="Client Review Landing Page"><Image src="/images/logo-white.png" alt="Logo" width={40} height={40} /></Link></>; }

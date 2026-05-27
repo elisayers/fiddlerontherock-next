@@ -1,0 +1,10 @@
+export type ShowId = "one-man-symphony" | "legends-of-the-fiddle" | "sedona-serenades";
+export type PublicShowId = "one-man-symphony" | "legends-of-the-fiddle";
+export type TicketTier = "general" | "vip";
+export type SerenadesPackageId = "romantic_escape" | "gathering" | "celebration" | "memory_package" | "private_event";
+export type SerenadesLocationId = "secret_spot" | "open_air_spot";
+export type SourceAttribution = "internet_search" | "visit_sedona" | "cbs_mornings" | "word_of_mouth" | "concierge" | "google_ad" | "other";
+export type AvailabilitySlot = { id: string; showId: ShowId; startsAt: string; endsAt: string; capacity: number; paidCount: number; heldCount: number; soldOutOverride?: boolean; location?: SerenadesLocationId; label: string };
+export type BookingSelection = { showId: ShowId; slotId: string; tier?: TicketTier; adultCount?: number; kidCount?: number; underFiveCount?: number; packageId?: SerenadesPackageId; guestCount?: number; customSongCount?: number; chocolateCount?: number; source?: SourceAttribution; customer?: { name?: string; email?: string; phone?: string } };
+export type PricedLine = { label: string; quantity: number; unitAmount: number; total: number; metadata?: Record<string, string> };
+export type PricedOrder = { lines: PricedLine[]; subtotal: number; capacityUnits: number; requiresRequest: boolean; errors: string[] };

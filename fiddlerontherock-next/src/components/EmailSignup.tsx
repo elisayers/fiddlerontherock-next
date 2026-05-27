@@ -1,12 +1,10 @@
 "use client";
 
 import { useState } from "react";
-import { motion, useInView } from "framer-motion";
-import { useRef } from "react";
+import { motion } from "framer-motion";
+import { fadeUp, staggerContainer } from "@/lib/motion";
 
 export default function EmailSignup() {
-  const ref = useRef<HTMLElement>(null);
-  const inView = useInView(ref, { once: true, margin: "-60px" });
   const [email, setEmail] = useState("");
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
 
@@ -27,7 +25,6 @@ export default function EmailSignup() {
 
   return (
     <section
-      ref={ref}
       style={{
         padding: "120px 52px",
         background: "var(--color-ink)",
@@ -35,12 +32,16 @@ export default function EmailSignup() {
         textAlign: "center",
       }}
     >
-      <div style={{ maxWidth: "600px", margin: "0 auto" }}>
+      <motion.div
+        variants={staggerContainer}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, amount: 0.2 }}
+        style={{ maxWidth: "600px", margin: "0 auto" }}
+      >
         {/* Eyebrow */}
         <motion.div
-          initial={{ opacity: 0, y: 16 }}
-          animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.7 }}
+          variants={fadeUp}
           style={{
             display: "inline-flex",
             alignItems: "center",
@@ -81,9 +82,7 @@ export default function EmailSignup() {
 
         {/* Headline */}
         <motion.h2
-          initial={{ opacity: 0, y: 20 }}
-          animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.8, delay: 0.1 }}
+          variants={fadeUp}
           style={{
             fontFamily: "var(--font-cormorant), Georgia, serif",
             fontSize: "clamp(2rem, 4vw, 3rem)",
@@ -100,9 +99,7 @@ export default function EmailSignup() {
         </motion.h2>
 
         <motion.p
-          initial={{ opacity: 0, y: 16 }}
-          animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.8, delay: 0.18 }}
+          variants={fadeUp}
           style={{
             fontSize: "0.98rem",
             fontWeight: 300,
@@ -112,15 +109,13 @@ export default function EmailSignup() {
           }}
         >
           Concert dates, private availability, and occasional dispatches from
-          the red rocks. No noise.
+          the Red Rocks. No noise.
         </motion.p>
 
         {/* Form */}
         <motion.form
           onSubmit={handleSubmit}
-          initial={{ opacity: 0, y: 16 }}
-          animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.8, delay: 0.26 }}
+          variants={fadeUp}
           style={{
             display: "flex",
             gap: "0",
@@ -203,9 +198,7 @@ export default function EmailSignup() {
         )}
 
         <motion.p
-          initial={{ opacity: 0 }}
-          animate={inView ? { opacity: 1 } : {}}
-          transition={{ duration: 0.8, delay: 0.36 }}
+          variants={fadeUp}
           style={{
             marginTop: "20px",
             fontSize: "0.72rem",
@@ -215,7 +208,7 @@ export default function EmailSignup() {
         >
           No spam, ever. Unsubscribe anytime.
         </motion.p>
-      </div>
+      </motion.div>
     </section>
   );
 }

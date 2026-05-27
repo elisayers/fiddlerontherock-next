@@ -4,25 +4,15 @@ import { useRef } from "react";
 import Link from "next/link";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { hero } from "@/lib/data";
+import HeroVideo from "./HeroVideo";
 
-const fadeUp = {
-  hidden: { opacity: 0, y: 28 },
-  show: (i: number) => ({
-    opacity: 1,
-    y: 0,
-    transition: {
-      delay: 0.15 + i * 0.12,
-      duration: 0.9,
-      ease: [0.25, 0.46, 0.45, 0.94],
-    },
-  }),
-};
+import { fadeUp, staggerContainer } from "@/lib/motion";
 
 export default function Hero() {
   const ref = useRef<HTMLElement>(null);
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end start"] });
   const yImg = useTransform(scrollYProgress, [0, 1], ["0%", "22%"]);
-  const opacityOverlay = useTransform(scrollYProgress, [0, 0.6], [0.48, 0.72]);
+  const opacityOverlay = useTransform(scrollYProgress, [0, 0.6], [0.28, 0.52]);
 
   return (
     <section
@@ -43,19 +33,18 @@ export default function Hero() {
           position: "absolute",
           inset: "-15%",
           y: yImg,
-          backgroundImage: "url(/images/tyler-hero.jpg)",
-          backgroundSize: "cover",
-          backgroundPosition: "center 30%",
           willChange: "transform",
         }}
-      />
+      >
+        <HeroVideo src="/video/hero-loop.webm" mp4Src="/video/hero-loop.mp4" />
+      </motion.div>
 
       {/* Dark overlay — thickens on scroll */}
       <motion.div
         style={{
           position: "absolute",
           inset: 0,
-          background: "linear-gradient(to bottom, rgba(11,13,18,0.35) 0%, rgba(11,13,18,0.75) 100%)",
+          background: "linear-gradient(to bottom, rgba(11,13,18,0.18) 0%, rgba(11,13,18,0.58) 100%)",
           opacity: opacityOverlay,
         }}
       />
@@ -66,13 +55,16 @@ export default function Hero() {
           position: "absolute",
           inset: 0,
           background:
-            "radial-gradient(ellipse at 50% 60%, transparent 40%, rgba(11,13,18,0.55) 100%)",
+            "radial-gradient(ellipse at 50% 60%, transparent 40%, rgba(11,13,18,0.35) 100%)",
           pointerEvents: "none",
         }}
       />
 
       {/* Content */}
-      <div
+      <motion.div
+        variants={staggerContainer}
+        initial="hidden"
+        animate="visible"
         style={{
           position: "relative",
           zIndex: 10,
@@ -84,10 +76,7 @@ export default function Hero() {
       >
         {/* Eyebrow */}
         <motion.div
-          custom={0}
           variants={fadeUp}
-          initial="hidden"
-          animate="show"
           style={{
             display: "inline-flex",
             alignItems: "center",
@@ -112,10 +101,7 @@ export default function Hero() {
 
         {/* Headline */}
         <motion.h1
-          custom={1}
           variants={fadeUp}
-          initial="hidden"
-          animate="show"
           style={{
             fontFamily: "var(--font-cormorant), Georgia, serif",
             fontSize: "clamp(4rem, 10vw, 8.5rem)",
@@ -126,24 +112,12 @@ export default function Hero() {
             marginBottom: "28px",
           }}
         >
-          Fiddler{" "}
-          <em
-            style={{
-              fontStyle: "italic",
-              color: "var(--color-gold)",
-              display: "block",
-            }}
-          >
-            on the Rock
-          </em>
+          {hero.headline}
         </motion.h1>
 
         {/* Sub */}
         <motion.p
-          custom={2}
           variants={fadeUp}
-          initial="hidden"
-          animate="show"
           style={{
             fontSize: "clamp(1rem, 1.8vw, 1.18rem)",
             fontWeight: 300,
@@ -154,16 +128,12 @@ export default function Hero() {
             letterSpacing: "0.01em",
           }}
         >
-          Violin music among the red rocks of Sedona. Private serenades,
-          open-air concerts, and experiences that stay with you.
+          {hero.subheadline}
         </motion.p>
 
         {/* CTAs */}
         <motion.div
-          custom={3}
           variants={fadeUp}
-          initial="hidden"
-          animate="show"
           style={{
             display: "flex",
             gap: "16px",
@@ -171,14 +141,14 @@ export default function Hero() {
             flexWrap: "wrap",
           }}
         >
-          <HeroButton href="/serenades" primary>
-            Book Private Experience
+          <HeroButton href={hero.ctaPrimary.href} primary>
+            {hero.ctaPrimary.label}
           </HeroButton>
-          <HeroButton href="/concerts">
-            See Concert Dates
+          <HeroButton href={hero.ctaSecondary.href}>
+            {hero.ctaSecondary.label}
           </HeroButton>
         </motion.div>
-      </div>
+      </motion.div>
 
       {/* Scroll indicator */}
       <motion.div

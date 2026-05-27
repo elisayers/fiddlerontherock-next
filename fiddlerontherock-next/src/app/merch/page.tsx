@@ -1,0 +1,5 @@
+import type { Metadata } from "next";
+import { CardGrid, InfoCard, PageHero, Section } from "@/components/PagePrimitives";
+import { merchItems } from "@/lib/data";
+export const metadata: Metadata = { title: "Fiddler on the Rock Merch", description: "Merch for Fiddler on the Rock with Square checkout after catalog cleanup. Tickets and merch remain separate." };
+export default function MerchPage() { return <><PageHero eyebrow="Merch" title="Merch is separate from tickets." subtitle="Square will own merch checkout after the product catalog is cleaned. GoHighLevel is used only for follow-up, promos, and retention." image="/images/logo-black.png" /><Section title="Catalog lanes"><CardGrid>{merchItems.map((item) => <InfoCard key={item.title} title={item.title} body={item.detail} />)}</CardGrid></Section><Section eyebrow="Before launch" title="Square cleanup required" tone="soft"><p className="lede">The Square catalog should be scrubbed before this page exposes live products: remove duplicates, fix copy-of names and typos, confirm prices, variants, inventory, photos, shipping, pickup, and tax settings.</p></Section></>; }

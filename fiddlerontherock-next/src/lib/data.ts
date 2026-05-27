@@ -1,326 +1,69 @@
-// ── Fiddler on the Rock — Site Data ─────────────────────────────────────────
-// Source of truth: WebsiteCopy_v3.docx + WebsiteCopy_v3_HomeCBS.docx
-// CMS placeholder: swap these exports for GoHighLevel API calls later.
-// ─────────────────────────────────────────────────────────────────────────────
+export type LinkItem = { label: string; href: string; external?: boolean };
+export type Experience = { id: string; title: string; eyebrow: string; href: string; image: string; alt: string; summary: string; setting: string; experience: string; when: string; where?: string; admission: string; highlights: string[]; ctas: LinkItem[]; schemaName: string };
 
-// ── HOME PAGE ─────────────────────────────────────────────────────────────────
+export const site = { name: "Fiddler on the Rock", url: "https://www.fiddlerontherock.com", owner: "Tyler Carson", location: "Sedona, Arizona", description: "Live violin concerts and private Living Music experiences in Sedona's red rock landscape. As seen on CBS Mornings.", indiegogo: "https://www.indiegogo.com/en/projects/softsign_c14951cf-838e-4a13-a24a-1b524b5cc04a/fiddler-on-the-rock-reaching-for-the-stars" };
+export const navLinks: LinkItem[] = [{ label: "Experiences", href: "/experiences" }, { label: "Media", href: "/media" }, { label: "Press", href: "/press" }, { label: "Reviews", href: "/what-people-say" }, { label: "Merch", href: "/merch" }, { label: "About", href: "/about" }];
+export const mediaLinks: LinkItem[] = [
+  { label: "EPK", href: "/epk" },{ label: "CBS", href: "/cbs" }, { label: "Documentary", href: "/documentary" }, { label: "Videos", href: "/videos" }, { label: "Music", href: "/music" }];
+export const socialLinks = [{ label: "Instagram", href: "https://www.instagram.com/fiddlerontherock/", icon: "instagram" }, { label: "Facebook", href: "https://www.facebook.com/fiddlerontherock/", icon: "facebook" }, { label: "YouTube", href: "https://www.youtube.com/@fiddlerontherock", icon: "youtube" }, { label: "Spotify", href: "https://open.spotify.com/search/tyler%20carson", icon: "spotify" }, { label: "Apple Music", href: "https://music.apple.com/us/search?term=Tyler%20Carson", icon: "apple" }];
+export const home = { headline: "You've never heard anything like this.", seoHeadline: "Fiddler on the Rock: Sedona's Premier Live Music & Sunset Experience", subheadline: "Live violin. Sedona's red rock canyon. No stage, no amplification, no barrier between the music and the landscape.", primaryCta: { label: "See Upcoming Concerts", href: "/booking" }, secondaryCta: { label: "Book a Private Experience", href: "/sedona-serenades" } };
 
-export const hero = {
-  headline: "You've never heard anything like this.",
-  subheadline:
-    "Live violin. Sedona's red rock canyon. No stage, no amplification, no barrier between the music and the landscape.",
-  ctaPrimary: { label: "See Upcoming Concerts", href: "/events" },
-  ctaSecondary: { label: "Book a Private Experience", href: "/sedona-serenades" },
-}
+export const experiences: Experience[] = [
+  { id: "one-man-symphony", title: "One Man Symphony", eyebrow: "Thursdays in the Red Rocks", href: "/one-man-symphony", image: "/images/one-man-symphony-green-flannel.jpg", alt: "Tyler Carson smiling in a green flannel shirt with violin at the Sedona Heritage Museum", summary: "Tyler's signature one-man-orchestra: loop pedals, rare horn violin, and a private canyon stage as Sedona does what Sedona does to the light.", setting: "A private Red Rock stage near the Sedona Heritage Museum, with the canyon light shifting toward gold around the audience.", experience: "Loop pedals and rare horn violin weave Led Zeppelin, Disney, Taylor Swift, originals, and personal stories into a concert that feels like an entire orchestra meeting the landscape.", when: "Thursdays, 5:45 PM. Doors open at 5:00 PM.", where: "Sedona Heritage Museum / Apple Barn area", admission: "$55 General | $85 VIP", highlights: ["As seen on CBS Mornings", "Free museum entry with every ticket", "Small audience by design"], ctas: [{ label: "General Admission", href: "/booking?show=one-man-symphony&tier=general" }, { label: "VIP Admission", href: "/booking?show=one-man-symphony&tier=vip" }], schemaName: "One Man Symphony - Fiddler on the Rock" },
+  { id: "sedona-serenades", title: "Sedona Serenades", eyebrow: "Exclusive private violin experience", href: "/sedona-serenades", image: "/images/serenades-private-hero.jpg", alt: "Private Sedona Serenades violin concert at sunset", summary: "A private outdoor concert built entirely for your group. You hike in, Tyler plays, the canyon holds you.", setting: "Choose The Secret Spot for a short walk into a natural canyon formation, or The Open-Air Spot for flat, accessible Red Rock views.", experience: "A full private Living Music concert as the canyon light shifts around you. The sound of the violin meets the silence of the Red Rocks, with guided dialogue between pieces.", when: "Scheduled around your visit from direct-bookable availability slots.", where: "The Secret Spot or The Open-Air Spot, Sedona", admission: "Romantic Escape starts at $399 for two", highlights: ["Private by definition", "Ideal for proposals and anniversaries", "Add custom songs or chocolates"], ctas: [{ label: "Book Serenades", href: "/booking?show=sedona-serenades" }, { label: "Request Custom Event", href: "/contact?booking=request" }], schemaName: "Sedona Serenades - Private Violin Experience" },
+  { id: "legends-of-the-fiddle", title: "Legends of the Fiddle", eyebrow: "Saturdays at Sedona Dances HQ", href: "/legends-of-the-fiddle", image: "/images/legends-stage-hero.jpg", alt: "Tyler Carson performing on stage", summary: "Tyler's most theatrical show: cinematic, mythic, and technically extraordinary, with one violin filling the room.", setting: "Sedona Dances Headquarters in West Sedona, built for an immersive indoor concert experience.", experience: "A journey through the legends that shaped the violin: Celtic fire, classical triumph, the devil going down to Georgia, and Tyler's own story of recovery and resilience.", when: "Saturdays, 6:45 PM. Doors open at 6:30 PM.", where: "Sedona Dances Headquarters, West Sedona", admission: "$55 General | $85 VIP", highlights: ["Debuted to a sold-out house at SIFF", "Patrick Schweiss called Tyler extraordinary", "As seen on CBS Mornings"], ctas: [{ label: "General Admission", href: "/booking?show=legends-of-the-fiddle&tier=general" }, { label: "VIP Admission", href: "/booking?show=legends-of-the-fiddle&tier=vip" }], schemaName: "Legends of the Fiddle - Fiddler on the Rock" }
+];
+export const decisionTree = [{ prompt: "First time in Sedona?", recommendation: "Start with One Man Symphony.", body: "A private Red Rock stage at sunset and Tyler's full one-man-orchestra experience. This is the classic Sedona evening." }, { prompt: "Planning something unforgettable for someone you love?", recommendation: "Choose Sedona Serenades.", body: "A private concert in the Red Rocks, built for proposals, anniversaries, and the kind of night that becomes a family story." }, { prompt: "Ready for a full concert experience?", recommendation: "Book Legends of the Fiddle.", body: "Cinematic, mythic, and technically extraordinary. Saturday evenings at Sedona Dances HQ." }, { prompt: "Can't decide?", recommendation: "Many guests book all three.", body: "Each one is a different doorway into Tyler's music. Together, they are the complete Sedona sound." }];
+export const cbs = { youtubeId: "Uh0ckhgVxJM", title: "Tyler Carson on CBS Mornings", headline: "As Seen on CBS Mornings", subheadline: "CBS Mornings traveled to Sedona to cover Tyler Carson's story: a violinist who lost his voice and found something more powerful.", quote: "That was so fun!! You are such a great player.", attribution: "Lindsey Stirling, on CBS Mornings after performing with Tyler Carson", body: "The segment was not only about a concert. It was about what happens when a musician loses the ability to speak and discovers that the violin can do what the voice no longer can. CBS followed Tyler into the Red Rocks, into the canyon where he performs, and into the story of spasmodic dysphonia, recovery, and music as survival." };
+export const documentary = { youtubeId: "SgLyS1mI-VA", headline: "Living Music", subheadline: "The award-winning short documentary about Tyler Carson, Fiddler on the Rock, and the moment music became his voice.", body: "Living Music is the short documentary from BluPrint Films LA following Tyler Carson, the Sedona violinist behind Fiddler on the Rock. After spasmodic dysphonia changed his ability to speak, Tyler found that the violin could carry what words could not. The film follows that story into the Red Rocks, where performance becomes presence and music becomes survival, healing, and invitation. Living Music has screened as an award-winning documentary short and official selection at festivals including Illuminate, Prescott, Madrid, St. Louis, Awareness, and BendFilm.", quote: "EXTRAORDINARY doesn't even begin to describe this multi-talented performer, composer, and musical genius.", attribution: "Patrick Schweiss, Executive Director, Sedona International Film Festival" };
+export const epk = {
+  headline: "Tyler Carson",
+  subheadline: "Fiddler on the Rock",
+  kicker: "Thirty-five years. One instrument. No ceiling.",
+  location: "Sedona, Arizona",
+  show: "One Man Symphony",
+  date: "Electronic Press Kit - May 2026",
+  image: "/images/epk/tyler-red-rock.jpg",
+  jumpImage: "/images/epk/tyler-jump-hero.jpg",
+  wordmark: "/images/epk/fotr-wordmark-light.png",
+  bio: [
+    "Tyler Carson plays the violin with the kind of conviction that makes audiences forget what room they're in. His style defies easy categorization: classical precision, Celtic fire, improvisation, and the genre he calls Living Music.",
+    "Tyler grew up in Victoria, British Columbia, with a violin in hand before most children hold a pencil. He was a classical soloist with the Victoria Symphony at thirteen and went on to tour across Canada, Japan, Thailand, Germany, and the Cayman Islands.",
+    "Everything changed when Tyler lost his voice. Spasmodic dysphonia stripped away his ability to sing and speak normally. What followed was not a setback, but a becoming. The violin became the voice that could still carry the story.",
+    "Today Tyler performs every Thursday in the red rock landscape of Sedona, where the canyon becomes the concert hall and the violin fills the kind of silence most people have stopped knowing how to find."
+  ],
+  downloads: [
+    { label: "Press Photos", href: "/images/epk/tyler-red-rock.jpg" },
+    { label: "Jump Hero", href: "/images/epk/tyler-jump-hero.jpg" },
+    { label: "Logo", href: "/images/epk/fotr-logo-white.png" },
+    { label: "Wordmark", href: "/images/epk/fotr-wordmark-light.png" }
+  ]
+};
 
-export const cbsSection = {
-  eyebrow: "As Seen on CBS Mornings",
-  headline: "As Seen on CBS Mornings",
-  body:
-    "CBS Mornings traveled to Sedona to cover Tyler's story — a violinist who lost his voice and discovered something more powerful. Watch the segment below.",
-  quote: "That was so fun!! You are such a great player.",
-  quoteAttribution: "Lindsey Stirling, CBS Mornings",
-  ctaPrimary: { label: "Read Tyler's Full Story", href: "/about" },
-  ctaSecondary: { label: "Watch the Full CBS Segment", href: "/cbs" },
-  // YouTube video ID — confirm with Tyler and replace CBS_VIDEO_ID below
-  youtubeId: "CBS_VIDEO_ID",
-}
-
-export const emailSignup = {
-  headline: "Stay Connected",
-  body:
-    "Get first access to Thursday concert dates, behind-the-scenes from the red rocks, and music you won't hear anywhere else.",
-  buttonLabel: "Join the List",
-  // Wire to Kit/ConvertKit when email platform migration is complete
-  // Placeholder: GoHighLevel webhook as interim
-}
-
-// ── EXPERIENCES ───────────────────────────────────────────────────────────────
-
-export const experiences = [
-  {
-    id: "one-man-symphony",
-    tag: "As Seen on CBS Mornings",
-    title: "One Man Symphony",
-    tagline: "Sedona's iconic Thursday evening concert — live violin in a setting you won't find anywhere else.",
-    description:
-      "Tyler performs against one of Sedona's most dramatic natural backdrops — a private red rock stage as the canyon light shifts to gold. His signature one-man-symphony weaves loop pedals and rare horn violin through Led Zeppelin, Disney, and Taylor Swift into something that sounds like an entire orchestra. Original compositions woven with personal stories of healing and triumph.",
-    when: "Thursdays, 5:45 PM (doors open 5:00 PM)",
-    pricing: [
-      { label: "General Admission", price: "$55" },
-      { label: "VIP", price: "$85" },
-    ],
-    bonus: "Free museum entry with every ticket — a $20-per-couple value.",
-    ctas: [
-      { label: "General Admission", href: "/one-man-symphony" },
-      { label: "VIP Admission", href: "/one-man-symphony?tier=vip" },
-    ],
-    href: "/one-man-symphony",
-    accent: false,
-  },
-  {
-    id: "sedona-serenades",
-    tag: "Exclusive Private Violin Experience",
-    title: "Sedona Serenades",
-    tagline:
-      "For those who want to be inside the music — not watching it from a seat.",
-    description:
-      "A short hike into the red rocks brings you to your private concert location. Just you, your companions, and the canyon. I perform a full private concert as the canyon light shifts around you. My “Living Music” approach pulls you fully into the present — the sound of the violin meeting the silence of the red rocks. An hour that most Sedona visitors never know is possible.",
-    why: "This is the most intimate experience I offer. Couples book this for proposals, anniversaries, and moments that deserve a soundtrack that belongs entirely to them.",
-    when: "Scheduled around your visit — contact to arrange",
-    pricing: [
-      { label: "Starting at $499 for two", price: "" },
-      { label: "$149 per additional adult", price: "" },
-    ],
-    locations: [
-      {
-        id: "secret-cave",
-        name: "Secret Cave",
-        description:
-          "A 5-minute walk from parking into a natural canyon formation. Natural rock shelter, the sound of wind through the canyon, complete privacy. This is what people mean when they say Sedona changes you.",
-        href: "/sedona-serenades?location=secret-cave",
-      },
-      {
-        id: "cultural-park",
-        name: "Cultural Park",
-        description:
-          "Flat, fully accessible terrain. No hiking required. Open red rock views with the same private, exclusive experience. Ideal for guests with mobility considerations or those who want to arrive and immediately be in the moment.",
-        href: "/sedona-serenades?location=cultural-park",
-      },
-    ],
-    ctas: [
-      { label: "Secret Cave — Book This Location", href: "/sedona-serenades?location=secret-cave" },
-      { label: "Cultural Park — Book This Location", href: "/sedona-serenades?location=cultural-park" },
-    ],
-    href: "/sedona-serenades",
-    accent: true,
-    voiceNote: "First person — Tyler speaking directly to the buyer",
-  },
-  {
-    id: "legends-of-the-fiddle",
-    tag: "As Seen on CBS Mornings",
-    title: "Legends of the Fiddle",
-    tagline:
-      "Tyler's most immersive performance — cinematic scale, mythic storytelling, one violin.",
-    description:
-      "An immersive musical journey through the legends that shaped the violin across centuries — from Celtic fire to classical triumph to the devil going down to Georgia. This is the concert Tyler was born to play: soaring technique, mythic narratives, and the kind of moment where a single musician fills the entire room. Discover how the triumphs of musical legends mirror your own story.",
-    where: "Sedona Dances Headquarters, West Sedona",
-    when: "Saturdays, 6:45 PM (doors open 6:30 PM)",
-    pricing: [
-      { label: "General Admission", price: "$55" },
-      { label: "VIP", price: "$85" },
-    ],
-    pullQuotes: [
-      { quote: "Sheer brilliance.", context: "Debuted to a sold-out house at the Sedona International Film Festival" },
-      {
-        quote:
-          "EXTRAORDINARY doesn't even begin to describe this multi-talented performer, composer, and musical genius.",
-        attribution: "Patrick Schweiss, Executive Director, SIFF",
-      },
-    ],
-    ctas: [
-      { label: "General Admission", href: "/legends-of-the-fiddle" },
-      { label: "VIP Admission", href: "/legends-of-the-fiddle?tier=vip" },
-    ],
-    href: "/legends-of-the-fiddle",
-    accent: false,
-  },
-]
-
-// ── HOME PAGE EXPERIENCE CARDS (short teasers) ────────────────────────────────
-// These are the simplified card versions used on the home page only.
-// Full copy is on each experience's destination page.
-
-export const experienceCards = [
-  {
-    id: "one-man-symphony",
-    tag: "Thursdays · Red Rock Canyon",
-    title: "One Man Symphony",
-    description:
-      "Thursdays in the red rocks. Tyler's signature one-man-orchestra — loop pedals, rare horn violin, and a private canyon stage as Sedona does what Sedona does to the light.",
-    cta: "See Thursday's Concert",
-    href: "/one-man-symphony",
-    accent: false,
-  },
-  {
-    id: "sedona-serenades",
-    tag: "Private · By Arrangement",
-    title: "Sedona Serenades",
-    description:
-      "A private outdoor concert built entirely for your group. You hike in, Tyler plays, the canyon holds you. The most intimate experience in the Southwest.",
-    cta: "Book a Private Experience",
-    href: "/sedona-serenades",
-    accent: true,
-  },
-  {
-    id: "legends-of-the-fiddle",
-    tag: "Saturdays · Sedona Dances HQ",
-    title: "Legends of the Fiddle",
-    description:
-      "Tyler's most theatrical show. Saturday evenings at Sedona Dances HQ — cinematic, mythic, one violin filling the room.",
-    cta: "See Saturday's Show",
-    href: "/legends-of-the-fiddle",
-    accent: false,
-  },
-]
-
-// ── DECISION TREE (Experiences page) ─────────────────────────────────────────
-
-export const decisionTree = [
-  {
-    prompt: "First time in Sedona?",
-    recommendation: "One Man Symphony",
-    body: "A private red rock stage at sunset, Tyler's full one-man-orchestra experience. This is the classic Sedona evening.",
-  },
-  {
-    prompt: "Planning something unforgettable for someone you love?",
-    recommendation: "Sedona Serenades",
-    body: "A private concert in the red rocks, built entirely for the two of you. Proposals, anniversaries, or simply the kind of evening that becomes a story you tell for the rest of your lives.",
-  },
-  {
-    prompt: "Ready for a full concert experience?",
-    recommendation: "Legends of the Fiddle",
-    body: "Tyler's most theatrical show — cinematic, mythic, and technically extraordinary. Saturday evenings at Sedona Dances HQ.",
-  },
-  {
-    prompt: "Can't decide?",
-    recommendation: null,
-    body: "Many guests book all three. Each one is a completely different experience of Tyler's music. Together, they're the complete Sedona sound.",
-  },
-]
-
-export const limitedSeating = {
-  headline: "Limited Seating",
-  left: "Every Tyler Carson experience is designed to stay intimate. One Man Symphony and Legends of the Fiddle hold small audiences by design. Sedona Serenades is private by definition. When dates fill, they fill. Sedona visitors who wait too long to decide are the ones who leave wishing they hadn't.",
-  right: "Don't let your Sedona visit be just another tourist experience. Choose the musical adventure that makes your time here unforgettable.",
-  cta: { label: "Book Your Experience Now", href: "/events" },
-}
-
-// ── TESTIMONIALS ──────────────────────────────────────────────────────────────
-// Source: Wix slider — 10 reviews total.
-// Karen's Austin TX Google 5-star review leads per Eli's direction.
-// TODO: Pull remaining 8 verified reviews from the Wix slider and add below.
-
-export const testimonials = [
-  {
-    // Lead slide — keep this first per Eli's instruction
-    quote:
-      "We flew in from Austin and this was, without question, the highlight of our entire trip. We've been to Sedona three times. Nothing comes close to this.",
-    author: "Karen M.",
-    context: "Google · ★★★★★ · Austin, TX",
-  },
-  {
-    quote: "That was so fun!! You are such a great player.",
-    author: "Lindsey Stirling",
-    context: "CBS Mornings",
-  },
-  {
-    quote:
-      "The most magical thing I have ever witnessed. We were completely speechless. Our guests still talk about it months later.",
-    author: "Sarah & Michael T.",
-    context: "Private Wedding, Sedona",
-  },
-  {
-    quote:
-      "I've traveled the world for music and nothing has moved me like violin in the red rocks at sunrise. Book this. Don't think. Just book it.",
-    author: "James R.",
-    context: "Nature Concert Guest",
-  },
-  {
-    quote:
-      "Tyler proposed to me with violin echoing off the canyon walls. I said yes before he even finished the song.",
-    author: "Priya K.",
-    context: "Sedona Serenade",
-  },
-  // TODO: Add remaining verified reviews from Wix slider to reach 10 total
-]
-
-// ── PRESS ─────────────────────────────────────────────────────────────────────
+export const epkPressItems = [
+  { outlet: "CBS Mornings", logo: "/images/epk/cbs-mornings.jpg", title: "The story of violinist Tyler Carson, the Fiddler on the Rock", href: "https://www.cbsnews.com/video/the-story-of-violinist-tyler-carson-the-fiddler-on-the-rock/", summary: "Natalie Morales spoke with Tyler Carson in Sedona about beauty, hope, healing, and the unexpected turn that drew him to the Red Rocks.", featured: true },
+  { outlet: "Sedona Red Rock News", logo: null, title: "Fiddling with the Red Rocks", href: "https://www.redrocknews.com/2023/12/28/fiddling-with-the-red-rocks/", summary: "A profile tracing Tyler's path from classical training in Canada to touring with major Celtic acts and becoming Sedona's Fiddler on the Rock." },
+  { outlet: "Insight Timer", logo: null, title: "Featured Artist Profile", href: "https://insighttimer.com/fiddlerontherock", summary: "Featured on the meditation platform for Tyler's lifelong connection to violin and Living Music." },
+  { outlet: "Discover the Phoenix Region", logo: "/images/epk/dtpr-cover.png", title: "Fiddler on the Rock - Up and Coming from the Red Rocks of Sedona", href: "https://discovertheregion.com/fiddler-on-the-rock-up-and-coming-from-the-redrocks-of-sedona/", summary: "Cover story on Tyler's formative years, early performances, classical training, and fiddle roots." },
+  { outlet: "Visit Sedona", logo: null, title: "Sedona's Unique Musical Experience: Fiddler on the Rock", href: "https://visitsedona.com/blog/discover-sedonas-unique-musical-experience-fiddler-on-the-rock/", summary: "Official tourism feature about the show, Tyler Carson, and the Sedona concert experience." }
+];
 
 export const pressItems = [
-  {
-    outlet: "CBS Mornings",
-    blurb:
-      "National television feature on Tyler's story — a violinist who lost his voice and discovered something more powerful, performing alongside Lindsey Stirling.",
-    href: "/cbs",
-  },
-  {
-    outlet: "Sedona International Film Festival",
-    blurb:
-      '"EXTRAORDINARY doesn\'t even begin to describe this multi-talented performer, composer, and musical genius." — Patrick Schweiss, Executive Director',
-    href: "#",
-  },
-  {
-    outlet: "Red Rock News",
-    blurb:
-      "Sedona's paper of record covers the man behind the music and what it means to play where the canyon listens.",
-    href: "#",
-  },
-  {
-    outlet: "Insight Timer",
-    blurb:
-      "Featured in the wellness community's largest platform as an artist whose music facilitates deep presence and healing.",
-    href: "#",
-  },
-]
+  ...epkPressItems,{ outlet: "CBS Mornings", title: "Tyler Carson, the Fiddler on the Rock", href: "/cbs", sourceHref: "https://www.paramountplus.com/shows/video/HEu80JjRaVEH_kIOyf9dZ_OAj0cOctMD/", summary: "National feature on Tyler's Sedona story, voice loss, resilience, and performance with Lindsey Stirling.", featured: true }, { outlet: "Voyage Phoenix", title: "Daily Inspiration: Meet Tyler Carson", href: "https://voyagephoenix.com/interview/daily-inspiration-meet-tyler-carson/", summary: "Interview profile covering Tyler's path, creative life, and work as Fiddler on the Rock." }, { outlet: "JournalAZ", title: "Fiddler on the Rock to play weekly at museum", href: "https://journalaz.com/2025/09/20/fiddler-on-the-rock-to-play-weekly-at-museum/", summary: "Local coverage of Tyler's weekly concert series at the Sedona Heritage Museum." }, { outlet: "RE/MAX Sedona", title: "Things to Do Thursday", href: "https://www.remax-sedona-az.com/blog/things-to-do-thursday-74.html/print", summary: "Local things-to-do mention positioning Fiddler on the Rock as a Sedona evening option." }];
+export const testimonials = [{ quote: "We flew in from Austin and this was, without question, the highlight of our entire trip. We've been to Sedona three times. Nothing comes close to this.", author: "Karen M.", context: "Google five-star review, Austin, TX" }, { quote: cbs.quote, author: "Lindsey Stirling", context: "CBS Mornings" }, { quote: "EXTRAORDINARY doesn't even begin to describe this multi-talented performer, composer, and musical genius.", author: "Patrick Schweiss", context: "Sedona International Film Festival" }];
+export const reviews = [{ platform: "Google", rating: "5.0", count: "Live API pending", quote: testimonials[0].quote, author: "Karen M.", source: "Google review" }, { platform: "Tripadvisor", rating: "5.0", count: "Live API pending", quote: "A Sedona experience unlike anything else.", author: "Guest review", source: "Tripadvisor" }, { platform: "Yelp", rating: "5.0", count: "Live API pending", quote: "Music, views, and the feeling that you found something rare.", author: "Guest review", source: "Yelp" }, { platform: "Facebook", rating: "Recommended", count: "Live API pending", quote: "An unforgettable night in the Red Rocks.", author: "Guest recommendation", source: "Facebook" }];
+export const ratingApiPlan = ["Google Places API for rating, count, allowed review snippets, and photos where permitted.", "Yelp Fusion API for rating, count, and review excerpts within display rules.", "Tripadvisor Content API after access approval.", "Meta/Facebook Graph API for recommendations where permissions allow.", "Cache provider responses server-side for speed and quota control."];
+export const videos = [{ title: "CBS Mornings Feature", href: "/cbs", type: "National feature", youtubeId: cbs.youtubeId }, { title: "Living Music Documentary", href: "/documentary", type: "Documentary", youtubeId: documentary.youtubeId }, { title: "Red Rock Performance", href: "/videos", type: "Performance archive", youtubeId: cbs.youtubeId }];
+export const musicItems = [{ title: "Living Music", detail: "Original music shaped by presence, recovery, and the red rock landscape." }, { title: "One Man Symphony", detail: "Looped violin arrangements that turn one performer into an orchestra." }, { title: "Legends of the Fiddle", detail: "Mythic concert pieces, Celtic fire, classical lift, and cinematic storytelling." }];
+export const merchItems = [{ title: "Logo Apparel", detail: "Shirts, hoodies, and wearable pieces after the Square catalog is cleaned." }, { title: "Music & Keepsakes", detail: "Albums, signed items, and keepsakes surfaced after product names and variants are verified." }, { title: "Giftable Sedona Moments", detail: "A future lane for gift cards or experience-adjacent merch once Square data is stable." }];
+export const bookingChecklist = ["Create GoHighLevel forms for private Serenades, photographer requests, and private event inquiries.", "Create GHL custom fields for show, location, group size, ticket tier, add-ons, requested date, and UTM source.", "Create Square checkout/payment links for One Man Symphony General/VIP and Legends General/VIP.", "Create Square or request-first paths for Serenades packages after pricing is finalized.", "Tag every lead by path: public-show, sedona-serenades, private-event, merch, support, press, or newsletter.", "Test internal notifications, auto-replies, and follow-up sequences before launch."];
+export const support = { headline: "Help Fiddler on the Rock reach for the stars.", body: "The crowdfunding campaign supports the next chapter of Tyler's Living Music work. It is separate from ticketing and merch, and it gives supporters a way to help the project grow beyond a single Sedona evening.", href: site.indiegogo };
 
-// ── CBS PAGE ──────────────────────────────────────────────────────────────────
+export const seoKeywords = ["things to do in Sedona", "live music Sedona", "Sedona concerts", "Sedona sunset concert", "Sedona entertainment", "private concert Sedona", "romantic things to do Sedona", "Sedona proposal ideas", "Sedona Serenades", "Tyler Carson CBS", "Sedona violin", "violin looping artist"];
 
-export const cbsPage = {
-  hero: {
-    headline: "As Seen on CBS Mornings",
-    subheadline:
-      "CBS Mornings traveled to Sedona to cover Tyler Carson's story — a violinist who lost his voice and found something more powerful. The segment introduced a national audience to the red rocks, the music, and a message about resilience the network knew would resonate.",
-  },
-  // YouTube video ID — confirm with Tyler
-  youtubeId: "CBS_VIDEO_ID",
-  featuredQuote: {
-    text: "That was so fun!! You are such a great player.",
-    attribution: "Lindsey Stirling, on CBS Mornings after performing with Tyler Carson",
-  },
-  storySection: {
-    headline: "What Brought CBS to Sedona",
-    body: "The segment wasn't about a concert. It was about what happens when a musician loses the ability to speak — and discovers that the violin can do what the voice no longer can.\n\nCBS followed Tyler into the red rocks, into the canyon where he performs, and into the story of spasmodic dysphonia, recovery, and what music means when it becomes survival rather than career. The segment aired nationally and introduced millions of viewers to a story that had been unfolding quietly in the Sedona landscape for years.\n\nOn set that day, Tyler performed alongside Lindsey Stirling — one of the most recognized violinists in the world. Her reaction says more than any review could.",
-  },
-  ctas: [
-    { label: "See All Experiences", href: "/experiences" },
-    { label: "Read Tyler's Full Story", href: "/about" },
-  ],
-  seo: {
-    title: "Tyler Carson on CBS Mornings | Fiddler on the Rock | Sedona",
-    description:
-      "Watch the CBS Mornings feature on Tyler Carson — the Sedona violinist who lost his voice and found it in the violin. Featuring Lindsey Stirling. As seen on national television.",
-  },
-}
 
-// ── SEO (per page) ────────────────────────────────────────────────────────────
-
-export const seo = {
-  home: {
-    title: "Live Violin Concerts in Sedona | Fiddler on the Rock",
-    description:
-      "Tyler Carson performs live outdoor violin concerts in Sedona's red rock landscape every Thursday and Saturday — and by private booking year-round. As seen on CBS Mornings.",
-    ogImage: "/images/og/home.jpg",
-  },
-  experiences: {
-    title: "Live Music Experiences in Sedona | Fiddler on the Rock",
-    description:
-      "Three live violin experiences in Sedona's red rock landscape. Thursday and Saturday concerts, plus private Sedona Serenades for couples. Book now.",
-    ogImage: "/images/og/experiences.jpg",
-  },
-  cbs: {
-    title: "Tyler Carson on CBS Mornings | Fiddler on the Rock | Sedona",
-    description:
-      "Watch the CBS Mornings feature on Tyler Carson — the Sedona violinist who lost his voice and found it in the violin. Featuring Lindsey Stirling.",
-    ogImage: "/images/og/cbs.jpg",
-  },
-}
-
-// ── NAV ───────────────────────────────────────────────────────────────────────
-
-export const navLinks = [
-  { label: "Concerts", href: "/events" },
-  { label: "Serenades", href: "/sedona-serenades" },
-  { label: "About", href: "/about" },
-  { label: "Press", href: "/cbs" },
-]
+export const hero = { ...home, ctaPrimary: home.primaryCta, ctaSecondary: home.secondaryCta };
+export const cbsSection = { eyebrow: cbs.headline, headline: cbs.headline, body: cbs.subheadline, quote: cbs.quote, quoteAttribution: cbs.attribution, ctaPrimary: { label: "Read Tyler's Full Story", href: "/about" }, ctaSecondary: { label: "Watch the Full CBS Segment", href: "/cbs" }, youtubeId: cbs.youtubeId };
+export const emailSignup = { headline: "Stay Connected", body: "Get first access to Thursday concert dates, behind-the-scenes from the Red Rocks, and music you won't hear anywhere else.", buttonLabel: "Join the List" };
+export const experienceCards = experiences.map((item) => ({ id: item.id, tag: item.eyebrow, title: item.title, description: item.summary, cta: "Explore", href: item.href, accent: item.id === "sedona-serenades" }));
+export const indiegogo = { href: site.indiegogo, headline: support.headline, body: support.body };

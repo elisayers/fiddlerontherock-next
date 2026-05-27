@@ -1,0 +1,5 @@
+import type { Metadata } from "next";
+import { CardGrid, InfoCard, PageHero, Section } from "@/components/PagePrimitives";
+import { ratingApiPlan, reviews } from "@/lib/data";
+export const metadata: Metadata = { title: "What People Say", description: "Ratings and reviews for Fiddler on the Rock from Google, Tripadvisor, Facebook, and Yelp with live API integration plan." };
+export default function ReviewsPage() { return <><PageHero eyebrow="Reviews" title="What People Say" subtitle="Live ratings will pull from official provider APIs where access and display rules allow. Owner responses are intentionally excluded." image="/images/red-rock-concert.jpg" /><Section title="Ratings snapshot"><CardGrid>{reviews.map((item) => <InfoCard key={item.platform} eyebrow={item.platform + " - " + item.rating} title={item.count} body={'"' + item.quote + '" - ' + item.author} />)}</CardGrid></Section><Section eyebrow="Live ratings" title="API integration plan" tone="soft"><CardGrid>{ratingApiPlan.map((item, index) => <InfoCard key={item} title={(index + 1).toString().padStart(2, "0")} body={item} />)}</CardGrid></Section></>; }
