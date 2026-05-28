@@ -6,9 +6,6 @@ import { experiences, site, socialLinks, support } from "@/lib/data";
 import { usePathname } from "next/navigation";
 
 export default function Footer() {
-  const pathname = usePathname();
-  if (pathname === "/experience") return null;
-
   const year = new Date().getFullYear();
   return (
     <footer className="site-footer">

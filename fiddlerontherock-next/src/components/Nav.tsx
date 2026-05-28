@@ -8,9 +8,6 @@ import { experiences } from "@/lib/data";
 import { usePathname } from "next/navigation";
 
 export default function Nav() {
-  const pathname = usePathname();
-  if (pathname === "/experience") return null;
-
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
@@ -57,7 +54,12 @@ export default function Nav() {
       </Link>
 
       <nav className="desktop-nav" aria-label="Primary navigation">
-        <Link href="/">Home</Link>
+        <div className="nav-dropdown">
+          <Link href="/">Home</Link>
+          <div className="dropdown-panel">
+            <Link href="/experience">Landing Page</Link>
+          </div>
+        </div>
         
         <div className="nav-dropdown">
           <Link href="/experiences">Experiences</Link>
@@ -131,7 +133,10 @@ export default function Nav() {
           >
             <MobileGroup
               title="Home"
-              links={[{ label: "Fiddler Home", href: "/" }]}
+              links={[
+                { label: "Fiddler Home", href: "/" },
+                { label: "Landing Page", href: "/experience" }
+              ]}
               onClick={() => setOpen(false)}
             />
             <MobileGroup
