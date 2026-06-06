@@ -1,37 +1,40 @@
 import type { Metadata } from "next";
-import { publicShows } from "@/lib/booking/catalog";
-import { dollars } from "@/lib/booking/pricing";
+import { createClient } from "@/utils/supabase/server";
 import { PageHero, Section } from "@/components/PagePrimitives";
+import AdminEventsList from "./AdminEventsList";
 
 export const metadata: Metadata = {
   title: "Admin Events | Fiddler on the Rock",
   description: "Manage public Fiddler on the Rock show definitions.",
 };
 
-export default function AdminEventsPage() {
+export default async function AdminEventsPage() {
+  const supabase = createClient();
+
+  // Query events along with their ticket types
+  const { data: events, error } = await supabase
+    .from("events")
+    .select(`
+      *,
+      ticket_types (*)
+    `)
+    .order("title");
+
+  if (error) {
+    console.error("Error loading events:", error);
+  }
+
+  const eventsData = events || [];
+
   return (
     <>
-      <PageHero eyebrow="Admin" title="Public show setup" subtitle="These are the MVP defaults. After Supabase is connected, this screen becomes editable inventory." />
-      <Section title="Ticketed shows">
-        <div className="admin-panel">
-          <table className="admin-table">
-            <thead>
-              <tr><th>Show</th><th>When</th><th>Capacity</th><th>General</th><th>VIP</th><th>Kids</th></tr>
-            </thead>
-            <tbody>
-              {Object.entries(publicShows).map(([slug, show]) => (
-                <tr key={slug}>
-                  <td>{show.title}</td>
-                  <td>{show.weekday === 4 ? "Thursdays" : "Saturdays"} at {show.startHour}:{String(show.startMinute).padStart(2, "0")}</td>
-                  <td>{show.capacity}</td>
-                  <td>{dollars(show.tiers.general.adult)}</td>
-                  <td>{dollars(show.tiers.vip.adult)}</td>
-                  <td>{dollars(show.tiers.general.kid)}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+      <PageHero
+        eyebrow="Admin"
+        title="Public Show Setup"
+        subtitle="Manage show definitions, general/VIP pricing, default capacities, and under-8 reservation status."
+      />
+      <Section title="Show Configurations">
+        <AdminEventsList initialEvents={eventsData} />
       </Section>
     </>
   );

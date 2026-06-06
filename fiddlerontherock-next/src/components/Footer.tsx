@@ -6,6 +6,8 @@ import { experiences, site, socialLinks, support } from "@/lib/data";
 import { usePathname } from "next/navigation";
 
 export default function Footer() {
+  const pathname = usePathname();
+  if (pathname === "/experience") return null;
   const year = new Date().getFullYear();
   return (
     <footer className="site-footer">
@@ -14,7 +16,7 @@ export default function Footer() {
           <Image src="/images/logo-white.png" alt="Fiddler on the Rock" width={56} height={56} />
           <span style={{ fontFamily: "var(--font-serif)", fontSize: "1.25rem", letterSpacing: "0.02em" }}>Fiddler on the Rock</span>
         </div>
-        <p style={{ marginTop: "8px", maxWidth: "460px" }}>Tyler Carson performs Living Music in the Red Rocks of Sedona, Arizona.</p>
+        <p style={{ marginTop: "8px", maxWidth: "460px" }}>Tyler Carson performs live violin in the Red Rocks of Sedona, Arizona.</p>
         
         <div style={{ display: "flex", gap: "20px", marginTop: "16px" }}>
           {socialLinks.map((link) => {
@@ -50,7 +52,13 @@ export default function Footer() {
       </div>
 
       <div className="footer-grid">
-        <FooterColumn title="Experiences" links={experiences.map((item) => ({ label: item.title, href: item.href }))} />
+        <FooterColumn 
+          title="Experiences" 
+          links={[
+            { label: "Events Calendar", href: "/events" },
+            ...experiences.map((item) => ({ label: item.title, href: item.href }))
+          ]} 
+        />
         <FooterColumn 
           title="Media" 
           links={[
@@ -85,7 +93,6 @@ export default function Footer() {
 
       <div className="footer-bottom">
         <p>© {year} Tyler Carson. Sedona, Arizona.</p>
-        <p>Tickets and merch are separate checkout paths. Square handles payments; GoHighLevel handles CRM sync.</p>
       </div>
     </footer>
   );

@@ -229,7 +229,7 @@ export default function ExperienceLandingPage() {
   <div className="gallery-header">
     <span className="section-eyebrow">The Experience</span>
     <h2 className="section-title" style={{ marginBottom: "14px" }}>Moments from the<br /><em>canyon.</em></h2>
-    <p style={{ fontSize: "15px", fontWeight: "300", color: "var(--muted)", lineHeight: "1.65" }}>Real moments from real guests — in the red rocks, under open sky.</p>
+    <p style={{ fontSize: "15px", fontWeight: "300", color: "var(--muted)", lineHeight: "1.65" }}>Real moments from real guests — in the Red Rocks, under open sky.</p>
   </div>
   <div className="gallery-grid">
     <div className="gallery-item g-love">
@@ -239,13 +239,13 @@ export default function ExperienceLandingPage() {
       <img src="/images/experience/happy-crew.jpg" alt="Happy guests enjoying a Sedona Red Rock concert" loading="lazy" />
     </div>
     <div className="gallery-item g-tyler">
-      <img src="/images/experience/tyler-serenade-story.jpg" alt="Tyler Carson performing violin in the Sedona red rocks" loading="lazy" />
+      <img src="/images/experience/tyler-serenade-story.jpg" alt="Tyler Carson performing violin in the Sedona Red Rocks" loading="lazy" />
     </div>
     <div className="gallery-item g-sunset">
       <img src="/images/experience/sunset-serenades.jpg" alt="Sunset during a private violin concert in Sedona" loading="lazy" />
     </div>
     <div className="gallery-item g-redrock">
-      <img src="/images/experience/redrock-views.jpg" alt="Red rock canyon views during a Sedona concert" loading="lazy" />
+      <img src="/images/experience/redrock-views.jpg" alt="Red Rock canyon views during a Sedona concert" loading="lazy" />
     </div>
     <div className="gallery-item g-seats">
       <img src="/images/experience/serenade-seats.jpg" alt="Intimate seating arrangement for a Sedona Red Rock concert" loading="lazy" />

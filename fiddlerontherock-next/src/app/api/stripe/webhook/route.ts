@@ -1,7 +1,6 @@
 import { NextResponse } from "next/server";
 import { verifyStripeWebhook } from "@/lib/booking/stripe";
 import { supabaseConfigured, supabasePatch, supabaseRpc } from "@/lib/booking/supabase";
-import { recordGhlSyncError, syncBookingToGhl } from "@/lib/ghl";
 
 export async function POST(request: Request) {
   const rawBody = await request.text();
@@ -21,18 +20,6 @@ export async function POST(request: Request) {
           customer_email: event.data.object.customer_details?.email ?? null,
           customer_phone: event.data.object.customer_details?.phone ?? null,
         });
-        try {
-          await syncBookingToGhl({
-            orderId,
-            stripeSessionId: event.data.object.id,
-            stripePaymentIntentId: event.data.object.payment_intent ?? null,
-            stripeCustomer: event.data.object.customer_details,
-            stripeAmountTotal: event.data.object.amount_total ?? null,
-          });
-        } catch (ghlError) {
-          console.error("GoHighLevel booking sync failed", { orderId, error: ghlError });
-          await recordGhlSyncError(orderId, ghlError);
-        }
       }
       return NextResponse.json({ received: true, confirmed: true, orderId });
     }

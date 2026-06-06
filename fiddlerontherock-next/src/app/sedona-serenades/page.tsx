@@ -24,7 +24,7 @@ export default function SerenadesPage() {
 
       <Section title="The canyon is your private concert hall.">
         <FeatureSplit
-          image="/images/serenades-private-hero.jpg"
+          image="/images/red-rock-concert.jpg"
           alt="Tyler Carson playing violin for a couple at sunset in Sedona"
           eyebrow="An Intimate Sacred Evening"
           title="Where music meets the silence of the Red Rocks."
@@ -53,7 +53,7 @@ export default function SerenadesPage() {
             <div style={{ padding: '28px', flexGrow: 1, display: 'flex', flexDirection: 'column' }}>
               <p className="card-eyebrow">Vast Red Rock Vista</p>
               <h3>The Open-Air Spot</h3>
-              <p style={{ flexGrow: 1 }}>A sweeping red rock vista with flat, accessible terrain and wide Sedona views.</p>
+              <p style={{ flexGrow: 1 }}>A sweeping Red Rock vista with flat, accessible terrain and wide Sedona views.</p>
             </div>
           </div>
 

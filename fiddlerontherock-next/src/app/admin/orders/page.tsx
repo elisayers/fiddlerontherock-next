@@ -1,22 +1,40 @@
 import type { Metadata } from "next";
+import { createClient } from "@/utils/supabase/server";
 import { PageHero, Section } from "@/components/PagePrimitives";
+import AdminOrdersList from "./AdminOrdersList";
 
 export const metadata: Metadata = {
   title: "Admin Orders | Fiddler on the Rock",
   description: "Review Fiddler on the Rock booking orders and payment status.",
 };
 
-export default function AdminOrdersPage() {
+export default async function AdminOrdersPage() {
+  const supabase = createClient();
+
+  // Query orders along with their order_items, ordered by created_at descending
+  const { data: orders, error } = await supabase
+    .from("orders")
+    .select(`
+      *,
+      order_items (*)
+    `)
+    .order("created_at", { ascending: false });
+
+  if (error) {
+    console.error("Error loading orders:", error);
+  }
+
+  const ordersData = orders || [];
+
   return (
     <>
-      <PageHero eyebrow="Admin" title="Orders and payment status" subtitle="Paid counts must only change after Stripe webhook confirmation, never after the browser success page." />
-      <Section title="Order states">
-        <div className="admin-grid">
-          <div className="admin-panel"><h3>Held</h3><p>Seat hold exists and expires after 15 minutes if checkout is abandoned.</p></div>
-          <div className="admin-panel"><h3>Pending</h3><p>Stripe Checkout session created, but payment has not been confirmed by webhook.</p></div>
-          <div className="admin-panel"><h3>Paid</h3><p>Webhook verified. Order is confirmed and paid counts are incremented.</p></div>
-          <div className="admin-panel"><h3>Released</h3><p>Expired holds are released and no longer block availability.</p></div>
-        </div>
+      <PageHero
+        eyebrow="Admin"
+        title="Orders & Sync Audit"
+        subtitle="Track seat bookings, payment confirmations, and GHL CRM integration status."
+      />
+      <Section title="Seat Bookings">
+        <AdminOrdersList initialOrders={ordersData as any} />
       </Section>
     </>
   );

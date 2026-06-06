@@ -8,22 +8,27 @@ import { experiences } from "@/lib/data";
 import { usePathname } from "next/navigation";
 
 export default function Nav() {
+  const pathname = usePathname();
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
+    if (pathname === "/experience") return;
     const onScroll = () => setScrolled(window.scrollY > 24);
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
-  }, []);
+  }, [pathname]);
 
   useEffect(() => {
+    if (pathname === "/experience") return;
     document.body.style.overflow = open ? "hidden" : "";
     return () => {
       document.body.style.overflow = "";
     };
-  }, [open]);
+  }, [open, pathname]);
+
+  if (pathname === "/experience") return null;
 
   const experienceLinks = experiences.map((item) => ({ label: item.title, href: item.href }));
 
@@ -54,12 +59,8 @@ export default function Nav() {
       </Link>
 
       <nav className="desktop-nav" aria-label="Primary navigation">
-        <div className="nav-dropdown">
-          <Link href="/">Home</Link>
-          <div className="dropdown-panel">
-            <Link href="/experience">Landing Page</Link>
-          </div>
-        </div>
+        <Link href="/">Home</Link>
+        <Link href="/events">Events</Link>
         
         <div className="nav-dropdown">
           <Link href="/experiences">Experiences</Link>
@@ -108,7 +109,7 @@ export default function Nav() {
         </div>
       </nav>
 
-      <Link href="/booking" className="nav-cta">Book</Link>
+      <Link href="/booking" className="nav-cta">Get Tickets</Link>
 
       <button
         className="menu-button"
@@ -135,7 +136,7 @@ export default function Nav() {
               title="Home"
               links={[
                 { label: "Fiddler Home", href: "/" },
-                { label: "Landing Page", href: "/experience" }
+                { label: "Events Calendar", href: "/events" }
               ]}
               onClick={() => setOpen(false)}
             />
