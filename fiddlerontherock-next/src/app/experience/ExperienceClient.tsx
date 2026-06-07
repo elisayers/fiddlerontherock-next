@@ -33,7 +33,7 @@ export default function ExperienceClient() {
         <div className="hero-bg"></div>
         <div className="hero-overlay"></div>
         <div className="hero-content">
-          <img src="/images/experience/packages-hero.png" alt="Fiddler on the Rock" className="hero-logo" />
+          <Image src="/images/experience/packages-hero.png" alt="Fiddler on the Rock" width={100} height={100} className="hero-logo" priority />
           <p className="hero-eyebrow">Sedona, Arizona · Private Concert Experience</p>
           <h1>A Violin Concert<br /><em>Just for You</em><br />in the Red Rocks</h1>
           <p className="hero-sub">Tyler Carson leads you to a secret vantage point among Sedona's ancient cliffs — and plays a private concert you'll never stop talking about.</p>
@@ -233,22 +233,22 @@ export default function ExperienceClient() {
         </div>
         <div className="gallery-grid">
           <div className="gallery-item g-love">
-            <img src="/images/experience/serenade-love.jpg" alt="Couple sharing a moment during a private violin experience in Sedona" loading="lazy" />
+            <Image src="/images/experience/serenade-love.jpg" alt="Couple sharing a moment during a private violin experience in Sedona" fill sizes="(max-width: 600px) 100vw, (max-width: 900px) 50vw, 33vw" className="image-cover" />
           </div>
           <div className="gallery-item g-crew">
-            <img src="/images/experience/happy-crew.jpg" alt="Happy guests enjoying a Sedona Red Rock concert" loading="lazy" />
+            <Image src="/images/experience/happy-crew.jpg" alt="Happy guests enjoying a Sedona Red Rock concert" fill sizes="(max-width: 600px) 100vw, (max-width: 900px) 50vw, 33vw" className="image-cover" />
           </div>
           <div className="gallery-item g-tyler">
-            <img src="/images/experience/tyler-serenade-story.jpg" alt="Tyler Carson performing violin in the Sedona Red Rocks" loading="lazy" />
+            <Image src="/images/experience/tyler-serenade-story.jpg" alt="Tyler Carson performing violin in the Sedona Red Rocks" fill sizes="(max-width: 900px) 50vw, 33vw" className="image-cover" />
           </div>
           <div className="gallery-item g-sunset">
-            <img src="/images/experience/sunset-serenades.jpg" alt="Sunset during a private violin concert in Sedona" loading="lazy" />
+            <Image src="/images/experience/sunset-serenades.jpg" alt="Sunset during a private violin concert in Sedona" fill sizes="(max-width: 600px) 100vw, (max-width: 900px) 50vw, 33vw" className="image-cover" />
           </div>
           <div className="gallery-item g-redrock">
-            <img src="/images/experience/redrock-views.jpg" alt="Red Rock canyon views during a Sedona concert" loading="lazy" />
+            <Image src="/images/experience/redrock-views.jpg" alt="Red Rock canyon views during a Sedona concert" fill sizes="(max-width: 600px) 100vw, (max-width: 900px) 50vw, 33vw" className="image-cover" />
           </div>
           <div className="gallery-item g-seats">
-            <img src="/images/experience/serenade-seats.jpg" alt="Intimate seating arrangement for a Sedona Red Rock concert" loading="lazy" />
+            <Image src="/images/experience/serenade-seats.jpg" alt="Intimate seating arrangement for a Sedona Red Rock concert" fill sizes="100vw" className="image-cover" />
           </div>
         </div>
         <div className="gallery-footer">
@@ -486,7 +486,7 @@ export default function ExperienceClient() {
 
       {/* ═══════════════════ FOOTER ═══════════════════ */}
       <footer className="page-footer">
-        <img src="/images/experience/packages-hero.png" alt="Fiddler on the Rock" className="footer-logo" />
+        <Image src="/images/experience/packages-hero.png" alt="Fiddler on the Rock" width={100} height={100} className="footer-logo" />
         <p className="footer-text">Tyler Carson · Sedona, Arizona · Red Rock Nature Concert</p>
         <a href="https://fiddleontherock.com" className="footer-link">fiddleontherock.com</a>
       </footer>

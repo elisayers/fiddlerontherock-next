@@ -65,7 +65,7 @@ export function musicEventSchema(events: any[]) {
         }
       },
       "image": [
-        site.url + (event.slug === "one-man-symphony" ? "/images/red-rock-concert.jpg" : "/images/tyler-leaping.jpg")
+        site.url + (event.slug === "one-man-symphony" ? "/images/sedona-heritage-museum-historic-apple-barn.jpg" : "/images/sedona-hub-concert-hall-windows.jpg")
       ],
       "performer": {
         "@type": "Person",

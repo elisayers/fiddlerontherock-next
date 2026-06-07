@@ -24,7 +24,7 @@ export default function PrivateEventsPage() {
 
       <Section title="The canyon is your private concert hall.">
         <FeatureSplit
-          image="/images/red-rock-concert.jpg"
+          image="/images/sedona-violin-sunset-proposal.jpg"
           alt="Tyler Carson playing violin for a couple at sunset in Sedona"
           eyebrow="A Bespoke Experience"
           title="Designed for Planners, Brides, and Milestone Celebrations"
@@ -94,7 +94,7 @@ export default function PrivateEventsPage() {
 
           <div className="info-card" style={{ padding: 0, overflow: 'hidden', display: 'flex', flexDirection: 'column' }}>
             <div style={{ position: 'relative', height: '240px', width: '100%' }}>
-              <Image src="/images/serenades-1.jpg" alt="The Open-Air Spot" fill className="image-cover" />
+              <Image src="/images/sedona-serenade-sunset-overlook.jpg" alt="The Open-Air Spot" fill className="image-cover" />
             </div>
             <div style={{ padding: '28px', flexGrow: 1, display: 'flex', flexDirection: 'column' }}>
               <p className="card-eyebrow">Vast Red Rock Vista</p>
