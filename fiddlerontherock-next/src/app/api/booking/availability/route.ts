@@ -11,40 +11,44 @@ export async function GET(request: Request) {
   const show = (searchParams.get("show") || "one-man-symphony") as ShowId;
 
   if (supabaseConfigured()) {
-    if (show === "sedona-serenades") {
-      const rows = await supabaseRest<SerenadeSlotRow[]>("availability_slots?select=id,start_at,end_at,capacity,paid_count,held_count,sold_out_override,location_slug,location_label&active=eq.true&order=start_at.asc");
+    try {
+      if (show === "sedona-serenades") {
+        const rows = await supabaseRest<SerenadeSlotRow[]>("availability_slots?select=id,start_at,end_at,capacity,paid_count,held_count,sold_out_override,location_slug,location_label&active=eq.true&order=start_at.asc");
+        const slots = rows.map((row) => ({
+          id: row.id,
+          showId: show,
+          startsAt: row.start_at,
+          endsAt: row.end_at,
+          capacity: row.capacity,
+          paidCount: row.paid_count,
+          heldCount: row.held_count,
+          soldOutOverride: row.sold_out_override,
+          location: row.location_slug,
+          label: row.location_label,
+          remaining: Math.max(0, row.capacity - row.paid_count - row.held_count),
+          soldOut: row.sold_out_override || row.capacity - row.paid_count - row.held_count <= 0,
+        }));
+        return NextResponse.json({ slots, demo: false });
+      }
+
+      const rows = await supabaseRest<PublicSlotRow[]>(`event_occurrences?select=id,start_at,end_at,capacity,paid_count,held_count,sold_out_override,events!inner(slug,title)&events.slug=eq.${show}&active=eq.true&order=start_at.asc`);
       const slots = rows.map((row) => ({
         id: row.id,
-        showId: show,
+        showId: row.events.slug,
         startsAt: row.start_at,
         endsAt: row.end_at,
         capacity: row.capacity,
         paidCount: row.paid_count,
         heldCount: row.held_count,
         soldOutOverride: row.sold_out_override,
-        location: row.location_slug,
-        label: row.location_label,
+        label: row.events.title,
         remaining: Math.max(0, row.capacity - row.paid_count - row.held_count),
         soldOut: row.sold_out_override || row.capacity - row.paid_count - row.held_count <= 0,
       }));
       return NextResponse.json({ slots, demo: false });
+    } catch (e) {
+      console.warn("Supabase fetch failed, falling back to demo mode:", e);
     }
-
-    const rows = await supabaseRest<PublicSlotRow[]>(`event_occurrences?select=id,start_at,end_at,capacity,paid_count,held_count,sold_out_override,events!inner(slug,title)&events.slug=eq.${show}&active=eq.true&order=start_at.asc`);
-    const slots = rows.map((row) => ({
-      id: row.id,
-      showId: row.events.slug,
-      startsAt: row.start_at,
-      endsAt: row.end_at,
-      capacity: row.capacity,
-      paidCount: row.paid_count,
-      heldCount: row.held_count,
-      soldOutOverride: row.sold_out_override,
-      label: row.events.title,
-      remaining: Math.max(0, row.capacity - row.paid_count - row.held_count),
-      soldOut: row.sold_out_override || row.capacity - row.paid_count - row.held_count <= 0,
-    }));
-    return NextResponse.json({ slots, demo: false });
   }
 
   const slots = demoAvailability(show).map((slot) => ({ ...slot, remaining: remainingSeats(slot), soldOut: remainingSeats(slot) <= 0 }));
