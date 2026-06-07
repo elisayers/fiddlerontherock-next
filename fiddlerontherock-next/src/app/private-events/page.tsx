@@ -4,20 +4,20 @@ import BookingForm from "@/components/BookingForm";
 import { CardGrid, InfoCard, PageHero, Section, FeatureSplit } from "@/components/PagePrimitives";
 
 export const metadata: Metadata = { 
-  title: "Sedona Serenades Private Concert | Fiddler on the Rock", 
-  description: "Private Sedona violin experience for couples, proposals, anniversaries, and small groups." 
+  title: "Private Events | Fiddler on the Rock", 
+  description: "Private Sedona violin experience for couples, proposals, anniversaries, corporate events, and retreats." 
 };
 
-export default function SerenadesPage() { 
+export default function PrivateEventsPage() { 
   return (
     <>
       <PageHero 
-        eyebrow="Private Red Rock Nature Concert" 
+        eyebrow="Private Events" 
         title="A violin concert just for you in the Red Rocks." 
         subtitle="Canyon walls, open sky, and Tyler Carson playing a private Living Music concert for your group." 
         image="/images/tyler-romantic-sunset.jpg" 
         ctas={[
-          { label: "Book a Serenade", href: "#book" }, 
+          { label: "Book a Private Event", href: "#book" }, 
           { label: "Request Custom Event", href: "/contact?booking=request" }
         ]} 
       />

@@ -1,87 +1,163 @@
 "use client";
 
+import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { experiences, site, socialLinks, support } from "@/lib/data";
+import { site, socialLinks, support } from "@/lib/data";
 import { usePathname } from "next/navigation";
 
 export default function Footer() {
   const pathname = usePathname();
+  const [email, setEmail] = useState("");
+  const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
+
   if (pathname === "/experience") return null;
   const year = new Date().getFullYear();
+
+  async function handleSubscribe(e: React.FormEvent) {
+    e.preventDefault();
+    if (!email) return;
+    setStatus("loading");
+    try {
+      await new Promise((res) => setTimeout(res, 900));
+      setStatus("success");
+      setEmail("");
+    } catch {
+      setStatus("error");
+    }
+  }
+
   return (
     <footer className="site-footer">
-      <div className="footer-brand" style={{ display: "flex", flexDirection: "column", alignItems: "flex-start", gap: "12px", marginBottom: "42px" }}>
-        <div style={{ display: "flex", alignItems: "center", gap: "16px" }}>
-          <Image src="/images/logo-white.png" alt="Fiddler on the Rock" width={56} height={56} />
-          <span style={{ fontFamily: "var(--font-serif)", fontSize: "1.25rem", letterSpacing: "0.02em" }}>Fiddler on the Rock</span>
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))", gap: "48px", marginBottom: "48px" }}>
+        {/* Brand column */}
+        <div className="footer-brand" style={{ display: "flex", flexDirection: "column", alignItems: "flex-start", gap: "12px", margin: 0 }}>
+          <div style={{ display: "flex", alignItems: "center", gap: "16px" }}>
+            <Image src="/images/logo-white.png" alt="Fiddler on the Rock" width={56} height={56} />
+            <span style={{ fontFamily: "var(--font-serif)", fontSize: "1.25rem", letterSpacing: "0.02em" }}>Fiddler on the Rock</span>
+          </div>
+          <p style={{ marginTop: "8px", maxWidth: "460px" }}>Tyler Carson performs live violin in the Red Rocks of Sedona, Arizona.</p>
+          
+          <div style={{ display: "flex", gap: "20px", marginTop: "16px" }}>
+            {socialLinks.map((link) => {
+              const Icon = getSocialIcon(link.label);
+              return (
+                <a
+                  key={link.label}
+                  href={link.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  style={{
+                    color: "var(--color-gold)",
+                    opacity: 0.6,
+                    transition: "opacity 0.25s ease, transform 0.2s ease",
+                    display: "inline-flex",
+                    alignItems: "center"
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.opacity = "1";
+                    e.currentTarget.style.transform = "translateY(-2px)";
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.opacity = "0.6";
+                    e.currentTarget.style.transform = "none";
+                  }}
+                  aria-label={link.label}
+                >
+                  {Icon}
+                </a>
+              );
+            })}
+          </div>
         </div>
-        <p style={{ marginTop: "8px", maxWidth: "460px" }}>Tyler Carson performs live violin in the Red Rocks of Sedona, Arizona.</p>
-        
-        <div style={{ display: "flex", gap: "20px", marginTop: "16px" }}>
-          {socialLinks.map((link) => {
-            const Icon = getSocialIcon(link.label);
-            return (
-              <a
-                key={link.label}
-                href={link.href}
-                target="_blank"
-                rel="noopener noreferrer"
-                style={{
-                  color: "var(--color-gold)",
-                  opacity: 0.6,
-                  transition: "opacity 0.25s ease, transform 0.2s ease",
-                  display: "inline-flex",
-                  alignItems: "center"
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.opacity = "1";
-                  e.currentTarget.style.transform = "translateY(-2px)";
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.opacity = "0.6";
-                  e.currentTarget.style.transform = "none";
-                }}
-                aria-label={link.label}
-              >
-                {Icon}
-              </a>
-            );
-          })}
+
+        {/* Newsletter Signup ("Stay Connected") */}
+        <div style={{ display: "flex", flexDirection: "column", gap: "16px", maxWidth: "480px" }}>
+          <h3 style={{ fontFamily: "var(--font-mono)", fontSize: "0.68rem", letterSpacing: "0.24em", textTransform: "uppercase", color: "var(--color-gold)", margin: 0 }}>
+            Stay Connected
+          </h3>
+          <p style={{ margin: 0, color: "var(--color-cream-soft)", fontSize: "0.9rem" }}>
+            Join the list for first access to concert dates, music releases, and stories from the Sedona canyons.
+          </p>
+          <form onSubmit={handleSubscribe} style={{ display: "flex", width: "100%", marginTop: "8px" }}>
+            <input
+              type="email"
+              placeholder="Your email address"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+              disabled={status === "loading" || status === "success"}
+              style={{
+                flex: 1,
+                padding: "12px 16px",
+                background: "var(--color-ink)",
+                border: "1px solid rgba(200, 169, 110, 0.2)",
+                borderRight: "none",
+                color: "var(--color-cream)",
+                fontSize: "0.85rem",
+                outline: "none"
+              }}
+            />
+            <button
+              type="submit"
+              disabled={status === "loading" || status === "success"}
+              style={{
+                padding: "12px 20px",
+                background: "var(--color-gold)",
+                color: "var(--color-ink)",
+                border: "none",
+                fontFamily: "var(--font-sans)",
+                fontSize: "0.65rem",
+                letterSpacing: "0.15em",
+                textTransform: "uppercase",
+                fontWeight: 600,
+                cursor: "pointer"
+              }}
+            >
+              {status === "loading" ? "..." : status === "success" ? "Subscribed" : "Join"}
+            </button>
+          </form>
+          {status === "error" && (
+            <p style={{ color: "rgba(200,100,100,0.8)", fontSize: "0.75rem", margin: 0 }}>Something went wrong. Please try again.</p>
+          )}
         </div>
       </div>
 
-      <div className="footer-grid">
+      <div className="footer-grid" style={{ borderTop: "1px solid rgba(138,143,168,0.1)", paddingTop: "42px" }}>
         <FooterColumn 
-          title="Experiences" 
+          title="Explore" 
           links={[
-            { label: "Events Calendar", href: "/events" },
-            ...experiences.map((item) => ({ label: item.title, href: item.href }))
+            { label: "Home", href: "/" },
+            { label: "Live Concerts", href: "/live-concerts" },
+            { label: "Private Events", href: "/private-events" },
+            { label: "Media & Merch", href: "/media-merch" },
+            { label: "Contact", href: "/contact" }
           ]} 
         />
         <FooterColumn 
-          title="Media" 
+          title="Listen & Follow" 
           links={[
-            { label: "CBS Feature", href: "/cbs" },
-            { label: "Documentary", href: "/documentary" },
-            { label: "Videos", href: "/videos" },
-            { label: "Music", href: "/music" }
+            { label: "Spotify", href: "https://open.spotify.com/search/tyler%20carson", external: true },
+            { label: "Apple Music", href: "https://music.apple.com/us/search?term=Tyler%20Carson", external: true },
+            { label: "YouTube", href: "https://www.youtube.com/@fiddlerontherock", external: true },
+            { label: "Instagram", href: "https://www.instagram.com/fiddlerontherock/", external: true },
+            { label: "Facebook", href: "https://www.facebook.com/fiddlerontherock/", external: true }
           ]} 
         />
         <FooterColumn 
-          title="Press" 
-          links={[
-            { label: "Press Hub", href: "/press" },
-            { label: "EPK", href: "/epk" },
-            { label: "Reviews", href: "/what-people-say" }
-          ]} 
-        />
-        <FooterColumn 
-          title="About" 
+          title="Info" 
           links={[
             { label: "About Tyler", href: "/about" },
-            { label: "Support Campaign", href: "/support" },
-            { label: "Contact", href: "/contact" }
+            { label: "Press Kit (EPK)", href: "/epk" },
+            { label: "Reviews", href: "/what-people-say" },
+            { label: "Support Campaign", href: "/support" }
+          ]} 
+        />
+        <FooterColumn 
+          title="Legal" 
+          links={[
+            { label: "Privacy Policy", href: "/privacy" },
+            { label: "Terms of Service", href: "/terms" }
           ]} 
         />
       </div>
@@ -93,6 +169,11 @@ export default function Footer() {
 
       <div className="footer-bottom">
         <p>© {year} Tyler Carson. Sedona, Arizona.</p>
+        <div style={{ display: "flex", gap: "16px" }}>
+          <Link href="/privacy" style={{ textDecoration: "none", color: "inherit" }}>Privacy Policy</Link>
+          <span>•</span>
+          <Link href="/terms" style={{ textDecoration: "none", color: "inherit" }}>Terms of Service</Link>
+        </div>
       </div>
     </footer>
   );

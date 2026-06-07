@@ -30,27 +30,6 @@ export default function Nav() {
 
   if (pathname === "/experience") return null;
 
-  const experienceLinks = experiences.map((item) => ({ label: item.title, href: item.href }));
-
-  const mediaNavLinks = [
-    { label: "CBS", href: "/cbs" },
-    { label: "Documentary", href: "/documentary" },
-    { label: "Videos", href: "/videos" },
-    { label: "Music", href: "/music" }
-  ];
-
-  const pressNavLinks = [
-    { label: "Press", href: "/press" },
-    { label: "EPK", href: "/epk" },
-    { label: "Reviews", href: "/what-people-say" }
-  ];
-
-  const aboutNavLinks = [
-    { label: "About", href: "/about" },
-    { label: "Support", href: "/support" },
-    { label: "Contact", href: "/contact" }
-  ];
-
   return (
     <header className={"site-nav " + (scrolled ? "site-nav-scrolled" : "")}>
       <Link href="/" className="nav-logo" aria-label="Fiddler on the Rock home" onClick={() => setOpen(false)}>
@@ -60,56 +39,18 @@ export default function Nav() {
 
       <nav className="desktop-nav" aria-label="Primary navigation">
         <Link href="/">Home</Link>
-        <Link href="/events">Events</Link>
-        
-        <div className="nav-dropdown">
-          <Link href="/experiences">Experiences</Link>
-          <div className="dropdown-panel">
-            {experienceLinks.map((link) => (
-              <Link key={link.href} href={link.href}>
-                {link.label}
-              </Link>
-            ))}
-          </div>
-        </div>
-
-        <div className="nav-dropdown">
-          <Link href="/media">Media</Link>
-          <div className="dropdown-panel">
-            {mediaNavLinks.map((link) => (
-              <Link key={link.href} href={link.href}>
-                {link.label}
-              </Link>
-            ))}
-          </div>
-        </div>
-
-        <div className="nav-dropdown">
-          <Link href="/press">Press</Link>
-          <div className="dropdown-panel">
-            {pressNavLinks.map((link) => (
-              <Link key={link.href} href={link.href}>
-                {link.label}
-              </Link>
-            ))}
-          </div>
-        </div>
-
-        <Link href="/merch">Merch</Link>
-
-        <div className="nav-dropdown">
-          <Link href="/about">About</Link>
-          <div className="dropdown-panel">
-            {aboutNavLinks.map((link) => (
-              <Link key={link.href} href={link.href}>
-                {link.label}
-              </Link>
-            ))}
-          </div>
-        </div>
+        <Link href="/live-concerts">Live Concerts</Link>
+        <Link href="/private-events">Private Events</Link>
+        <Link href="/media-merch">Media & Merch</Link>
       </nav>
 
-      <Link href="/booking" className="nav-cta">Get Tickets</Link>
+      {/* Utility Contact Link (Envelope Icon) */}
+      <Link href="/contact" className="nav-contact-utility" aria-label="Contact Tyler">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" style={{ display: 'block' }}>
+          <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+          <polyline points="22,6 12,13 2,6"></polyline>
+        </svg>
+      </Link>
 
       <button
         className="menu-button"
@@ -131,59 +72,28 @@ export default function Nav() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -16 }}
             transition={{ duration: 0.25 }}
+            style={{ display: "flex", flexDirection: "column", gap: "20px" }}
           >
-            <MobileGroup
-              title="Home"
-              links={[
-                { label: "Fiddler Home", href: "/" },
-                { label: "Events Calendar", href: "/events" }
-              ]}
-              onClick={() => setOpen(false)}
-            />
-            <MobileGroup
-              title="Experiences"
-              links={[{ label: "All Experiences", href: "/experiences" }, ...experienceLinks]}
-              onClick={() => setOpen(false)}
-            />
-            <MobileGroup
-              title="Media"
-              links={[{ label: "Media Hub", href: "/media" }, ...mediaNavLinks]}
-              onClick={() => setOpen(false)}
-            />
-            <MobileGroup
-              title="Press"
-              links={pressNavLinks}
-              onClick={() => setOpen(false)}
-            />
-            <MobileGroup
-              title="Merch"
-              links={[{ label: "Merch Store", href: "/merch" }]}
-              onClick={() => setOpen(false)}
-            />
-            <MobileGroup
-              title="About"
-              links={aboutNavLinks}
-              onClick={() => setOpen(false)}
-            />
-            <Link className="mobile-book" href="/booking" onClick={() => setOpen(false)}>
-              Book an Experience
-            </Link>
+            <div style={{ display: "flex", flexDirection: "column", gap: "24px", marginTop: "24px" }}>
+              <Link href="/" onClick={() => setOpen(false)} style={{ fontFamily: "var(--font-serif)", fontSize: "2rem", color: pathname === "/" ? "var(--color-gold)" : "var(--color-cream)" }}>
+                Home
+              </Link>
+              <Link href="/live-concerts" onClick={() => setOpen(false)} style={{ fontFamily: "var(--font-serif)", fontSize: "2rem", color: pathname === "/live-concerts" ? "var(--color-gold)" : "var(--color-cream)" }}>
+                Live Concerts
+              </Link>
+              <Link href="/private-events" onClick={() => setOpen(false)} style={{ fontFamily: "var(--font-serif)", fontSize: "2rem", color: pathname === "/private-events" ? "var(--color-gold)" : "var(--color-cream)" }}>
+                Private Events
+              </Link>
+              <Link href="/media-merch" onClick={() => setOpen(false)} style={{ fontFamily: "var(--font-serif)", fontSize: "2rem", color: pathname.startsWith("/media-merch") ? "var(--color-gold)" : "var(--color-cream)" }}>
+                Media & Merch
+              </Link>
+              <Link href="/contact" onClick={() => setOpen(false)} style={{ fontFamily: "var(--font-serif)", fontSize: "2rem", color: pathname === "/contact" ? "var(--color-gold)" : "var(--color-cream)" }}>
+                Contact
+              </Link>
+            </div>
           </motion.div>
         ) : null}
       </AnimatePresence>
     </header>
-  );
-}
-
-function MobileGroup({ title, links, onClick }: { title: string; links: { label: string; href: string }[]; onClick: () => void }) {
-  return (
-    <div className="mobile-group">
-      <p>{title}</p>
-      {links.map((link) => (
-        <Link key={link.href + link.label} href={link.href} onClick={onClick}>
-          {link.label}
-        </Link>
-      ))}
-    </div>
   );
 }

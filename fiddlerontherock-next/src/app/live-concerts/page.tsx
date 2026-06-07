@@ -11,7 +11,7 @@ import "./events.css";
 export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
-  title: "Concert Schedule & Upcoming Events | Fiddler on the Rock",
+  title: "Live Concerts | Fiddler on the Rock",
   description: "Browse upcoming live violin performances by Tyler Carson in Sedona, Arizona. Reserve your tickets online.",
 };
 
@@ -145,7 +145,7 @@ export default async function EventsPage() {
   return (
     <>
       <PageHero
-        eyebrow="Schedule"
+        eyebrow="Live Concerts"
         title="Sedona Concert Schedule"
         subtitle="Experience live violin in the heart of Sedona's majestic landscape. Select a gold-rimmed date on the calendar below to reserve your seats."
         image="/images/red-rock-concert.jpg"
@@ -170,8 +170,8 @@ export default async function EventsPage() {
             <p>
               Book an exclusive, private concert for your group, proposal, anniversary, or milestone event. Tyler will perform just for you at a scenic Red Rock overlook.
             </p>
-            <Link href="/sedona-serenades" className="btn btn-primary" style={{ padding: "10px 28px" }}>
-              Explore Sedona Serenades
+            <Link href="/private-events" className="btn btn-primary" style={{ padding: "10px 28px" }}>
+              Explore Private Events
             </Link>
           </div>
         </div>
