@@ -146,7 +146,7 @@ export default async function EventsPage() {
     <>
       <PageHero
         eyebrow="Live Concerts"
-        title="Sedona Concert Schedule"
+        title="Your Unforgettable Sedona Sunset Awaits."
         subtitle="Experience live violin in the heart of Sedona's majestic landscape. Select a gold-rimmed date on the calendar below to reserve your seats."
         image="/images/red-rock-concert.jpg"
       />

@@ -4,8 +4,8 @@ import BookingForm from "@/components/BookingForm";
 import { CardGrid, InfoCard, PageHero, Section, FeatureSplit } from "@/components/PagePrimitives";
 
 export const metadata: Metadata = { 
-  title: "Private Events | Fiddler on the Rock", 
-  description: "Private Sedona violin experience for couples, proposals, anniversaries, corporate events, and retreats." 
+  title: "Private Events & Bespoke Concerts | Fiddler on the Rock", 
+  description: "World-class live violin music for weddings, proposals, corporate events, and wellness retreats in Sedona's Red Rocks." 
 };
 
 export default function PrivateEventsPage() { 
@@ -13,12 +13,12 @@ export default function PrivateEventsPage() {
     <>
       <PageHero 
         eyebrow="Private Events" 
-        title="A violin concert just for you in the Red Rocks." 
-        subtitle="Canyon walls, open sky, and Tyler Carson playing a private Living Music concert for your group." 
+        title="World-Class Live Music for Your Most Important Moments." 
+        subtitle="From romantic mountaintop proposals and destination weddings to immersive corporate retreats, Tyler Carson designs bespoke soundscapes that capture the heartbeat of Sedona." 
         image="/images/tyler-romantic-sunset.jpg" 
         ctas={[
-          { label: "Book a Private Event", href: "#book" }, 
-          { label: "Request Custom Event", href: "/contact?booking=request" }
+          { label: "Book an Event", href: "#book" }, 
+          { label: "Inquire Online", href: "/contact?booking=request" }
         ]} 
       />
 
@@ -26,11 +26,57 @@ export default function PrivateEventsPage() {
         <FeatureSplit
           image="/images/red-rock-concert.jpg"
           alt="Tyler Carson playing violin for a couple at sunset in Sedona"
-          eyebrow="An Intimate Sacred Evening"
-          title="Where music meets the silence of the Red Rocks."
-          body="No stage, no amplification, no barrier. Walk into a natural canyon or step onto a flat Red Rock vista. Tyler Carson crafts a custom soundscape that responds to the wind, the sunset, and your presence."
+          eyebrow="A Bespoke Experience"
+          title="Designed for Planners, Brides, and Milestone Celebrations"
+          body="Whether you are coordinating a high-end corporate retreat, planning a dream red rock wedding, or arranging an intimate anniversary proposal, Tyler Carson works directly with coordinators and clients to compose the perfect musical narrative. We offer self-contained outdoor setups that respect the nature guidelines of Sedona while delivering pristine acoustic performance."
           ctas={[{ label: "Reserve Your Date", href: "#book" }]}
         />
+      </Section>
+
+      {/* Performance Formats Section */}
+      <Section eyebrow="Performance Formats" title="The Formats: One Man Symphony vs. Acoustic Elegance" tone="soft">
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))", gap: "40px" }}>
+          <div style={{ background: "rgba(19,22,30,0.68)", border: "1px solid rgba(200,169,110,0.18)", padding: "36px", borderRadius: "2px" }}>
+            <span style={{ fontFamily: "var(--font-mono)", fontSize: "0.6rem", letterSpacing: "0.15em", textTransform: "uppercase", color: "var(--color-gold)", display: "block", marginBottom: "12px" }}>
+              High Energy & Cinematic
+            </span>
+            <h3 style={{ fontFamily: "var(--font-serif)", fontSize: "1.8rem", color: "var(--color-cream)", marginBottom: "16px", marginTop: 0 }}>
+              The One Man Symphony
+            </h3>
+            <p style={{ color: "var(--color-cream-soft)", fontSize: "0.95rem", lineHeight: "1.7" }}>
+              Tyler's signature loops weave violin, rare horn violin, and digital looping pedals into a rich soundscape that feels like a full orchestra. Performing creative arrangements of Led Zeppelin, Taylor Swift, Disney theme songs, and original stories, this format is perfect for high-impact receptions, cocktails, and dynamic corporate keynotes.
+            </p>
+          </div>
+
+          <div style={{ background: "rgba(19,22,30,0.68)", border: "1px solid rgba(200,169,110,0.18)", padding: "36px", borderRadius: "2px" }}>
+            <span style={{ fontFamily: "var(--font-mono)", fontSize: "0.6rem", letterSpacing: "0.15em", textTransform: "uppercase", color: "var(--color-gold)", display: "block", marginBottom: "12px" }}>
+              Pure & Intimate
+            </span>
+            <h3 style={{ fontFamily: "var(--font-serif)", fontSize: "1.8rem", color: "var(--color-cream)", marginBottom: "16px", marginTop: 0 }}>
+              Acoustic & Classical Elegance
+            </h3>
+            <p style={{ color: "var(--color-cream-soft)", fontSize: "0.95rem", lineHeight: "1.7" }}>
+              A pure unamplified performance where the violin meets the raw silence of the canyons. Featuring classical masterpieces (Bach, Vivaldi), traditional Celtic fire, and serene ambient melodies. Ideal for wedding ceremonies, sacred mountaintop proposals, intimate dinner parties, and yoga/breathwork settings.
+            </p>
+          </div>
+        </div>
+      </Section>
+
+      {/* Wellness & Spiritual Retreats Section */}
+      <Section eyebrow="Retreats & Healing" title="Vibrational Resonance: Wellness & Spiritual Retreats">
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))", gap: "48px", alignItems: "center" }}>
+          <div>
+            <p className="lede" style={{ fontSize: "1.1rem", color: "var(--color-cream)" }}>
+              As a featured Insight Timer artist who has performed on the sacred grounds of the Matrimandir in Auroville, India, Tyler Carson designs music specifically for vibrational healing, meditation, and spiritual recovery.
+            </p>
+            <p style={{ color: "var(--color-cream-soft)", fontSize: "1rem", lineHeight: "1.7" }}>
+              Tyler's personal healing journey from spasmodic dysphonia (which took his speaking voice but opened his violin resonance) infuses his retreat performances with deep presence, resilience, and transformation. His soundscapes integrate seamlessly into yoga classes, sound baths, meditation journeys, and spiritual retreats in the heart of Sedona's energy vortexes.
+            </p>
+          </div>
+          <div style={{ position: 'relative', height: '360px', width: '100%', border: "1px solid rgba(200,169,110,0.18)" }}>
+            <Image src="/images/secret-cave-hero.jpg" alt="Tyler Carson performing inside a red rock cave" fill className="image-cover" />
+          </div>
+        </div>
       </Section>
 
       <Section id="spots" title="Two secret spots. Both unforgettable." tone="soft">
