@@ -28,7 +28,7 @@ export default function Nav() {
     };
   }, [open, pathname]);
 
-  if (pathname === "/experience") return null;
+  if (pathname === "/experience" || pathname.startsWith("/booking")) return null;
 
   return (
     <header className={"site-nav " + (scrolled ? "site-nav-scrolled" : "")}>

@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { ButtonLink, PageHero, Section } from "@/components/PagePrimitives";
+import SuccessClearCart from "./SuccessClearCart";
 
 export const metadata: Metadata = {
   title: "Booking Confirmed | Fiddler on the Rock",
@@ -9,6 +10,7 @@ export const metadata: Metadata = {
 export default function BookingSuccessPage() {
   return (
     <>
+      <SuccessClearCart />
       <PageHero
         eyebrow="Booking received"
         title="Your Sedona music moment is on its way."
@@ -24,3 +26,4 @@ export default function BookingSuccessPage() {
     </>
   );
 }
+

@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { priceBooking } from "@/lib/booking/pricing";
 import { createCheckoutSession } from "@/lib/booking/stripe";
-import { supabaseConfigured, supabaseRpc } from "@/lib/booking/supabase";
+import { supabaseConfigured, supabaseRpc, supabasePatch } from "@/lib/booking/supabase";
 import { stripeConfigured } from "@/lib/booking/stripe";
 import type { BookingSelection } from "@/lib/booking/types";
 
@@ -28,6 +28,15 @@ export async function POST(request: Request) {
     });
     demo = false;
 
+    // Save customer details in orders table right after hold is placed
+    if (selection.customer) {
+      await supabasePatch(`orders?id=eq.${orderId}`, {
+        customer_name: selection.customer.name ?? null,
+        customer_email: selection.customer.email ?? null,
+        customer_phone: selection.customer.phone ?? null,
+      });
+    }
+
     const origin = new URL(request.url).origin;
     const session = await createCheckoutSession({
       orderId,
@@ -35,6 +44,7 @@ export async function POST(request: Request) {
       successUrl: origin + "/booking/success",
       cancelUrl: origin + "/booking/canceled",
       metadata: { orderId, showId: selection.showId, slotId: selection.slotId, source: selection.source ?? "" },
+      customerEmail: selection.customer?.email,
     });
 
     return NextResponse.json({ url: session.url, checkoutUrl: session.url, orderId, priced, holdExpiresInMinutes: 15, demo });

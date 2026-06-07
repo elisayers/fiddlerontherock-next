@@ -11,7 +11,7 @@ export default function Footer() {
   const [email, setEmail] = useState("");
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
 
-  if (pathname === "/experience") return null;
+  if (pathname === "/experience" || pathname.startsWith("/booking")) return null;
   const year = new Date().getFullYear();
 
   async function handleSubscribe(e: React.FormEvent) {

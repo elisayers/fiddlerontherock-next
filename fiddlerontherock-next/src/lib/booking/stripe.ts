@@ -2,7 +2,50 @@ import type { PricedOrder } from "./types";
 import { createHmac, timingSafeEqual } from "node:crypto";
 
 export function stripeConfigured() { return Boolean(process.env.STRIPE_SECRET_KEY); }
-export async function createCheckoutSession(input: { orderId: string; priced: PricedOrder; successUrl: string; cancelUrl: string; metadata: Record<string, string> }) { const secret = process.env.STRIPE_SECRET_KEY; if (!secret) return { url: input.successUrl + "?mock=1&order=" + encodeURIComponent(input.orderId) }; const params = new URLSearchParams(); params.set("mode", "payment"); params.set("success_url", input.successUrl + "?session_id={CHECKOUT_SESSION_ID}"); params.set("cancel_url", input.cancelUrl); params.set("phone_number_collection[enabled]", "true"); params.set("billing_address_collection", "auto"); Object.entries(input.metadata).forEach(([key, value]) => params.set("metadata[" + key + "]", value)); input.priced.lines.filter((line) => line.total > 0).forEach((line, index) => { params.set("line_items[" + index + "][quantity]", String(line.quantity)); params.set("line_items[" + index + "][price_data][currency]", "usd"); params.set("line_items[" + index + "][price_data][unit_amount]", String(line.unitAmount)); params.set("line_items[" + index + "][price_data][product_data][name]", line.label); }); const response = await fetch("https://api.stripe.com/v1/checkout/sessions", { method: "POST", headers: { Authorization: "Bearer " + secret, "Content-Type": "application/x-www-form-urlencoded", "Stripe-Version": "2026-02-25.clover" }, body: params }); if (!response.ok) throw new Error(await response.text()); return (await response.json()) as { url: string; id: string }; }
+export async function createCheckoutSession(input: {
+  orderId: string;
+  priced: PricedOrder;
+  successUrl: string;
+  cancelUrl: string;
+  metadata: Record<string, string>;
+  customerEmail?: string;
+}) {
+  const secret = process.env.STRIPE_SECRET_KEY;
+  if (!secret) return { url: input.successUrl + "?mock=1&order=" + encodeURIComponent(input.orderId) };
+
+  const params = new URLSearchParams();
+  params.set("mode", "payment");
+  params.set("success_url", input.successUrl + "?session_id={CHECKOUT_SESSION_ID}");
+  params.set("cancel_url", input.cancelUrl);
+  params.set("phone_number_collection[enabled]", "true");
+  params.set("billing_address_collection", "auto");
+
+  if (input.customerEmail) {
+    params.set("customer_email", input.customerEmail);
+  }
+
+  Object.entries(input.metadata).forEach(([key, value]) => params.set("metadata[" + key + "]", value));
+
+  input.priced.lines.filter((line) => line.total > 0).forEach((line, index) => {
+    params.set("line_items[" + index + "][quantity]", String(line.quantity));
+    params.set("line_items[" + index + "][price_data][currency]", "usd");
+    params.set("line_items[" + index + "][price_data][unit_amount]", String(line.unitAmount));
+    params.set("line_items[" + index + "][price_data][product_data][name]", line.label);
+  });
+
+  const response = await fetch("https://api.stripe.com/v1/checkout/sessions", {
+    method: "POST",
+    headers: {
+      Authorization: "Bearer " + secret,
+      "Content-Type": "application/x-www-form-urlencoded",
+      "Stripe-Version": "2026-02-25.clover"
+    },
+    body: params
+  });
+
+  if (!response.ok) throw new Error(await response.text());
+  return (await response.json()) as { url: string; id: string };
+}
 
 export async function verifyStripeWebhook(rawBody: string, signature: string | null) {
   const secret = process.env.STRIPE_WEBHOOK_SECRET;
