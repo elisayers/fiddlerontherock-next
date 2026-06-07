@@ -6,13 +6,15 @@ import { createClient } from "@/utils/supabase/server";
 import { demoAvailability } from "@/lib/booking/catalog";
 import { experiences } from "@/lib/data";
 import EventsCalendar from "./EventsCalendar";
+import JsonLd from "@/components/JsonLd";
+import { musicEventSchema } from "@/lib/schema";
 import "./events.css";
 
 export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
-  title: "Live Concerts | Fiddler on the Rock",
-  description: "Browse upcoming live violin performances by Tyler Carson in Sedona, Arizona. Reserve your tickets online.",
+  title: "Sedona Sunset Concerts & Live Violin Performances | Fiddler on the Rock",
+  description: "Experience the magic of Tyler Carson's live violin performances in Sedona, Arizona. Browse the show calendar and book your sunset concert tickets online.",
 };
 
 type UpcomingEvent = {
@@ -144,6 +146,7 @@ export default async function EventsPage() {
 
   return (
     <>
+      <JsonLd data={musicEventSchema(upcomingEvents)} />
       <PageHero
         eyebrow="Live Concerts"
         title="Your Unforgettable Sedona Sunset Awaits."

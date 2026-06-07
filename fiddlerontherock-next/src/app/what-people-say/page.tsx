@@ -2,15 +2,18 @@ import type { Metadata } from "next";
 import { CardGrid, InfoCard, PageHero, Section } from "@/components/PagePrimitives";
 import { reviews } from "@/lib/data";
 import ReviewsWall from "@/components/ReviewsWall";
+import JsonLd from "@/components/JsonLd";
+import { aggregateRatingSchema } from "@/lib/schema";
 
 export const metadata: Metadata = {
-  title: "Wall of Love | Guest Reviews | Fiddler on the Rock",
-  description: "Read verified guest ratings and reviews for Fiddler on the Rock from Google, Tripadvisor, Facebook, and Yelp.",
+  title: "Wall of Love & Guest Reviews | Fiddler on the Rock Sedona",
+  description: "Read verified 5-star guest reviews and testimonials from Google, TripAdvisor, Facebook, and Yelp for Tyler Carson's Sedona live violin concerts."
 };
 
 export default function ReviewsPage() {
   return (
     <>
+      <JsonLd data={aggregateRatingSchema()} />
       <PageHero
         eyebrow="Reviews"
         title="What People Say"

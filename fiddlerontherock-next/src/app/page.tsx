@@ -4,7 +4,7 @@ import Image from "next/image";
 import JsonLd from "@/components/JsonLd";
 import { ButtonLink, CardGrid, FeatureSplit, InfoCard, PageHero, Section } from "@/components/PagePrimitives";
 import { cbs, experiences, home, testimonials } from "@/lib/data";
-import { eventSchema, localBusinessSchema } from "@/lib/schema";
+import { localBusinessSchema, aggregateRatingSchema } from "@/lib/schema";
 export const metadata: Metadata = { 
   title: "Live Violin Concerts in Sedona | Fiddler on the Rock", 
   description: "Experience live violin concerts in Sedona's Red Rocks. Book public sunset shows, private Sedona Serenades, and intimate music events. As seen on CBS Mornings." 
@@ -20,7 +20,7 @@ export default function HomePage() {
 
   return (
     <>
-      <JsonLd data={[localBusinessSchema(), ...eventSchema()]} />
+      <JsonLd data={[localBusinessSchema(), aggregateRatingSchema()]} />
       
       {/* 1. Hero Section */}
       <PageHero 

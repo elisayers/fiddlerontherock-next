@@ -1,5 +1,8 @@
 import type { Metadata } from "next";
 import { ButtonLink, CardGrid, FeatureSplit, InfoCard, PageHero, Section } from "@/components/PagePrimitives";
 import { decisionTree, experiences } from "@/lib/data";
-export const metadata: Metadata = { title: "Live Music Experiences in Sedona", description: "Three live violin experiences in Sedona: One Man Symphony, Sedona Serenades, and Legends of the Fiddle." };
+export const metadata: Metadata = {
+  title: "Sedona Live Music Experiences & Concerts | Fiddler on the Rock",
+  description: "Explore the live music offerings of Fiddler on the Rock in Sedona. Find the perfect experience: public sunset shows, theatrical indoor concerts, or private serenades."
+};
 export default function ExperiencesPage() { return <><PageHero eyebrow="The Experiences" title="Three ways to experience Sedona's music." subtitle="Live violin among Red Rock formations on Thursday evenings, Saturday nights, and by private arrangement." image="/images/cbs-experiences-hero.png" ctas={[{ label: "Book Now", href: "/booking" }, { label: "Private Serenades", href: "/sedona-serenades" }]} /><Section title="Choose the experience that fits your visit.">{experiences.map((item, index) => <FeatureSplit key={item.id} reverse={index % 2 === 1} image={item.image} alt={item.alt} eyebrow={item.eyebrow} title={item.title} body={item.summary + " " + item.experience} ctas={[{ label: "View Details", href: item.href }]} />)}</Section><Section eyebrow="Decision guide" title="Which experience calls to you?" tone="soft"><CardGrid>{decisionTree.map((item) => <InfoCard key={item.prompt} eyebrow={item.prompt} title={item.recommendation} body={item.body} />)}</CardGrid><div className="button-row left"><ButtonLink link={{ label: "Book Your Experience Now", href: "/booking" }} /></div></Section></>; }
