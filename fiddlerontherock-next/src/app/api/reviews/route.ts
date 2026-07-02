@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { NextResponse } from "next/server";
 
 interface NormalizedReview {
@@ -12,142 +13,6 @@ interface NormalizedReview {
   category: "concert" | "wedding" | "retreat" | "general";
 }
 
-// Fallback high-fidelity reviews when API keys are not present
-const mockReviews: NormalizedReview[] = [
-  {
-    id: "g1",
-    source: "google",
-    author: "Karen M.",
-    rating: 5,
-    text: "We flew in from Austin and this was, without question, the highlight of our entire trip. We've been to Sedona three times. Nothing comes close to this performance in the Red Rocks.",
-    date: "2 days ago",
-    profilePhoto: "",
-    url: "https://google.com/maps",
-    category: "concert"
-  },
-  {
-    id: "g2",
-    source: "google",
-    author: "Sarah & John D.",
-    rating: 5,
-    text: "We booked Tyler for our wedding proposal at the Secret Spot. He played our custom songs as the sun set over the cliffs. It was absolutely magical and worth every penny. A memory we will hold forever.",
-    date: "2 weeks ago",
-    profilePhoto: "",
-    url: "https://google.com/maps",
-    category: "wedding"
-  },
-  {
-    id: "y1",
-    source: "yelp",
-    author: "Emily S.",
-    rating: 5,
-    text: "An incredible sunset concert experience. Tyler is a master of his craft. The looping technique is fascinating, and the backdrop of Wilson Mountain at the Apple Barn is absolutely stunning.",
-    date: "3 days ago",
-    profilePhoto: "",
-    url: "https://yelp.com",
-    category: "concert"
-  },
-  {
-    id: "f1",
-    source: "facebook",
-    author: "Laura B.",
-    rating: 5,
-    text: "Tyler played for our wellness and meditation retreat in the Sedona canyon. The sound of the violin vibrating through the red rocks created a deeply spiritual, resonant, and healing space. Simply amazing.",
-    date: "1 month ago",
-    profilePhoto: "",
-    url: "https://facebook.com",
-    category: "retreat"
-  },
-  {
-    id: "g3",
-    source: "google",
-    author: "David L.",
-    rating: 5,
-    text: "Tyler's One Man Symphony is mind-blowing! The way he loops the violin and builds an entire orchestra live at sunset is unforgettable. Highly recommend to anyone visiting Sedona.",
-    date: "1 week ago",
-    profilePhoto: "",
-    url: "https://google.com/maps",
-    category: "concert"
-  },
-  {
-    id: "y2",
-    source: "yelp",
-    author: "Thomas R.",
-    rating: 5,
-    text: "Fiddler on the Rock is an absolute must-do. Tyler's performance is deeply emotional, cinematic, and technically flawless. We sat spellbound the entire evening. Easily 5 stars.",
-    date: "1 month ago",
-    profilePhoto: "",
-    url: "https://yelp.com",
-    category: "concert"
-  },
-  {
-    id: "f2",
-    source: "facebook",
-    author: "Marcus G.",
-    rating: 5,
-    text: "Highly recommend Tyler Carson! An unforgettable night of music, stories, and connection. His energy is infectious and the setting is pure Sedona magic. Will definitely return.",
-    date: "3 weeks ago",
-    profilePhoto: "",
-    url: "https://facebook.com",
-    category: "concert"
-  },
-  {
-    id: "g4",
-    source: "google",
-    author: "Michelle K.",
-    rating: 5,
-    text: "Hearing Tyler's loop violin in the Apple Barn at the Sedona Heritage Museum was the highlight of our visit. Outstanding acoustics, intimate seating, and beautiful stories.",
-    date: "2 weeks ago",
-    profilePhoto: "",
-    url: "https://google.com/maps",
-    category: "concert"
-  },
-  {
-    id: "y3",
-    source: "yelp",
-    author: "Jessica P.",
-    rating: 5,
-    text: "We hired Tyler Carson for our outdoor wedding ceremony in Sedona. He was incredibly professional, flexible, and played beautifully. Our guests are still talking about the violin music!",
-    date: "Last month",
-    profilePhoto: "",
-    url: "https://yelp.com",
-    category: "wedding"
-  },
-  {
-    id: "f3",
-    source: "facebook",
-    author: "Chris D.",
-    rating: 5,
-    text: "A beautiful soul and incredibly talented violinist. His CBS Mornings feature brought us here, and the live show in person exceeded all expectations. A truly unique performance.",
-    date: "2 weeks ago",
-    profilePhoto: "",
-    url: "https://facebook.com",
-    category: "general"
-  },
-  {
-    id: "g5",
-    source: "google",
-    author: "Amanda W.",
-    rating: 5,
-    text: "The most romantic proposal music we could have dreamed of. Tyler played our favorite songs on a private cliff, and the acoustics in the red rocks were unbelievable. 10/10!",
-    date: "Last month",
-    profilePhoto: "",
-    url: "https://google.com/maps",
-    category: "wedding"
-  },
-  {
-    id: "f4",
-    source: "facebook",
-    author: "Robert T.",
-    rating: 5,
-    text: "We booked a private Sedona Serenade concert for our spiritual wellness circle. Tyler's sound healing and violin presence elevated the entire retreat. Highly recommend his work.",
-    date: "2 months ago",
-    profilePhoto: "",
-    url: "https://facebook.com",
-    category: "retreat"
-  }
-];
-
 export async function GET() {
   const googleKey = process.env.GOOGLE_PLACES_API_KEY;
   const googlePlaceId = process.env.GOOGLE_PLACE_ID;
@@ -156,9 +21,9 @@ export async function GET() {
   const facebookToken = process.env.FACEBOOK_ACCESS_TOKEN;
   const facebookPageId = process.env.FACEBOOK_PAGE_ID;
 
-  // If no API keys are present, return normalized mock reviews immediately
+  // Avoid presenting mock reviews as real guest proof.
   if (!googleKey && !yelpKey && !facebookToken) {
-    return NextResponse.json({ reviews: mockReviews, source: "mocked" });
+    return NextResponse.json({ reviews: [], source: "unconfigured" });
   }
 
   const fetchPromises: Promise<NormalizedReview[]>[] = [];
@@ -285,14 +150,13 @@ export async function GET() {
     const results = await Promise.all(fetchPromises);
     const combinedReviews = results.flat();
 
-    // If combined reviews are empty (API failures), return the mock data
     if (combinedReviews.length === 0) {
-      return NextResponse.json({ reviews: mockReviews, source: "mocked_fallback" });
+      return NextResponse.json({ reviews: [], source: "empty" });
     }
 
     return NextResponse.json({ reviews: combinedReviews, source: "live" });
   } catch (error) {
     console.error("Promise.all failed in review fetcher:", error);
-    return NextResponse.json({ reviews: mockReviews, source: "mocked_error_fallback" });
+    return NextResponse.json({ reviews: [], source: "error" });
   }
 }

@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState, useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
 interface NormalizedReview {
@@ -25,13 +25,12 @@ export default function ReviewsWall() {
 
   useEffect(() => {
     let active = true;
-    setLoading(true);
     fetch("/api/reviews")
       .then((res) => {
         if (!res.ok) throw new Error("Could not load reviews.");
         return res.json();
       })
-      .then((data: { reviews: NormalizedReview[] }) => {
+      .then((data: { reviews?: NormalizedReview[] }) => {
         if (!active) return;
         setReviews(data.reviews ?? []);
       })
@@ -85,37 +84,33 @@ export default function ReviewsWall() {
 
   if (error && reviews.length === 0) {
     return (
-      <div style={{ textAlign: "center", padding: "48px 24px", color: "var(--color-gold)" }}>
+      <div className="checkout-status-card" style={{ maxWidth: "780px", margin: "40px auto 0" }}>
+        <h4>Live review integrations are being finalized.</h4>
         <p>{error}</p>
-        <button
-          className="btn btn-primary"
-          type="button"
-          onClick={() => window.location.reload()}
-          style={{ marginTop: "16px" }}
-        >
-          Try Again
-        </button>
+        <p>For current references, use the curated comments above or contact Tyler directly for availability and guest feedback.</p>
+      </div>
+    );
+  }
+
+  if (!reviews.length) {
+    return (
+      <div className="checkout-status-card" style={{ maxWidth: "780px", margin: "40px auto 0" }}>
+        <h4>Live review integrations are not connected yet.</h4>
+        <p>Details are being finalized. Please contact Tyler directly for current availability, references, and guest feedback.</p>
       </div>
     );
   }
 
   return (
     <div className="reviews-wall-container" style={{ marginTop: "24px" }}>
-      {/* Category Tabs */}
       <div className="review-filters">
         {(["all", "concert", "wedding", "retreat"] as FilterCategory[]).map((cat) => (
-          <button
-            key={cat}
-            type="button"
-            className={`review-filter-btn ${activeFilter === cat ? "active" : ""}`}
-            onClick={() => setActiveFilter(cat)}
-          >
+          <button key={cat} type="button" className={`review-filter-btn ${activeFilter === cat ? "active" : ""}`} onClick={() => setActiveFilter(cat)}>
             {cat === "all" ? "All Reviews" : cat === "concert" ? "Concerts" : cat === "wedding" ? "Weddings" : "Retreats"}
           </button>
         ))}
       </div>
 
-      {/* Masonry Columns Layout */}
       <div className="reviews-masonry">
         <AnimatePresence mode="popLayout">
           {filteredReviews.map((rev) => (
@@ -129,15 +124,10 @@ export default function ReviewsWall() {
               transition={{ duration: 0.25 }}
             >
               <div className={`review-card-premium ${rev.source}`}>
-                {/* Header: Author + Star rating & platform badge */}
                 <div className="review-card-header">
                   <div className="reviewer-info">
                     {rev.profilePhoto ? (
-                      <img
-                        src={rev.profilePhoto}
-                        alt={rev.author}
-                        style={{ width: 38, height: 38, borderRadius: "50%", objectFit: "cover" }}
-                      />
+                      <img src={rev.profilePhoto} alt={rev.author} style={{ width: 38, height: 38, borderRadius: "50%", objectFit: "cover" }} />
                     ) : (
                       <div className="reviewer-avatar">{rev.author.substring(0, 2)}</div>
                     )}
@@ -148,36 +138,32 @@ export default function ReviewsWall() {
                   </div>
 
                   <div className="platform-badge" title={`Verified review from ${rev.source}`}>
-                    {rev.source === "google" && <GoogleIcon />}
-                    {rev.source === "yelp" && <YelpIcon />}
-                    {rev.source === "facebook" && <FacebookIcon />}
+                    {rev.source === "google" ? <GoogleIcon /> : null}
+                    {rev.source === "yelp" ? <YelpIcon /> : null}
+                    {rev.source === "facebook" ? <FacebookIcon /> : null}
                   </div>
                 </div>
 
-                {/* Star Rating list */}
                 <div className="review-rating-stars" aria-label={`${rev.rating} out of 5 stars`}>
                   {Array.from({ length: 5 }).map((_, idx) => (
                     <span key={idx} style={{ color: idx < rev.rating ? "#FFB400" : "rgba(255,255,255,0.15)" }}>
-                      ★
+                      {"★"}
                     </span>
                   ))}
                 </div>
 
-                {/* Text Description */}
-                <p className="review-card-text">"{rev.text}"</p>
+                <p className="review-card-text">
+                  <span aria-hidden="true">&ldquo;</span>
+                  {rev.text}
+                  <span aria-hidden="true">&rdquo;</span>
+                </p>
 
-                {/* Card Footer: Category badge + read more */}
                 <div className="review-card-footer">
                   <span className="review-category-tag">
                     {rev.category === "concert" ? "Concert" : rev.category === "wedding" ? "Wedding" : rev.category === "retreat" ? "Retreat" : "Review"}
                   </span>
-                  <a
-                    href={rev.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="review-read-more"
-                  >
-                    Read on {rev.source} →
+                  <a href={rev.url} target="_blank" rel="noopener noreferrer" className="review-read-more">
+                    Read on {rev.source} {"->"}
                   </a>
                 </div>
               </div>
@@ -189,7 +175,6 @@ export default function ReviewsWall() {
   );
 }
 
-// Brand SVGs
 function GoogleIcon() {
   return (
     <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">

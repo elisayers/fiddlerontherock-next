@@ -16,6 +16,9 @@ export default function PrivateEventsPage() {
         title="World-Class Live Music for Your Most Important Moments." 
         subtitle="From romantic mountaintop proposals and destination weddings to immersive corporate retreats, Tyler Carson designs bespoke soundscapes that capture the heartbeat of Sedona." 
         image="/images/tyler-romantic-sunset.jpg" 
+        align="left"
+        imagePosition="65% center"
+        mobileImagePosition="60% center"
         ctas={[
           { label: "Book an Event", href: "#book" }, 
           { label: "Inquire Online", href: "/contact?booking=request" }
@@ -44,7 +47,7 @@ export default function PrivateEventsPage() {
               The One Man Symphony
             </h3>
             <p style={{ color: "var(--color-cream-soft)", fontSize: "0.95rem", lineHeight: "1.7" }}>
-              Tyler's signature loops weave violin, rare horn violin, and digital looping pedals into a rich soundscape that feels like a full orchestra. Performing creative arrangements of Led Zeppelin, Taylor Swift, Disney theme songs, and original stories, this format is perfect for high-impact receptions, cocktails, and dynamic corporate keynotes.
+              {"Tyler's signature loops weave violin, rare horn violin, and digital looping pedals into a rich soundscape that feels like a full orchestra. Performing creative arrangements of Led Zeppelin, Taylor Swift, Disney theme songs, and original stories, this format is perfect for high-impact receptions, cocktails, and dynamic corporate keynotes."}
             </p>
           </div>
 
@@ -70,7 +73,7 @@ export default function PrivateEventsPage() {
               As a featured Insight Timer artist who has performed on the sacred grounds of the Matrimandir in Auroville, India, Tyler Carson designs music specifically for vibrational healing, meditation, and spiritual recovery.
             </p>
             <p style={{ color: "var(--color-cream-soft)", fontSize: "1rem", lineHeight: "1.7" }}>
-              Tyler's personal healing journey from spasmodic dysphonia (which took his speaking voice but opened his violin resonance) infuses his retreat performances with deep presence, resilience, and transformation. His soundscapes integrate seamlessly into yoga classes, sound baths, meditation journeys, and spiritual retreats in the heart of Sedona's energy vortexes.
+              {"Tyler's personal healing journey from spasmodic dysphonia (which took his speaking voice but opened his violin resonance) infuses his retreat performances with deep presence, resilience, and transformation. His soundscapes integrate seamlessly into yoga classes, sound baths, meditation journeys, and spiritual retreats in the heart of Sedona's energy vortexes."}
             </p>
           </div>
           <div style={{ position: 'relative', height: '360px', width: '100%', border: "1px solid rgba(200,169,110,0.18)" }}>
@@ -145,6 +148,9 @@ export default function PrivateEventsPage() {
       </Section>
 
       <Section id="book" eyebrow="Direct booking" title="Select your package, location, and time.">
+        <p className="lede" style={{ marginBottom: "24px" }}>
+          {"If your preferred date, payment path, or custom request is not available online yet, submit the form anyway. Tyler confirms private-event details directly."}
+        </p>
         <BookingForm showId="sedona-serenades" />
       </Section>
     </>

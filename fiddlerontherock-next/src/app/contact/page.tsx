@@ -1,11 +1,13 @@
+import { Suspense } from "react";
 import type { Metadata } from "next";
 import { PageHero, Section } from "@/components/PagePrimitives";
 import JsonLd from "@/components/JsonLd";
 import { localBusinessSchema } from "@/lib/schema";
+import ContactInquiryForm from "./ContactInquiryForm";
 
 export const metadata: Metadata = {
   title: "Contact Fiddler on the Rock",
-  description: "Contact Fiddler on the Rock for private events, Sedona Serenades, press, and booking questions."
+  description: "Contact Fiddler on the Rock for private events, Sedona Serenades, press, merch, and booking questions.",
 };
 
 export default function ContactPage() {
@@ -15,39 +17,16 @@ export default function ContactPage() {
       <PageHero
         eyebrow="Contact"
         title="Tell us what you are planning."
-        subtitle="Submit your inquiry for private events, Sedona Serenades, press, and booking questions."
+        subtitle="Use this page for private events, Sedona Serenades, press, merch, and booking questions. If a backend workflow is not connected yet, the form still gives you a clear direct-contact path."
         image="/images/serenades-1.jpg"
+        align="left"
+        imagePosition="center center"
+        mobileImagePosition="58% center"
       />
-      <Section title="Request form">
-        <form className="form-grid" action="https://formspree.io/f/hello@fiddlerontherock.com" method="POST">
-          <label>
-            Name
-            <input name="name" placeholder="Your name" />
-          </label>
-          <label>
-            Email
-            <input name="email" type="email" placeholder="you@example.com" />
-          </label>
-          <label>
-            Inquiry type
-            <select name="type">
-              <option>Private Serenade</option>
-              <option>Public show tickets</option>
-              <option>Private event</option>
-              <option>Press</option>
-              <option>Merch</option>
-            </select>
-          </label>
-          <label>
-            Preferred date
-            <input name="date" type="date" />
-          </label>
-          <label className="full">
-            Message
-            <textarea name="message" rows={6} placeholder="Tell us about the experience you want to create." />
-          </label>
-          <button className="btn btn-primary" type="submit">Send Request</button>
-        </form>
+      <Section title="Inquiry form" eyebrow="Direct Contact">
+        <Suspense fallback={<div className="checkout-status-card" style={{ maxWidth: "860px" }}><h4>Loading contact form.</h4><p>If this takes a moment, you can still email hello@fiddlerontherock.com directly.</p></div>}>
+          <ContactInquiryForm />
+        </Suspense>
       </Section>
     </>
   );

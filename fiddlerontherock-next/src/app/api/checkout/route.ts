@@ -9,9 +9,20 @@ export async function POST(request: Request) {
   try {
     const selection = (await request.json()) as BookingSelection;
     const priced = priceBooking(selection);
+    const requestParams = new URLSearchParams({
+      booking: "request",
+      show: selection.showId,
+      source: selection.source ?? "",
+      checkout: "offline",
+    });
+    if (selection.slotId) requestParams.set("slot", selection.slotId);
+    if (selection.customer?.name) requestParams.set("name", selection.customer.name);
+    if (selection.customer?.email) requestParams.set("email", selection.customer.email);
+    if (selection.customer?.phone) requestParams.set("phone", selection.customer.phone);
+
     if (priced.errors.length) return NextResponse.json({ error: priced.errors.join(" ") }, { status: 400 });
-    if (priced.requiresRequest) return NextResponse.json({ requestOnly: true, redirectUrl: "/contact?booking=request" });
-    if (!supabaseConfigured() || !stripeConfigured()) return NextResponse.json({ error: "Online checkout is temporarily paused while payment setup is connected." }, { status: 503 });
+    if (priced.requiresRequest) return NextResponse.json({ requestOnly: true, redirectUrl: "/contact?" + requestParams.toString() });
+    if (!supabaseConfigured() || !stripeConfigured()) return NextResponse.json({ requestOnly: true, redirectUrl: "/contact?" + requestParams.toString() });
 
     let orderId = "demo_" + Date.now();
     let demo = true;

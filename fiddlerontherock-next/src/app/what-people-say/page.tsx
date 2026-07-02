@@ -6,8 +6,8 @@ import JsonLd from "@/components/JsonLd";
 import { aggregateRatingSchema } from "@/lib/schema";
 
 export const metadata: Metadata = {
-  title: "Wall of Love & Guest Reviews | Fiddler on the Rock Sedona",
-  description: "Read verified 5-star guest reviews and testimonials from Google, TripAdvisor, Facebook, and Yelp for Tyler Carson's Sedona live violin concerts."
+  title: "Guest Comments & Press Praise | Fiddler on the Rock Sedona",
+  description: "Read guest comments, press praise, and published reactions to Tyler Carson's live violin performances in Sedona.",
 };
 
 export default function ReviewsPage() {
@@ -17,31 +17,32 @@ export default function ReviewsPage() {
       <PageHero
         eyebrow="Reviews"
         title="What People Say"
-        subtitle="Read real stories and testimonials from guests who have experienced Tyler Carson's live violin performances in the Red Rocks of Sedona."
+        subtitle="A mix of guest comments, media praise, and published reactions to Tyler Carson's live performances in Sedona."
         image="/images/red-rock-concert.jpg"
+        align="left"
+        imagePosition="center center"
+        mobileImagePosition="58% center"
       />
 
-      {/* Ratings Snapshot */}
-      <Section title="Ratings Snapshot" eyebrow="Verified Satisfaction">
+      <Section title="Selected Praise" eyebrow="Guest Comments">
         <p className="lede">
-          Fiddler on the Rock consistently holds a 5-star rating across major platforms. Here is a brief snapshot of our verified profiles.
+          These highlights use only comments and public praise already represented on the site. Live platform-specific review feeds appear below only when connected.
         </p>
         <CardGrid>
           {reviews.map((item) => (
             <InfoCard
-              key={item.platform}
-              eyebrow={item.platform + " — " + item.rating}
+              key={item.platform + item.author}
+              eyebrow={`${item.platform} | ${item.rating}`}
               title={item.count}
-              body={`"${item.quote}" — ${item.author}`}
+              body={`"${item.quote}" ${item.author}`}
             />
           ))}
         </CardGrid>
       </Section>
 
-      {/* Dynamic Wall of Love Reviews Grid */}
-      <Section id="wall-of-love" title="The Wall of Love" eyebrow="Detailed Experiences" tone="soft">
+      <Section id="wall-of-love" title="Live Review Feed" eyebrow="When Connected" tone="soft">
         <p className="lede" style={{ marginBottom: "12px" }}>
-          Read the full, detailed reviews and filtering by category (public concerts, private weddings, and spiritual retreats) to see why guests describe Tyler's concerts as the highlight of their Sedona visit.
+          Platform-specific reviews are shown here when Google, Yelp, or Facebook data is connected. Until then, use the curated comments above or contact Tyler directly for current references.
         </p>
         <ReviewsWall />
       </Section>

@@ -1,6 +1,6 @@
 "use client";
 
-import { Suspense, useState, useEffect } from "react";
+import { Suspense } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import Image from "next/image";
 import JsonLd from "@/components/JsonLd";
@@ -12,22 +12,9 @@ import { videoSchema } from "@/lib/schema";
 function MediaMerchContent() {
   const searchParams = useSearchParams();
   const router = useRouter();
-  
-  // Read tab parameter, fallback to 'watch-listen'
-  const tabParam = searchParams.get("tab");
-  const [activeTab, setActiveTab] = useState<"watch-listen" | "shop">("watch-listen");
-
-  useEffect(() => {
-    if (tabParam === "shop") {
-      setActiveTab("shop");
-    } else {
-      setActiveTab("watch-listen");
-    }
-  }, [tabParam]);
+  const activeTab: "watch-listen" | "shop" = searchParams.get("tab") === "shop" ? "shop" : "watch-listen";
 
   const handleTabChange = (tab: "watch-listen" | "shop") => {
-    setActiveTab(tab);
-    // Update URL query parameter without full reload
     const params = new URLSearchParams(searchParams.toString());
     params.set("tab", tab);
     router.push(`/media-merch?${params.toString()}`, { scroll: false });
@@ -35,77 +22,45 @@ function MediaMerchContent() {
 
   return (
     <>
-      {activeTab === "watch-listen" && (
+      {activeTab === "watch-listen" ? (
         <JsonLd
           data={[
-            videoSchema(
-              documentary.headline,
-              documentary.subheadline,
-              "/images/living-music-documentary-cover.jpeg",
-              "https://www.youtube.com/watch?v=" + documentary.youtubeId
-            ),
-            videoSchema(
-              cbs.title,
-              cbs.subheadline,
-              "/images/cbs-experiences-hero.png",
-              "https://www.youtube.com/watch?v=" + cbs.youtubeId
-            )
+            videoSchema(documentary.headline, documentary.subheadline, "/images/living-music-documentary-cover.jpeg", `https://www.youtube.com/watch?v=${documentary.youtubeId}`),
+            videoSchema(cbs.title, cbs.subheadline, "/images/cbs-experiences-hero.png", `https://www.youtube.com/watch?v=${cbs.youtubeId}`),
           ]}
         />
-      )}
+      ) : null}
 
       <PageHero
-        eyebrow="Hub"
-        title={activeTab === "watch-listen" ? "Watch & Listen" : "Fiddler on the Rock Shop"}
-        subtitle={
-          activeTab === "watch-listen"
-            ? "Immerse yourself in Tyler Carson's Living Music story: CBS features, the award-winning documentary, performance videos, and studio recordings."
-            : "Bring a piece of the Sedona experience home. Official Fiddler on the Rock apparel, physical recordings, and unique keepsakes."
-        }
-        image={
-          activeTab === "watch-listen"
-            ? "/images/tyler-performance.jpg"
-            : "/images/logo-black.png"
-        }
+        eyebrow="Music & Media"
+        title={activeTab === "watch-listen" ? "Watch, listen, and follow Tyler Carson." : "Merch is being prepared for a fuller online release."}
+        subtitle={activeTab === "watch-listen"
+          ? "Start with the CBS feature, the Living Music documentary, and the performance archive."
+          : "Concert merchandise and take-home keepsakes are available at live events now. Online ordering is being finalized, so use this page as a current merch overview and inquiry point."}
+        image={activeTab === "watch-listen" ? "/images/tyler-performance.jpg" : "/images/tyler-red-rock.jpg"}
+        align="left"
+        imagePosition={activeTab === "watch-listen" ? "center center" : "60% center"}
+        mobileImagePosition="58% center"
       />
 
-      {/* Sub-Navigation Tabs */}
       <div className="tab-navigation-container">
-        <button
-          className={`tab-btn ${activeTab === "watch-listen" ? "active" : ""}`}
-          onClick={() => handleTabChange("watch-listen")}
-        >
+        <button className={`tab-btn ${activeTab === "watch-listen" ? "active" : ""}`} onClick={() => handleTabChange("watch-listen")}>
           Watch & Listen
         </button>
-        <button
-          className={`tab-btn ${activeTab === "shop" ? "active" : ""}`}
-          onClick={() => handleTabChange("shop")}
-        >
-          Shop Merch
+        <button className={`tab-btn ${activeTab === "shop" ? "active" : ""}`} onClick={() => handleTabChange("shop")}>
+          Merch & Keepsakes
         </button>
       </div>
 
       {activeTab === "watch-listen" ? (
         <>
-          {/* Section 1: The CBS Mornings Feature */}
           <Section eyebrow="National Feature" title={cbs.headline}>
             <div style={{ display: "grid", gridTemplateColumns: "1fr", gap: "36px", marginBottom: "48px" }}>
-              <div
-                className="video-embed-container"
-                style={{
-                  position: "relative",
-                  paddingBottom: "56.25%",
-                  height: 0,
-                  overflow: "hidden",
-                  maxWidth: "100%",
-                  borderRadius: "8px",
-                  border: "1px solid rgba(255,255,255,0.08)"
-                }}
-              >
+              <div className="video-embed-container" style={{ position: "relative", paddingBottom: "56.25%", height: 0, overflow: "hidden", maxWidth: "100%", borderRadius: "8px", border: "1px solid rgba(255,255,255,0.08)" }}>
                 <iframe
-                  src={"https://www.youtube.com/embed/" + cbs.youtubeId + "?rel=0&modestbranding=1"}
+                  src={`https://www.youtube.com/embed/${cbs.youtubeId}?rel=0&modestbranding=1`}
                   title={cbs.title}
-                  style={{ position: "absolute", top: 0, left: 0, width: "100%", height: "100%", border: 0 }}
+                  style={{ position: "absolute", inset: 0, width: "100%", height: "100%", border: 0 }}
                   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                   allowFullScreen
                 />
@@ -118,17 +73,10 @@ function MediaMerchContent() {
             </div>
           </Section>
 
-          {/* Section 2: Living Music Documentary */}
           <Section eyebrow="Award-Winning Short" title={documentary.headline} tone="soft">
             <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))", gap: "48px", alignItems: "center" }}>
               <div className="documentary-cover" style={{ margin: "0 auto", width: "100%", maxWidth: "400px" }}>
-                <Image
-                  src="/images/living-music-documentary-cover.jpeg"
-                  alt="Living Music documentary cover art"
-                  fill
-                  sizes="(max-width: 900px) 100vw, 400px"
-                  className="image-cover"
-                />
+                <Image src="/images/living-music-documentary-cover.jpeg" alt="Living Music documentary cover art" fill sizes="(max-width: 900px) 100vw, 400px" className="image-cover" />
               </div>
               <div>
                 <p className="lede">{documentary.body}</p>
@@ -151,70 +99,55 @@ function MediaMerchContent() {
             </div>
           </Section>
 
-          {/* Section 3: Performance Video Archive */}
-          <Section eyebrow="Performances" title="Sedona Performance Videos">
+          <Section eyebrow="Performance Archive" title="More Ways to Watch">
             <div style={{ marginBottom: "52px" }}>
               <VideoFacade youtubeId={videos[0].youtubeId} title="Fiddler on the Rock video archive" poster="/images/tyler-performance.jpg" />
             </div>
-            <h3 style={{ marginBottom: "24px", fontFamily: "var(--font-serif)", fontSize: "1.8rem" }}>More Videos</h3>
             <CardGrid>
               {videos.map((item) => (
-                <InfoCard
-                  key={item.title}
-                  eyebrow={item.type}
-                  title={item.title}
-                  body="Watch Tyler Carson perform his loops and original songs live in Sedona's red rocks."
-                  href={item.href}
-                  cta="Watch"
-                />
+                <InfoCard key={item.title} eyebrow={item.type} title={item.title} body="Watch Tyler Carson perform live in Sedona and explore the broader story behind the project." href={item.href} cta="Watch" />
               ))}
             </CardGrid>
           </Section>
 
-          {/* Section 4: Discography & Streaming */}
-          <Section eyebrow="Music Discography" title="The Sound of the Red Rocks" tone="soft">
-            <p className="lede">Explore Tyler Carson's original compositions and loops, shaped by recovery, presence, and the quiet beauty of the desert landscape.</p>
-            <div style={{ marginBottom: "52px" }}>
+          <Section eyebrow="Music" title="Listen Online" tone="soft">
+            <p className="lede">Original music, loop-based arrangements, and the sound world behind Fiddler on the Rock.</p>
+            <div style={{ marginBottom: "40px" }}>
               <CardGrid>
-                {musicItems.map((item) => (
-                  <InfoCard key={item.title} title={item.title} body={item.detail} />
-                ))}
+                {musicItems.map((item) => <InfoCard key={item.title} title={item.title} body={item.detail} />)}
               </CardGrid>
             </div>
-            <h3 style={{ marginBottom: "24px", fontFamily: "var(--font-serif)", fontSize: "1.8rem" }}>Listen Online</h3>
             <CardGrid>
-              {socialLinks
-                .filter((item) => ["Spotify", "Apple Music", "YouTube"].includes(item.label))
-                .map((item) => (
-                  <InfoCard
-                    key={item.label}
-                    title={item.label}
-                    body={`Stream Tyler's albums and singles on ${item.label}.`}
-                    href={item.href}
-                    cta="Listen"
-                  />
-                ))}
+              {socialLinks.filter((item) => ["Spotify", "Apple Music", "YouTube"].includes(item.label)).map((item) => (
+                <InfoCard key={item.label} title={item.label} body={`Listen to Tyler Carson on ${item.label}.`} href={item.href} cta="Open" />
+              ))}
             </CardGrid>
           </Section>
         </>
       ) : (
-        /* Shop Tab */
-        <Section title="Available Merchandise">
-          <p className="lede" style={{ marginBottom: "48px" }}>
-            Bring the soundtrack of the Red Rocks back home with you. Official apparel, music records, and mementos are available at all weekly concerts, or you can purchase online below.
-          </p>
-          <CardGrid>
-            {merchItems.map((item) => (
-              <InfoCard
-                key={item.title}
-                title={item.title}
-                body={item.detail}
-                href={item.title.toLowerCase().includes("gift") ? "/contact?booking=gift-cards" : undefined}
-                cta={item.title.toLowerCase().includes("gift") ? "Inquire" : undefined}
-              />
-            ))}
-          </CardGrid>
-        </Section>
+        <>
+          <Section eyebrow="Merch" title="Concert merch, music, and keepsakes">
+            <p className="lede" style={{ marginBottom: "32px" }}>
+              Merchandise is available at live shows now. Online ordering is being finalized, so this page functions as a polished overview instead of a broken storefront.
+            </p>
+            <CardGrid>
+              {merchItems.map((item) => <InfoCard key={item.title} title={item.title} body={item.detail} />)}
+            </CardGrid>
+          </Section>
+
+          <Section eyebrow="Need Something Specific?" title="Request the current merch list" tone="soft">
+            <div className="checkout-status-card" style={{ maxWidth: "860px" }}>
+              <h4>Online merch checkout is being finalized.</h4>
+              <p>
+                If you want current inventory, signed items, or a gift request, send a note and Tyler will confirm what is available directly.
+              </p>
+              <div className="button-row left" style={{ marginTop: 4 }}>
+                <ButtonLink link={{ label: "Contact Tyler", href: "/contact?type=merch" }} />
+                <ButtonLink link={{ label: "See Live Shows", href: "/live-concerts" }} variant="ghost" />
+              </div>
+            </div>
+          </Section>
+        </>
       )}
     </>
   );
@@ -223,11 +156,16 @@ function MediaMerchContent() {
 export default function MediaMerchClient() {
   return (
     <div className="site-main">
-      <Suspense fallback={
-        <div style={{ display: "grid", placeItems: "center", minHeight: "100vh", background: "var(--color-ink)", color: "var(--color-cream-soft)" }}>
-          <p style={{ fontFamily: "var(--font-mono)", fontSize: "0.8rem", letterSpacing: "0.2em", textTransform: "uppercase" }}>Loading...</p>
-        </div>
-      }>
+      <Suspense
+        fallback={
+          <div style={{ display: "grid", placeItems: "center", minHeight: "100vh", background: "var(--color-ink)", color: "var(--color-cream-soft)", padding: "32px" }}>
+            <div className="checkout-status-card" style={{ maxWidth: "700px" }}>
+              <h4>Loading music and media.</h4>
+              <p>The media library is opening now. If the page stalls, refresh once or use the contact page for the latest links.</p>
+            </div>
+          </div>
+        }
+      >
         <MediaMerchContent />
       </Suspense>
     </div>

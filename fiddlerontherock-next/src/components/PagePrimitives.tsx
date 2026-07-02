@@ -10,8 +10,44 @@ export function ButtonLink({ link, variant = "primary" }: { link: LinkItem; vari
   return <Link href={link.href} target={link.external ? "_blank" : undefined} rel={link.external ? "noopener noreferrer" : undefined} className={variant === "primary" ? "btn btn-primary" : "btn btn-ghost"}>{link.label}</Link>;
 }
 
-export function PageHero({ eyebrow, title, subtitle, image, ctas = [] }: { eyebrow?: string; title: string; subtitle?: string; image?: string; ctas?: LinkItem[] }) {
-  return <section className="page-hero">{image ? <div className="hero-bg"><Image src={image} alt="" fill priority sizes="100vw" className="image-cover" /><div className="hero-overlay" /></div> : null}<motion.div variants={staggerContainer} initial="hidden" animate="visible" className="page-hero-inner">{eyebrow ? <motion.p variants={fadeUp} className="eyebrow">{eyebrow}</motion.p> : null}<motion.h1 variants={fadeUp}>{title}</motion.h1>{subtitle ? <motion.p variants={fadeUp} className="hero-subtitle">{subtitle}</motion.p> : null}{ctas.length ? <motion.div variants={fadeUp} className="button-row">{ctas.map((cta, index) => <ButtonLink key={cta.href} link={cta} variant={index === 0 ? "primary" : "ghost"} />)}</motion.div> : null}</motion.div></section>;
+export function PageHero({
+  eyebrow,
+  title,
+  subtitle,
+  image,
+  ctas = [],
+  className,
+  align = "center",
+  imagePosition,
+  mobileImagePosition,
+}: {
+  eyebrow?: string;
+  title: string;
+  subtitle?: string;
+  image?: string;
+  ctas?: LinkItem[];
+  className?: string;
+  align?: "center" | "left";
+  imagePosition?: string;
+  mobileImagePosition?: string;
+}) {
+  return (
+    <section
+      className={["page-hero", align === "left" ? "page-hero-left" : "", className].filter(Boolean).join(" ")}
+      style={{
+        ...(imagePosition ? { ["--hero-image-position" as string]: imagePosition } : {}),
+        ...(mobileImagePosition ? { ["--hero-image-position-mobile" as string]: mobileImagePosition } : {}),
+      }}
+    >
+      {image ? <div className="hero-bg"><Image src={image} alt="" fill priority sizes="100vw" className="image-cover" /><div className="hero-overlay" /></div> : null}
+      <motion.div variants={staggerContainer} initial="hidden" animate="visible" className="page-hero-inner">
+        {eyebrow ? <motion.p variants={fadeUp} className="eyebrow">{eyebrow}</motion.p> : null}
+        <motion.h1 variants={fadeUp}>{title}</motion.h1>
+        {subtitle ? <motion.p variants={fadeUp} className="hero-subtitle">{subtitle}</motion.p> : null}
+        {ctas.length ? <motion.div variants={fadeUp} className={align === "left" ? "button-row left" : "button-row"}>{ctas.map((cta, index) => <ButtonLink key={cta.href} link={cta} variant={index === 0 ? "primary" : "ghost"} />)}</motion.div> : null}
+      </motion.div>
+    </section>
+  );
 }
 
 export function Section({ id, eyebrow, title, children, tone = "ink" }: { id?: string; eyebrow?: string; title?: string; children: React.ReactNode; tone?: "ink" | "soft" }) {

@@ -9,22 +9,21 @@ import { usePathname } from "next/navigation";
 export default function Footer() {
   const pathname = usePathname();
   const [email, setEmail] = useState("");
-  const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
+  const [status, setStatus] = useState<"idle" | "success" | "error">("idle");
 
   if (pathname === "/experience" || pathname.startsWith("/booking")) return null;
   const year = new Date().getFullYear();
 
   async function handleSubscribe(e: React.FormEvent) {
     e.preventDefault();
-    if (!email) return;
-    setStatus("loading");
-    try {
-      await new Promise((res) => setTimeout(res, 900));
-      setStatus("success");
-      setEmail("");
-    } catch {
+    if (!email.trim()) {
       setStatus("error");
+      return;
     }
+    const subject = encodeURIComponent("FOTR mailing list request");
+    const body = encodeURIComponent(`Please add this email to updates from Fiddler on the Rock:\n\n${email}`);
+    window.location.href = `mailto:hello@fiddlerontherock.com?subject=${subject}&body=${body}`;
+    setStatus("success");
   }
 
   return (
@@ -77,7 +76,7 @@ export default function Footer() {
             Stay Connected
           </h3>
           <p style={{ margin: 0, color: "var(--color-cream-soft)", fontSize: "0.9rem" }}>
-            Join the list for first access to concert dates, music releases, and stories from the Sedona canyons.
+            Request updates on concert dates, music releases, and stories from the Sedona canyons.
           </p>
           <form onSubmit={handleSubscribe} style={{ display: "flex", width: "100%", marginTop: "8px" }}>
             <input
@@ -86,7 +85,7 @@ export default function Footer() {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
-              disabled={status === "loading" || status === "success"}
+              disabled={status === "success"}
               style={{
                 flex: 1,
                 padding: "12px 16px",
@@ -100,7 +99,7 @@ export default function Footer() {
             />
             <button
               type="submit"
-              disabled={status === "loading" || status === "success"}
+              disabled={status === "success"}
               style={{
                 padding: "12px 20px",
                 background: "var(--color-gold)",
@@ -114,11 +113,16 @@ export default function Footer() {
                 cursor: "pointer"
               }}
             >
-              {status === "loading" ? "..." : status === "success" ? "Subscribed" : "Join"}
+              {status === "success" ? "Email Ready" : "Join"}
             </button>
           </form>
+          {status === "success" && (
+            <p style={{ color: "var(--color-muted)", fontSize: "0.75rem", margin: 0 }}>
+              Your email app should open with a ready-to-send request to join updates.
+            </p>
+          )}
           {status === "error" && (
-            <p style={{ color: "rgba(200,100,100,0.8)", fontSize: "0.75rem", margin: 0 }}>Something went wrong. Please try again.</p>
+            <p style={{ color: "rgba(200,100,100,0.8)", fontSize: "0.75rem", margin: 0 }}>Enter an email address to prepare the request.</p>
           )}
         </div>
       </div>

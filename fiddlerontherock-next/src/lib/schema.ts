@@ -1,4 +1,5 @@
-import { experiences, site } from "@/lib/data";
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { site } from "@/lib/data";
 
 export function localBusinessSchema() {
   return {
@@ -97,13 +98,7 @@ export function aggregateRatingSchema() {
       "addressRegion": "AZ",
       "addressCountry": "US"
     },
-    "aggregateRating": {
-      "@type": "AggregateRating",
-      "ratingValue": "5.0",
-      "reviewCount": "230",
-      "bestRating": "5",
-      "worstRating": "1"
-    }
+    "description": "Guest comments and press coverage for Tyler Carson's live Sedona performances."
   };
 }
 
