@@ -45,7 +45,7 @@ export default function HomePage() {
           <div>
             <h3 style={{ fontFamily: "var(--font-serif)", fontSize: "1.8rem", color: "var(--color-cream)", marginBottom: "16px" }}>The Immersive Solution</h3>
             <p style={{ color: "var(--color-cream-soft)", fontSize: "1.02rem", lineHeight: "1.75" }}>
-              Fiddler on the Rock offers a category-of-one Sedona evening: a live violin concert in the quiet of the Red Rocks. No stage barrier, no overproduced spectacle, just presence, changing light, and music that belongs to the place.
+              Fiddler on the Rock offers a one-of-one Sedona evening: a live violin concert in the quiet of the Red Rocks. No stage barrier, no overproduced spectacle, just presence, changing light, and music that belongs to the place.
             </p>
           </div>
         </div>
